@@ -1,0 +1,11 @@
+/*
+if (browser_width != width || browser_height != height)
+{
+width = browser_width-5;
+height = browser_height-5;
+window_set_size(width, height);
+}
+*/
+
+
+//show_message("main menu");
