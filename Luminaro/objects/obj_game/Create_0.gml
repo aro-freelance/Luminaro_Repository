@@ -48,6 +48,32 @@ enum E_SOLID_OBJ_TYPE{
 
 #endregion
 
+#region Player
+
+enum E_JUMP_STATE{
+	GROUNDED,
+	JUMPING,
+	FALLING,
+}
+
+enum E_STANDING_STATE{
+	STANDING,
+	CROUCHING,
+	PRONE,
+}
+
+enum E_ATTACK_STATE{
+	idle,
+	beam,
+}
+
+enum E_REACT_STATE{
+	idle,
+	getting_hit,
+}
+
+#endregion
+
 #region Enemies
 
 enum E_ENEMY_TYPES{
@@ -65,12 +91,44 @@ enum E_BOSS_TYPES{
 }
 
 
+enum E_ENEMY_JUMP_STATE{
+	GROUNDED,
+	JUMPING,
+	FALLING,
+	FLOATING,
+}
+
+enum E_ENEMY_STANDING_STATE{
+	STANDING,
+	CROUCHING,
+	PRONE,
+}
+
+enum E_ENEMY_ATTACK_STATE{
+	IDLE,
+	MELEE,
+	RANGED
+}
+
+enum E_ENEMY_REACT_STATE{
+	IDLE,
+	GETTING_HIT
+}
+
+enum E_ENEMY_TACTIC_STATE{
+	CHASE,
+	KEEP_DISTANCE,
+	MOVE_AWAY_TO_SHOOT,
+	MOVE_AWAY_TO_FLEE,
+	//TODO: move to heal -> make the enemy move to a shadow and heal? wihle it is healing the spawn rate is lower?
+}
+
+
 //the list of current enemies spawned
 global.enemy_list = ds_list_create();
 
 
 #endregion
-
 
 #region Shadows
 
@@ -105,7 +163,6 @@ enum E_SHADOW_SPAWN_ORIENTATION{
 }
 
 #endregion
-
 
 #region Light
 

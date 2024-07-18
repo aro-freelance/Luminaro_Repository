@@ -1,10 +1,11 @@
-/// @description basic light class (the player "weapon")
+/// @description light beam (the player "weapon")
+
 
 //draw behind player
 depth = -9;
 
-type = E_LIGHT_TYPES.lantern;
-intensity = .5;
+type = E_LIGHT_TYPES.beam;
+intensity = .9;
 
 sprite_subimage = 0;
 sprite_x_scale = 1;
@@ -19,4 +20,3 @@ sprite_alpha = 1;
 holder = noone;
 
 is_on = false;
-

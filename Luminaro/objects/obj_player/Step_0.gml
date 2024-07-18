@@ -222,21 +222,38 @@ if(global.button_held == E_BUTTON_HELD.CROUCH){
 
 #endregion
 
-
 #region INPUT: light beam
 
 if(mouse_check_button(mb_left)){
 	beam.sprite_rotation = point_direction(x, y, mouse_x, mouse_y)
+	lantern.is_on = false;
 	beam.is_on = true;
 }
 
 if(mouse_check_button_released(mb_left)){
 	beam.is_on = false;
+	lantern.is_on = true;
 }
 
 
 #endregion
 
+
+
+
+
+
+#region Death
+
+if(variable_instance_exists(id, "dynamic_hp")){
+	if(dynamic_hp <= 0){
+		show_debug_message("player " + string(id) + " death.");
+		//instance_destroy();
+	}
+}
+
+
+#endregion
 
 
 
