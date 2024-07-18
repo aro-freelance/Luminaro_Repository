@@ -24,6 +24,7 @@ standing_state = E_STANDING_STATE.STANDING;
 
 enum E_ATTACK_STATE{
 	idle,
+	beam,
 }
 
 attack_state = E_ATTACK_STATE.idle;
@@ -54,5 +55,20 @@ dynamic_jump_height = static_jump_height;
 dynamic_jump_number = static_jump_number; //How many jumps the player can make
 
 jump_current = 0; //How many jumps the player has remaining
+
+#endregion
+
+
+#region Light
+
+
+lantern = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Instances", obj_light);
+lantern.holder = self;
+lantern.is_on = true;
+
+beam = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Instances", obj_light_beam);
+type = E_LIGHT_TYPES.beam;
+beam.holder = self;
+beam.is_on = false;
 
 #endregion

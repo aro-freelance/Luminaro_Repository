@@ -155,7 +155,7 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 		if(!place_meeting(x, y - dynamic_jump_height, obj_solid)) y = y - dynamic_jump_height;
 		
 			
-		instance_create_layer(x, bbox_bottom, layer, obj_effect_jump);
+		instance_create_layer(x, bbox_bottom, "Instances", obj_effect_jump);
 			
 			
 			
@@ -169,7 +169,7 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 			if(!place_meeting(x, y - dynamic_jump_height, obj_solid)) y = y - dynamic_jump_height;
 			
 			
-			instance_create_layer(x, bbox_bottom, layer, obj_effect_jump);
+			instance_create_layer(x, bbox_bottom,  "Instances", obj_effect_jump);
 				
 		}
 	}
@@ -223,7 +223,19 @@ if(global.button_held == E_BUTTON_HELD.CROUCH){
 #endregion
 
 
+#region INPUT: light beam
 
+if(mouse_check_button(mb_left)){
+	beam.sprite_rotation = point_direction(x, y, mouse_x, mouse_y)
+	beam.is_on = true;
+}
+
+if(mouse_check_button_released(mb_left)){
+	beam.is_on = false;
+}
+
+
+#endregion
 
 
 
