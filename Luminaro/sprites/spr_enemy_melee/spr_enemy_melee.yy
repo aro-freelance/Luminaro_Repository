@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":7,
   "parent":{
-    "name":"Luminaro",
-    "path":"Luminaro.yyp",
+    "name":"EnemyAttacks",
+    "path":"folders/Sprites/EnemyAttacks.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

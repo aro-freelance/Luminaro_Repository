@@ -78,6 +78,44 @@ if(jump_state != E_JUMP_STATE.GROUNDED){
 
 #endregion
 
+#region pickup item
+
+if(place_meeting(x, y, obj_pickup_item)){
+	var pickup = instance_place(x, y, obj_pickup_item);
+	
+	if(pickup.type == E_PICKUP_TYPES.HEALTH){
+		hp += pickup.amount;
+		show_debug_message("hp = " + string(hp));
+	}
+	else if(pickup.type == E_PICKUP_TYPES.XP){
+		xp += pickup.amount;
+		show_debug_message("xp = " + string(xp));
+	}
+	else if(pickup.type == E_PICKUP_TYPES.MESSAGE){
+		show_message(pickup.message_string);
+	}
+	
+	//TODO: play sound
+	//TODO: play effect
+	
+	instance_destroy(pickup);
+	
+}
+
+#endregion
+
+#region Death
+
+if(variable_instance_exists(id, "dynamic_hp")){
+	if(dynamic_hp <= 0){
+		show_debug_message("player " + string(id) + " death.");
+		room_goto(rm_death_screen);
+	}
+}
+
+
+#endregion
+
 
 
 #region INPUT: left
@@ -181,7 +219,7 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 
 #region INPUT: crouch and prone
 
-if(keyboard_check_pressed(ord("C")) || keyboard_check_pressed(vk_lcontrol) || keyboard_check_pressed(vk_lshift)){
+if(keyboard_check_pressed(ord("C")) || keyboard_check_pressed(vk_lcontrol)){
 	
 	global.button_held_time = 0;
 	global.button_held = E_BUTTON_HELD.NONE;
@@ -204,7 +242,7 @@ if(keyboard_check_pressed(ord("C")) || keyboard_check_pressed(vk_lcontrol) || ke
 	}	
 }
 
-if(keyboard_check(ord("C")) || keyboard_check(vk_lcontrol)|| keyboard_check(vk_lshift) ){
+if(keyboard_check(ord("C")) || keyboard_check(vk_lcontrol)){
 	global.button_held_time++;
 	if(global.button_held_time > global.button_held_threshold){
 		global.button_held = E_BUTTON_HELD.CROUCH;
@@ -238,28 +276,37 @@ if(mouse_check_button_released(mb_left)){
 
 #endregion
 
+#region INPUT: wide beam
 
-
-
-
-
-#region Death
-
-if(variable_instance_exists(id, "dynamic_hp")){
-	if(dynamic_hp <= 0){
-		show_debug_message("player " + string(id) + " death.");
-		//instance_destroy();
+if(keyboard_check_pressed(vk_lshift)){
+	if(beam.is_on){
+		beam.size = E_LIGHT_SIZE.WIDE;
 	}
 }
 
+if(keyboard_check_released(vk_lshift)){
+	if(beam.is_on){
+		beam.size = E_LIGHT_SIZE.NORMAL;
+	}
+}
 
 #endregion
 
+#region INPUT: narrow beam
 
+if(keyboard_check_pressed(vk_lalt)){
+	if(beam.is_on){
+		beam.size = E_LIGHT_SIZE.NARROW;
+	}
+}
 
+if(keyboard_check_released(vk_lalt)){
+	if(beam.is_on){
+		beam.size = E_LIGHT_SIZE.NORMAL;
+	}
+}
 
-
-
+#endregion
 
 
 

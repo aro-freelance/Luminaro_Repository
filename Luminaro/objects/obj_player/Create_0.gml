@@ -3,6 +3,7 @@
 
 depth = -10; //draw in front of background
 
+global.game_state = E_GAME_STATE.PLAYING;
 
 #region Player State 
 
@@ -24,6 +25,9 @@ static_jump_height = 100;
 static_jump_number = 2; //How many jumps the player can make
 
 hp = 100;
+
+//TODO: get from save?
+xp = 0;
 
 #endregion
 
@@ -49,7 +53,7 @@ lantern.holder = self;
 lantern.is_on = true;
 
 beam = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Instances", obj_light_beam);
-type = E_LIGHT_TYPES.beam;
+type = E_LIGHT_TYPES.BEAM;
 beam.holder = self;
 beam.is_on = false;
 

@@ -1,5 +1,6 @@
 /// @description this controls the game
 
+
 #region Game Parameters
 
 enum E_GAME_STATE{
@@ -43,6 +44,13 @@ enum E_SOLID_OBJ_TYPE{
 	NONE,
 	FLOOR,
 	WALL,
+	last
+}
+
+enum E_PICKUP_TYPES{
+	MESSAGE,
+	HEALTH,
+	XP,
 	last
 }
 
@@ -167,8 +175,14 @@ enum E_SHADOW_SPAWN_ORIENTATION{
 #region Light
 
 enum E_LIGHT_TYPES{
-	lantern,
-	beam,
+	LANTERN,
+	BEAM,
+}
+
+enum E_LIGHT_SIZE{
+	NORMAL,
+	NARROW,
+	WIDE
 }
 
 #endregion

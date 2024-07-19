@@ -4,8 +4,9 @@
 //draw behind player
 depth = -9;
 
-type = E_LIGHT_TYPES.beam;
+type = E_LIGHT_TYPES.BEAM;
 intensity = .9;
+size = E_LIGHT_SIZE.NORMAL;
 
 sprite_subimage = 0;
 sprite_x_scale = 1;

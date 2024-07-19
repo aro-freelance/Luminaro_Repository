@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Enemy Types",
-    "path":"folders/Objects/Actors/Enemy Types.yy",
+    "path":"folders/Objects/Actors/Enemies/Enemy Types.yy",
   },
   "parentObjectId":{
     "name":"obj_enemy",

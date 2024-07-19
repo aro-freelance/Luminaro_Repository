@@ -38,17 +38,19 @@ can_attack = false;
 
 static_movement_speed = 3;
 
-melee_attack_range = 200;
+melee_attack_range = 50;
 
 can_float = true;
 
-can_shoot = false;
+can_shoot = true;
 
-ranged_attack_range = 0;
+ranged_attack_range = 500;
 
 attack_rate = 800;
 
 hp = 100;
+
+level = 1;
 
 #endregion
 
@@ -89,7 +91,7 @@ wander_freq = 100;
 
 is_at_distance_goal = false;
 
-attack_timer = 0;
+attack_timer = 400; //first shot is faster
 
 #endregion
 
@@ -98,5 +100,14 @@ attack_timer = 0;
 
 supercharged_initiated = false;
 supercharged = false;
+
+#endregion
+
+
+#region weapons
+
+melee_weapon = noone;
+
+projectiles = ds_list_create();
 
 #endregion

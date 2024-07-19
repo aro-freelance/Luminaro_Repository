@@ -1,6 +1,6 @@
 
 
-//increase in size and reach towards player
+
 
 #region init
 
@@ -28,6 +28,8 @@ y = owner.y;
 #endregion
 
 
+#region increase in size and reach towards player
+
 //if not at size to reach player's location
 if(sprite_height < owner.dynamic_melee_attack_range){
 	
@@ -42,6 +44,7 @@ else{
 	instance_destroy();
 }
 
+#endregion
 
 #region Deal Damage
 

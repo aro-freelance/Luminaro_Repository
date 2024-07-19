@@ -1,18 +1,20 @@
 {
   "$GMObject":"",
-  "%Name":"obj_button",
+  "%Name":"obj_message_pickup",
   "eventList":[
     {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":0,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
-    {"$GMEvent":"v1","%Name":"","collisionObjectId":null,"eventNum":0,"eventType":3,"isDnD":false,"name":"","resourceType":"GMEvent","resourceVersion":"2.0",},
   ],
   "managed":true,
-  "name":"obj_button",
+  "name":"obj_message_pickup",
   "overriddenProperties":[],
   "parent":{
-    "name":"UI",
-    "path":"folders/Objects/UI.yy",
+    "name":"Pickup_Item_Types",
+    "path":"folders/Objects/Objects/Pickups/Pickup_Item_Types.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_pickup_item",
+    "path":"objects/obj_pickup_item/obj_pickup_item.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,
@@ -31,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_button",
-    "path":"sprites/spr_button/spr_button.yy",
+    "name":"spr_message_pickup",
+    "path":"sprites/spr_message_pickup/spr_message_pickup.yy",
   },
   "spriteMaskId":null,
   "visible":true,

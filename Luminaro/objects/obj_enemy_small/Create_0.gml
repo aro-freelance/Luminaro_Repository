@@ -24,7 +24,7 @@ attack_state = E_ENEMY_ATTACK_STATE.IDLE;
 
 react_state = E_ENEMY_REACT_STATE.IDLE;
 
-tactic_state = E_ENEMY_TACTIC_STATE.MOVE_AWAY_TO_SHOOT;
+tactic_state = E_ENEMY_TACTIC_STATE.CHASE;
 
 
 can_move = false;
@@ -49,6 +49,8 @@ ranged_attack_range = 1000;
 attack_rate = 800;
 
 hp = 100;
+
+level = 1;
 
 #endregion
 
@@ -89,7 +91,7 @@ wander_freq = 100;
 
 is_at_distance_goal = false;
 
-attack_timer = 0;
+attack_timer = 400; //first shot is faster
 
 #endregion
 
@@ -98,5 +100,13 @@ attack_timer = 0;
 
 supercharged_initiated = false;
 supercharged = false;
+
+#endregion
+
+#region weapons
+
+melee_weapon = noone;
+
+projectiles = ds_list_create();
 
 #endregion

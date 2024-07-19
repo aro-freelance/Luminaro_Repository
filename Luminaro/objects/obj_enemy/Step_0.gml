@@ -230,17 +230,18 @@ if(can_move){
 		if(distance_to_object(obj_player) <= melee_attack_range){
 			show_debug_message("spawn melee attack");
 			attack_timer = 0;
-			melee_weapon = instance_create_layer(x, y, "Instances", obj_melee_weapon_enemy)
+			melee_weapon = instance_create_layer(x, y, "Instances", obj_melee_weapon_enemy);
 			melee_weapon.owner = self;
-			melee_weapon.is_on = true;
 		}
 		//not in melee range, if can shoot, then shoot
 		else{
 		
 			if(can_shoot){
 				attack_timer = 0;
-				//TODO:shoot
-				show_debug_message("TODO:shoot");
+				var projectile = instance_create_layer(x, y, "Instances", obj_projectile_weapon_enemy);
+				projectile.owner = self;
+				
+				ds_list_add(projectiles, projectile);
 			}
 			else{
 				show_debug_message("cannot shoot. and out of melee range");
@@ -253,7 +254,6 @@ if(can_move){
 #endregion
 
 
-
 #region Take Damage
 
 if(place_meeting(x, y, obj_light)){
@@ -263,7 +263,17 @@ if(place_meeting(x, y, obj_light)){
 
 if(place_meeting(x, y, obj_light_beam)){
 	show_debug_message("shadow collision with light beam");
-	dynamic_hp = dynamic_hp - global.player.beam.intensity;
+	
+	if(global.player.beam.size = E_LIGHT_SIZE.NORMAL){
+		dynamic_hp = dynamic_hp - global.player.beam.intensity;
+	}
+	else if (global.player.beam.size = E_LIGHT_SIZE.NARROW){
+		dynamic_hp = dynamic_hp - (global.player.beam.intensity * 2);
+	}
+	else if (global.player.beam.size = E_LIGHT_SIZE.WIDE){
+		dynamic_hp = dynamic_hp - (global.player.beam.intensity / 2);
+	}
+	
 }
 
 
@@ -275,6 +285,21 @@ if(place_meeting(x, y, obj_light_beam)){
 if(variable_instance_exists(id, "dynamic_hp")){
 	if(dynamic_hp <= 0){
 		show_debug_message("shadow " + string(id) + " death.");
+		
+		randomize();
+		var irand_health = irandom_range(0, 100);
+		var irand_xp_offset = irandom_range(-100, 100);
+		var irand_hp_offset = irandom_range(-100, 100) - irand_xp_offset;
+		
+		var xp_pickup = instance_create_layer(x + irand_xp_offset, y, "Instances", obj_xp_pickup);
+		xp_pickup.amount *= level;
+		
+		
+		if(irand_health > 90) {
+			var health_pickup = instance_create_layer(x + irand_hp_offset, y, "Instances", obj_xp_pickup);
+			health_pickup.amount *= level;
+		}
+		
 		instance_destroy();
 	}
 }

@@ -3,8 +3,7 @@
 //draw behind player
 depth = -9;
 
-type = E_LIGHT_TYPES.lantern;
-intensity = .5;
+
 
 sprite_subimage = 0;
 sprite_x_scale = 1;
@@ -20,3 +19,7 @@ holder = noone;
 
 is_on = false;
 
+
+type = E_LIGHT_TYPES.LANTERN;
+intensity = .5;
+size = E_LIGHT_SIZE.NORMAL;
