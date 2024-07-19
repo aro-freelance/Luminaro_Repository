@@ -25,7 +25,7 @@ attack_state = E_ENEMY_ATTACK_STATE.IDLE;
 
 react_state = E_ENEMY_REACT_STATE.IDLE;
 
-tactic_state = E_ENEMY_TACTIC_STATE.CHASE;
+tactic_state = E_ENEMY_TACTIC_STATE.KEEP_DISTANCE;
 
 
 can_move = false;
@@ -37,15 +37,17 @@ can_attack = false;
 
 #region static parameters
 
+enemy_type = E_ENEMY_TYPES.BASIC;
+
 static_movement_speed = 3;
 
-melee_attack_range = 100;
+melee_attack_range = 400;
 
 can_float = true;
 
 can_shoot = true;
 
-ranged_attack_range = 500;
+ranged_attack_range = 700;
 
 attack_rate = 800;
 
@@ -109,5 +111,16 @@ supercharged = false;
 melee_weapon = noone;
 
 projectiles = ds_list_create();
+
+#endregion
+
+
+#region bandaids
+//fixes for issues
+
+//if the enemy is not moving start a counter
+stuck_counter = 0;
+stuck_max_duration = 1000;
+
 
 #endregion

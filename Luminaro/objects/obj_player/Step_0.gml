@@ -7,20 +7,39 @@
 //store previous sprite so we can compare to see if the sprite changed
 var prev_sprite_index = sprite_index;
 
-if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-	sprite_index = spr_player;
+if(facing == E_FACING.right){
+	if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_player;
+	}
+	else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_crouching_player;
+	}
+	else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_prone_player;
+	}
+	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.JUMPING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_jumping_player;
+	}
+	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_falling_player;
+	}
 }
-else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-	sprite_index = spr_crouching_player;
-}
-else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-	sprite_index = spr_prone_player;
-}
-else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.JUMPING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-	sprite_index = spr_jumping_player;
-}
-else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-	sprite_index = spr_falling_player;
+else if(facing == E_FACING.left){
+	if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_player_l;
+	}
+	else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_crouching_player_l;
+	}
+	else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_prone_player_l;
+	}
+	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.JUMPING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_jumping_player_l;
+	}
+	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_falling_player_l;
+	}
 }
 
 
@@ -33,7 +52,7 @@ if(sprite_index != prev_sprite_index) image_index = 0;
 
 #region Ground player / Fall
 
-if(place_meeting(x, y, obj_solid)){
+if(place_meeting(x, y + global.grav, obj_solid)){
 	jump_state = E_JUMP_STATE.GROUNDED;
 	
 }
@@ -73,6 +92,8 @@ if(y > (room_height - sprite_height)){
 #region gravity
 
 if(jump_state != E_JUMP_STATE.GROUNDED){
+	//additional gravity when falling(as opposed to jumping)
+	if(jump_state == E_JUMP_STATE.FALLING) y = y + (.5 * global.grav);
 	y = y + global.grav;
 }
 
@@ -121,11 +142,14 @@ if(variable_instance_exists(id, "dynamic_hp")){
 #region INPUT: left
 
 if(keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)){
-	global.button_held_time = 0;
-	global.button_held = E_BUTTON_HELD.NONE;
-	//if(!place_meeting(x - movement_speed, y, obj_solid)) 
-	x = x - dynamic_movement_speed;
-	if(place_meeting(x, y, obj_wall)) x = xprevious;
+	if(!place_meeting(x - dynamic_movement_speed, y, obj_wall)){
+		global.button_held_time = 0;
+		global.button_held = E_BUTTON_HELD.NONE;
+		facing = E_FACING.left;
+		//if(!place_meeting(x - movement_speed, y, obj_solid)) 
+		x = x - dynamic_movement_speed;
+		//if(place_meeting(x, y, obj_wall)) x = xprevious;
+	}
 }
 
 if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
@@ -137,8 +161,10 @@ if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
 
 if(global.button_held == E_BUTTON_HELD.LEFT){
 	//if(!place_meeting(x - movement_speed, y, obj_solid)) 
-	x = x - dynamic_movement_speed/2;
-	if(place_meeting(x, y, obj_wall)) x = xprevious;
+	if(!place_meeting(x - dynamic_movement_speed, y, obj_wall)){
+		x = x - dynamic_movement_speed/2;
+		//if(place_meeting(x, y, obj_wall)) x = xprevious;
+	}
 }
 
 
@@ -147,11 +173,14 @@ if(global.button_held == E_BUTTON_HELD.LEFT){
 #region INPUT: right
 
 if(keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)){
-	global.button_held_time = 0;
-	global.button_held = E_BUTTON_HELD.NONE;
-	//if(!place_meeting(x + movement_speed, y, obj_solid)) 
-	x = x + dynamic_movement_speed;
-	if(place_meeting(x, y, obj_wall)) x = xprevious;
+	if(!place_meeting(x + dynamic_movement_speed, y, obj_wall)){
+		global.button_held_time = 0;
+		global.button_held = E_BUTTON_HELD.NONE;
+		facing = E_FACING.right;
+		//if(!place_meeting(x + movement_speed, y, obj_solid)) 
+		x = x + dynamic_movement_speed;
+		//if(place_meeting(x, y, obj_wall)) x = xprevious;
+	}
 }
 
 
@@ -163,9 +192,10 @@ if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
 }
 
 if(global.button_held == E_BUTTON_HELD.RIGHT){
-	//if(!place_meeting(x + movement_speed, y, obj_solid))
-	x = x + dynamic_movement_speed/2;
-	if(place_meeting(x, y, obj_wall)) x = xprevious;
+	if(!place_meeting(x + dynamic_movement_speed, y, obj_wall)){
+		x = x + dynamic_movement_speed/2;
+		//if(place_meeting(x, y, obj_wall)) x = xprevious;
+	}
 }
 
 #endregion
@@ -263,14 +293,21 @@ if(global.button_held == E_BUTTON_HELD.CROUCH){
 #region INPUT: light beam
 
 if(mouse_check_button(mb_left)){
-	beam.sprite_rotation = point_direction(x, y, mouse_x, mouse_y)
+	
+	beam.sprite_rotation = point_direction(x, y, mouse_x, mouse_y);
+	
 	lantern.is_on = false;
 	beam.is_on = true;
+	
+	
 }
 
 if(mouse_check_button_released(mb_left)){
+	
 	beam.is_on = false;
 	lantern.is_on = true;
+	
+	
 }
 
 

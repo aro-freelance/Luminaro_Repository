@@ -36,7 +36,7 @@ movement_speed = 12;
 
 can_bounce = false;
 
-//how many times can it bound
+//how many times can it bounce
 bounce_number = 1;
 
 //how many times has it bounced

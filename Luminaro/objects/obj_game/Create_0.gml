@@ -16,7 +16,7 @@ global.player = noone;
 
 #region World Parameters
 
-global.grav = 2;
+global.grav = 1.5;
 
 #endregion
 
@@ -78,6 +78,11 @@ enum E_ATTACK_STATE{
 enum E_REACT_STATE{
 	idle,
 	getting_hit,
+}
+
+enum E_FACING{
+	left,
+	right,
 }
 
 #endregion

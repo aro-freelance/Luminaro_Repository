@@ -20,6 +20,15 @@ holder = noone;
 is_on = false;
 
 
-type = E_LIGHT_TYPES.LANTERN;
+light_type = E_LIGHT_TYPES.LANTERN;
 intensity = .5;
 size = E_LIGHT_SIZE.NORMAL;
+hold_distance = 30; // how far ahead of player is the weapon held?
+
+can_bounce = false;
+
+//how many times can it bounce
+bounce_number = 1;
+
+//how many times has it bounced
+bounce_counter = 0;

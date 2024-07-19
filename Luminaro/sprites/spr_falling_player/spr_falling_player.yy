@@ -1,7 +1,7 @@
 {
   "$GMSprite":"",
   "%Name":"spr_falling_player",
-  "bboxMode":0,
+  "bboxMode":2,
   "bbox_bottom":63,
   "bbox_left":0,
   "bbox_right":63,
@@ -16,7 +16,7 @@
   ],
   "gridX":0,
   "gridY":0,
-  "height":64,
+  "height":76,
   "HTile":false,
   "layers":[
     {"$GMImageLayer":"","%Name":"708b9fab-0a2b-41ed-bc40-c0ddcaaf1e52","blendMode":0,"displayName":"default","isLocked":false,"name":"708b9fab-0a2b-41ed-bc40-c0ddcaaf1e52","opacity":100.0,"resourceType":"GMImageLayer","resourceVersion":"2.0","visible":true,},
@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":7,
   "parent":{
-    "name":"PlayerSprites",
-    "path":"folders/Sprites/PlayerSprites.yy",
+    "name":"Player_Right",
+    "path":"folders/Sprites/PlayerSprites/Player_Right.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
@@ -75,8 +75,8 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":32,
-    "yorigin":64,
+    "xorigin":24,
+    "yorigin":76,
   },
   "swatchColours":null,
   "swfPrecision":0.5,
@@ -86,5 +86,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":64,
+  "width":48,
 }

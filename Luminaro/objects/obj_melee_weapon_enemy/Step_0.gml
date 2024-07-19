@@ -13,7 +13,7 @@ if(!init){
 	
 	sprite_rotation = point_direction(x, y, global.player.x, global.player.y) - 90;
 	
-	//scale_distance_ratio = distance_to_player / sprite_get_height(sprite_index);
+	scale_distance_ratio = (distance_to_player + followthrough_distance) / sprite_get_height(sprite_index);
 	
 	is_on = true;
 }
@@ -31,7 +31,8 @@ y = owner.y;
 #region increase in size and reach towards player
 
 //if not at size to reach player's location
-if(sprite_height < owner.dynamic_melee_attack_range){
+if(y_scale < scale_distance_ratio){
+	//show_debug_message("meleeweapon: growing. range = " + string(owner.dynamic_melee_attack_range) + ". distance = " + string(distance_to_object(obj_player)));
 	
 	//if not touching player
 	if(!place_meeting(x, y, obj_player)){
@@ -41,18 +42,24 @@ if(sprite_height < owner.dynamic_melee_attack_range){
 	
 }
 else{
-	instance_destroy();
+	//show_debug_message("meleeweapon: reached max size. destroy self. B: range = " + string(owner.dynamic_melee_attack_range) + ". distance = " + string(distance_to_object(obj_player)));
+	destroy_counter++;
+	if (destroy_counter >= destroy_delay) instance_destroy();
 }
 
 #endregion
 
 #region Deal Damage
 
-if(place_meeting(x, y, obj_player)){
+
+if(place_meeting(x + sprite_width, y + (sprite_height * y_scale), obj_player) || place_meeting(global.player.x, global.player.y, self)){
+//if(collision_line(x, y, x + sprite_width, y + sprite_height, obj_player, false, true)){
+	
 	global.player.dynamic_hp = global.player.dynamic_hp - intensity;
-	show_debug_message("melee attack hits player. player hp = " + string(global.player.dynamic_hp));
+	show_debug_message("========================== melee attack hits player. player hp = " + string(global.player.dynamic_hp));
 	
 	instance_destroy();
 }
+
 
 #endregion

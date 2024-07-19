@@ -15,6 +15,8 @@ attack_state = E_ATTACK_STATE.idle;
 
 react_state = E_REACT_STATE.idle;
 
+facing = E_FACING.right;
+
 #endregion
 
 
@@ -24,7 +26,7 @@ static_movement_speed = 20;
 static_jump_height = 100;
 static_jump_number = 2; //How many jumps the player can make
 
-hp = 100;
+hp = 1000;
 
 //TODO: get from save?
 xp = 0;
@@ -49,12 +51,16 @@ dynamic_hp = hp;
 
 
 lantern = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Instances", obj_light);
+lantern.light_type = E_LIGHT_TYPES.LANTERN;
 lantern.holder = self;
 lantern.is_on = true;
 
+
 beam = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Instances", obj_light_beam);
-type = E_LIGHT_TYPES.BEAM;
+beam.light_type = E_LIGHT_TYPES.BEAM;
 beam.holder = self;
 beam.is_on = false;
+
+
 
 #endregion

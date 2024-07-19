@@ -46,8 +46,8 @@ if(!parameter_init){
 	}
 	
 	//set distance goal
-	if(dynamic_can_shoot) distance_goal = dynamic_ranged_attack_range;
-	else distance_goal = dynamic_melee_attack_range;
+	if(dynamic_can_shoot) distance_goal = dynamic_ranged_attack_range - 20;
+	else distance_goal = dynamic_melee_attack_range - 20;
 
 
 }
@@ -196,6 +196,8 @@ if(can_move){
 	if(distance_to_point(array_get(goal_point, 0), array_get(goal_point, 1)) < goal_radius){
 		is_at_distance_goal = true;
 		
+		
+		
 		/*TODO: move the enemy back and forth in some form once it is at it's point
 		
 		if(can_float){
@@ -226,8 +228,11 @@ if(can_move){
 	//if it is time to attack
 	if(attack_timer >= attack_rate){
 		
+		show_debug_message("Enemy Step: Attack timer ready: distance goal = " + string(distance_goal) + ". current distance = " + string(distance_to_object(obj_player)) );
+		
 		//if in melee range, make melee attack
 		if(distance_to_object(obj_player) <= melee_attack_range){
+			tactic_state = E_ENEMY_TACTIC_STATE.KEEP_DISTANCE;
 			show_debug_message("spawn melee attack");
 			attack_timer = 0;
 			melee_weapon = instance_create_layer(x, y, "Instances", obj_melee_weapon_enemy);
@@ -237,6 +242,7 @@ if(can_move){
 		else{
 		
 			if(can_shoot){
+				tactic_state = E_ENEMY_TACTIC_STATE.KEEP_DISTANCE;
 				attack_timer = 0;
 				var projectile = instance_create_layer(x, y, "Instances", obj_projectile_weapon_enemy);
 				projectile.owner = self;
@@ -245,6 +251,7 @@ if(can_move){
 			}
 			else{
 				show_debug_message("cannot shoot. and out of melee range");
+				tactic_state = E_ENEMY_TACTIC_STATE.CHASE;
 			}
 		}
 	}
@@ -256,24 +263,29 @@ if(can_move){
 
 #region Take Damage
 
-if(place_meeting(x, y, obj_light)){
-	show_debug_message("shadow collision with lantern");
-	dynamic_hp = dynamic_hp - global.player.lantern.intensity;
+
+if(global.player.lantern.is_on){
+	if(place_meeting(x, y, global.player.lantern)){
+		show_debug_message("obj_enemy step: enemy collision with lantern");
+		dynamic_hp = dynamic_hp - global.player.lantern.intensity;
+	}
 }
 
-if(place_meeting(x, y, obj_light_beam)){
-	show_debug_message("shadow collision with light beam");
+if(global.player.beam.is_on){
+	if(place_meeting(x, y, global.player.beam)){
+		show_debug_message("obj_enemy step: enemy collision with light beam");
 	
-	if(global.player.beam.size = E_LIGHT_SIZE.NORMAL){
-		dynamic_hp = dynamic_hp - global.player.beam.intensity;
-	}
-	else if (global.player.beam.size = E_LIGHT_SIZE.NARROW){
-		dynamic_hp = dynamic_hp - (global.player.beam.intensity * 2);
-	}
-	else if (global.player.beam.size = E_LIGHT_SIZE.WIDE){
-		dynamic_hp = dynamic_hp - (global.player.beam.intensity / 2);
-	}
+		if(global.player.beam.size = E_LIGHT_SIZE.NORMAL){
+			dynamic_hp = dynamic_hp - global.player.beam.intensity;
+		}
+		else if (global.player.beam.size = E_LIGHT_SIZE.NARROW){
+			dynamic_hp = dynamic_hp - (global.player.beam.intensity * 2);
+		}
+		else if (global.player.beam.size = E_LIGHT_SIZE.WIDE){
+			dynamic_hp = dynamic_hp - (global.player.beam.intensity / 2);
+		}
 	
+	}
 }
 
 
@@ -306,5 +318,32 @@ if(variable_instance_exists(id, "dynamic_hp")){
 
 
 #endregion
+
+
+#region Bandaids
+
+
+	#region Stuck
+	
+		if(x == xprevious && y == yprevious && distance_to_point(array_get(goal_point, 0), array_get(goal_point, 1)) < goal_radius){
+			stuck_counter++;
+		}
+		
+		//enemy is stuck for too long
+		if(stuck_counter >= stuck_max_duration){
+			//TODO: handle stuck enemy
+			show_debug_message("TODO: handle stuck enemy");
+		}
+	
+	#endregion
+
+#endregion
+
+
+
+
+
+
+
 
 

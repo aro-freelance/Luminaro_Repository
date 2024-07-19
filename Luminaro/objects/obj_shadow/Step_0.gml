@@ -1,12 +1,18 @@
 
 
 if((place_meeting(x, y, obj_light))){
-	show_debug_message("light hit shadow. lantern");
-	shadow_state = E_SHADOW_STATE.DEACTIVATED;
-	supercharged = false;
-	supercharge_timer = 0;
-	charge_timer = 0;
-	spawn_timer = 0;
+	var light = instance_place(x, y, obj_light);
+	if(light.is_on){
+		show_debug_message("light hit shadow. type = " + string(light.light_type));
+		shadow_state = E_SHADOW_STATE.DEACTIVATED;
+		supercharged = false;
+		supercharge_timer = 0;
+		charge_timer = 0;
+		spawn_timer = 0;
+	}
+	else if (shadow_state == E_SHADOW_STATE.DEACTIVATED){
+		shadow_state = E_SHADOW_STATE.CHARGING;
+	}
 }
 else if (shadow_state == E_SHADOW_STATE.DEACTIVATED){
 	shadow_state = E_SHADOW_STATE.CHARGING;

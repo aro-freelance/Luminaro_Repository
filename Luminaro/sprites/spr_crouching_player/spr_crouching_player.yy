@@ -1,7 +1,7 @@
 {
   "$GMSprite":"",
   "%Name":"spr_crouching_player",
-  "bboxMode":0,
+  "bboxMode":2,
   "bbox_bottom":47,
   "bbox_left":0,
   "bbox_right":63,
@@ -25,8 +25,8 @@
   "nineSlice":null,
   "origin":7,
   "parent":{
-    "name":"PlayerSprites",
-    "path":"folders/Sprites/PlayerSprites.yy",
+    "name":"Player_Right",
+    "path":"folders/Sprites/PlayerSprites/Player_Right.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",
@@ -75,7 +75,7 @@
     ],
     "visibleRange":null,
     "volume":1.0,
-    "xorigin":32,
+    "xorigin":24,
     "yorigin":48,
   },
   "swatchColours":null,
@@ -86,5 +86,5 @@
   },
   "type":0,
   "VTile":false,
-  "width":64,
+  "width":48,
 }

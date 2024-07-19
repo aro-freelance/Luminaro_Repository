@@ -1,23 +1,15 @@
 /// @description light beam (the player "weapon")
 
+// Inherit the parent event
+event_inherited();
 
-//draw behind player
-depth = -9;
 
 type = E_LIGHT_TYPES.BEAM;
 intensity = .9;
 size = E_LIGHT_SIZE.NORMAL;
+hold_distance = 30; // how far ahead of player is the weapon held?
 
-sprite_subimage = 0;
-sprite_x_scale = 1;
-sprite_y_scale = 1;
-sprite_rotation = 0;
-sprite_color = c_white;
-sprite_alpha = 1;
+can_bounce = false;
 
-
-
-//the actor holding the light
-holder = noone;
-
-is_on = false;
+//how many times can it bounce
+bounce_number = 1;
