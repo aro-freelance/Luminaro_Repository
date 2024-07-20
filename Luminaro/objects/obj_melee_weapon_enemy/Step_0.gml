@@ -38,6 +38,11 @@ if(y_scale < scale_distance_ratio){
 	if(!place_meeting(x, y, obj_player)){
 		//increase size
 		y_scale += growth_factor;
+		image_yscale = y_scale;
+		image_angle = sprite_rotation;
+		//var _spr = object_get_sprite(object_index);
+		//mask_index = _spr;
+		//show_debug_message("y scale = " + string(image_yscale));
 	}
 	
 }
@@ -51,7 +56,7 @@ else{
 
 #region Deal Damage
 
-
+/*
 if(place_meeting(x + sprite_width, y + (sprite_height * y_scale), obj_player) || place_meeting(global.player.x, global.player.y, self)){
 //if(collision_line(x, y, x + sprite_width, y + sprite_height, obj_player, false, true)){
 	
@@ -60,6 +65,7 @@ if(place_meeting(x + sprite_width, y + (sprite_height * y_scale), obj_player) ||
 	
 	instance_destroy();
 }
+*/
 
 
 #endregion

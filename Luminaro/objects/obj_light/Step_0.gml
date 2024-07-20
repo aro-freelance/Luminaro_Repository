@@ -1,4 +1,13 @@
 
+
+var spr = object_get_sprite(object_index);
+if (sprite_index != spr)
+{
+    sprite_index = spr;
+	mask_index = spr;
+}
+
+
 if(holder != noone){
 	if (holder.facing == E_FACING.left){
 	    x_offset = -hold_distance;
@@ -14,10 +23,14 @@ if(holder != noone){
 
 
 if(can_bounce && (bounce_counter < bounce_number)){
-	if(place_meeting(x, y, obj_solid)){
+	if(place_meeting(x, y, obj_mirror)){
 		
 		bounce_counter++;
-		var surface = instance_place(x, y, obj_solid);
+		
+		
+		
+		/*
+		var surface = instance_place(x, y, obj_mirror);
 		
 		if (direction<surface.direction){
 		    direction=direction+(180-(180-(abs(surface.direction-direction)*2)))
@@ -25,5 +38,7 @@ if(can_bounce && (bounce_counter < bounce_number)){
 		else{
 		    direction=direction+(180-(180-(abs((surface.direction+360)-direction)*2)))
 		}
+		*/
+		
 	}
 }

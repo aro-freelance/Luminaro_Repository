@@ -61,6 +61,13 @@ if(!parameter_init){
 //store previous sprite so we can compare to see if the sprite changed
 var prev_sprite_index = sprite_index;
 
+var _spr = object_get_sprite(object_index); 
+if (sprite_index != _spr)
+{
+    sprite_index = _spr;
+	mask_index = _spr;
+}
+
 if(standing_state == E_ENEMY_STANDING_STATE.STANDING && jump_state == E_ENEMY_JUMP_STATE.GROUNDED && attack_state == E_ENEMY_ATTACK_STATE.IDLE && react_state == E_ENEMY_REACT_STATE.IDLE){
 	sprite_index = spr_enemy;
 }

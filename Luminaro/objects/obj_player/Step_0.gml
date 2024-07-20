@@ -294,7 +294,12 @@ if(global.button_held == E_BUTTON_HELD.CROUCH){
 
 if(mouse_check_button(mb_left)){
 	
-	beam.sprite_rotation = point_direction(x, y, mouse_x, mouse_y);
+	if(mouse_x > x) facing = E_FACING.right;
+	else facing = E_FACING.left;
+	
+	beam.image_angle = point_direction(x, y, mouse_x, mouse_y);
+	beam.sprite_rotation = beam.image_angle;
+	
 	
 	lantern.is_on = false;
 	beam.is_on = true;
@@ -309,7 +314,6 @@ if(mouse_check_button_released(mb_left)){
 	
 	
 }
-
 
 #endregion
 
@@ -345,6 +349,24 @@ if(keyboard_check_released(vk_lalt)){
 
 #endregion
 
+
+#region INPUT: create a mirror
+
+if(mouse_check_button_pressed(mb_right)){
+	
+	var mirror = instance_create_layer(mouse_x, mouse_y, "Instances", obj_mirror);
+	
+	//if there are already the max number, remove the oldest
+	if(array_length(mirrors) == max_mirrors){
+		instance_destroy(array_get(mirrors, 0));
+		array_shift(mirrors);
+	}
+	
+	array_push(mirrors, mirror);
+	
+}
+
+#endregion
 
 
 

@@ -26,6 +26,9 @@ static_movement_speed = 20;
 static_jump_height = 100;
 static_jump_number = 2; //How many jumps the player can make
 
+//how many mirrors can player have?
+max_mirrors = 3;
+
 hp = 1000;
 
 //TODO: get from save?
@@ -39,6 +42,8 @@ xp = 0;
 dynamic_movement_speed = static_movement_speed;
 dynamic_jump_height = static_jump_height;
 dynamic_jump_number = static_jump_number; //How many jumps the player can make
+
+dynamic_max_mirrors = max_mirrors;
 
 jump_current = 0; //How many jumps the player has remaining
 
@@ -61,6 +66,15 @@ beam.light_type = E_LIGHT_TYPES.BEAM;
 beam.holder = self;
 beam.is_on = false;
 
+
+
+#endregion
+
+
+#region Mirrors
+
+//list of mirrors dropped
+mirrors = [];
 
 
 #endregion
