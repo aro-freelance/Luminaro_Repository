@@ -6,8 +6,8 @@ event_inherited();
 
 #region Sprite
 
-sprite_x_scale = 1.5;
-sprite_y_scale = .8;
+image_xscale = 1.5;
+image_yscale = .8;
 
 #endregion
 

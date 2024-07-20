@@ -22,8 +22,10 @@ if(!init){
 
 if(is_on){
 	
-	move_towards_point(array_get(player_location_snapshot, 0), array_get(player_location_snapshot, 1), movement_speed);
-
+	if(bounce_number < 1){
+		move_towards_point(array_get(player_location_snapshot, 0), array_get(player_location_snapshot, 1), movement_speed);
+	}
+	
 }
 
 #endregion

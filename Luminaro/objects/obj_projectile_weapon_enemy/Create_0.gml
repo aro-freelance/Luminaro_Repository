@@ -34,7 +34,7 @@ growth_factor = .2;
 
 movement_speed = 12;
 
-can_bounce = false;
+can_bounce = true;
 
 //how many times can it bounce
 bounce_number = 1;

@@ -4,16 +4,14 @@ show_debug_message("create shadow");
 
 depth = -8;
 
-sprite_subimage = 0;
-sprite_x_scale = 1;
-sprite_y_scale = 1;
-rotation = 0;
-sprite_color = c_white;
-sprite_alpha = 1;
-
 
 shadow_state = E_SHADOW_STATE.DEACTIVATED;
 shadow_type = E_SHADOW_TYPE.PUDDLE;
+
+level = 1;
+
+hp = 200;
+
 
 
 //timer until spawning starts (when in charging state)

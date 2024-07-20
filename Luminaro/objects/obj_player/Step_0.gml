@@ -67,6 +67,7 @@ if(!place_meeting(x, y, obj_solid) && jump_current == 0 && jump_state == E_JUMP_
 
 
 if(jump_state == E_JUMP_STATE.GROUNDED && jump_current > 0){
+	jump_float_counter = 0;
 	jump_current = 0;
 	
 }
@@ -89,12 +90,24 @@ if(y > (room_height - sprite_height)){
 
 #endregion
 
-#region gravity
+#region gravity and jumping
 
+if(jump_state == E_JUMP_STATE.JUMPING && jump_float_counter < dynamic_jump_float_time){
+	jump_float_counter++;
+}
+
+//if not on the ground
 if(jump_state != E_JUMP_STATE.GROUNDED){
-	//additional gravity when falling(as opposed to jumping)
-	if(jump_state == E_JUMP_STATE.FALLING) y = y + (.5 * global.grav);
-	y = y + global.grav;
+	//and not jumping OR past the jump hover time
+	if( jump_state != E_JUMP_STATE.JUMPING || (jump_float_counter >= dynamic_jump_float_time)){
+		
+		//apply gravity
+		y = y + global.grav;
+		
+		//plus more gravity when "falling"
+		if(jump_state == E_JUMP_STATE.FALLING) y = y + (.5 * global.grav);
+	
+	}
 }
 
 #endregion
@@ -217,7 +230,6 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 			
 		jump_state = E_JUMP_STATE.JUMPING;
 		
-		//jump from ground
 		jump_current++;
 		
 		if(!place_meeting(x, y - dynamic_jump_height, obj_solid)) y = y - dynamic_jump_height;
@@ -294,16 +306,22 @@ if(global.button_held == E_BUTTON_HELD.CROUCH){
 
 if(mouse_check_button(mb_left)){
 	
-	if(mouse_x > x) facing = E_FACING.right;
-	else facing = E_FACING.left;
+	if(beam.battery_charged){
+		
+		if(mouse_x > x) facing = E_FACING.right;
+		else facing = E_FACING.left;
 	
-	beam.image_angle = point_direction(x, y, mouse_x, mouse_y);
-	beam.sprite_rotation = beam.image_angle;
+		beam.image_angle = point_direction(x, y, mouse_x, mouse_y);
+		//beam.sprite_rotation = beam.image_angle;
 	
 	
-	lantern.is_on = false;
-	beam.is_on = true;
+		lantern.is_on = false;
+		beam.is_on = true;
 	
+	}
+	else{
+		show_debug_message("TODO: play effect and sound to tell player battery is dead. and text?  ");
+	}
 	
 }
 
@@ -349,12 +367,12 @@ if(keyboard_check_released(vk_lalt)){
 
 #endregion
 
-
 #region INPUT: create a mirror
 
 if(mouse_check_button_pressed(mb_right)){
 	
 	var mirror = instance_create_layer(mouse_x, mouse_y, "Instances", obj_mirror);
+	mirror.owner = self;
 	
 	//if there are already the max number, remove the oldest
 	if(array_length(mirrors) == max_mirrors){
@@ -368,6 +386,62 @@ if(mouse_check_button_pressed(mb_right)){
 
 #endregion
 
+
+#region INPUT: create prism beam
+
+
+if(mouse_check_button(mb_middle)){
+	
+	//spawn the beams if they are not out
+	if(ds_list_size(prism_beams) <= 0){
+		for(i = 0; i <= dynamic_prism_beam_number; i++){
+			
+			var prism_beam = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Instances", obj_light_beam);
+			prism_beam.light_type = E_LIGHT_TYPES.PLAYER_PRISM_BEAM;
+			prism_beam.holder = self;
+			prism_beam.is_on = true;
+			
+			ds_list_add(prism_beams, prism_beam);
+		}
+	}
+	
+	
+	//if there are beams, set the angles of the beams
+	if(ds_list_size(prism_beams) > 0){
+		for(j = 0; j <= dynamic_prism_beam_number; j++){
+			
+			show_debug_message("j = " + string(j));
+			
+			var prism_beam = prism_beams[| j];
+			
+			var beam_gap_angle = prism_max_angle / dynamic_prism_beam_number;
+		
+			var start_point =  point_direction(x, y, mouse_x, mouse_y) - prism_max_angle/2;
+
+			prism_beam.image_angle = start_point + (j * beam_gap_angle);
+			
+		}
+	}
+}
+
+
+if(mouse_check_button_released(mb_middle)){
+	
+	//delete each beam
+	if(ds_list_size(prism_beams) > 0){
+		for(j = 0; j <= dynamic_prism_beam_number; j++){
+			var prism_beam = prism_beams[| j];
+			instance_destroy(prism_beam);
+		}
+	}
+	
+	//and clear the list
+	ds_list_clear(prism_beams);
+	
+}
+
+
+#endregion
 
 
 

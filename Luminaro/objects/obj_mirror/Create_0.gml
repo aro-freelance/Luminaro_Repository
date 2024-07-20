@@ -1,2 +1,10 @@
-/// @description Insert description here
-// You can write your code in this editor
+/// @description mirror object that player can create
+// can bounce the light beam if player hits with beam
+
+
+beam = noone;
+
+owner = noone;
+
+
+

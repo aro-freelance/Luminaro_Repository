@@ -1,4 +1,5 @@
 
+#region Handle Activation
 
 if((place_meeting(x, y, obj_light))){
 	var light = instance_place(x, y, obj_light);
@@ -18,6 +19,10 @@ else if (shadow_state == E_SHADOW_STATE.DEACTIVATED){
 	shadow_state = E_SHADOW_STATE.CHARGING;
 }
 
+#endregion
+
+
+#region Handle Supercharge
 
 if(!supercharged && supercharge_timer > supercharge_rate){
 	supercharge_timer = 0;
@@ -29,6 +34,11 @@ if(!supercharged && supercharge_timer > supercharge_rate){
 	//TODO: spawn supercharge effect on shadow
 	
 }
+
+#endregion
+
+
+#region Handle Charging
 
 if(shadow_state == E_SHADOW_STATE.CHARGING){
 	charge_timer++;
@@ -51,3 +61,30 @@ else if(shadow_state == E_SHADOW_STATE.SPAWNING || shadow_state == E_SHADOW_STAT
 	spawn_timer++;
 	if(!supercharged) supercharge_timer++;
 }
+
+#endregion
+
+
+#region Death
+
+if(hp <= 0){
+		
+	randomize();
+	var irand_health = irandom_range(0, 100);
+	var irand_xp_offset = irandom_range(-100, 100);
+	var irand_hp_offset = irandom_range(-100, 100) - irand_xp_offset;
+		
+	var xp_pickup = instance_create_layer(x + irand_xp_offset, y, "Instances", obj_xp_pickup);
+	xp_pickup.amount *= (level * 5);
+		
+		
+	if(irand_health > 90) {
+		var health_pickup = instance_create_layer(x + irand_hp_offset, y, "Instances", obj_health_pickup);
+		health_pickup.amount *= (level * 5);
+	}
+		
+	instance_destroy();
+}
+
+
+#endregion

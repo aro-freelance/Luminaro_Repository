@@ -270,6 +270,7 @@ if(can_move){
 
 #region Take Damage
 
+/* handled in light collision event 
 
 if(global.player.lantern.is_on){
 	if(place_meeting(x, y, global.player.lantern)){
@@ -294,6 +295,7 @@ if(global.player.beam.is_on){
 	
 	}
 }
+*/
 
 
 #endregion
@@ -315,7 +317,7 @@ if(variable_instance_exists(id, "dynamic_hp")){
 		
 		
 		if(irand_health > 90) {
-			var health_pickup = instance_create_layer(x + irand_hp_offset, y, "Instances", obj_xp_pickup);
+			var health_pickup = instance_create_layer(x + irand_hp_offset, y, "Instances", obj_health_pickup);
 			health_pickup.amount *= level;
 		}
 		
