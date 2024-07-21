@@ -15,7 +15,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Light Types",
-    "path":"folders/Objects/Light/Light Types.yy",
+    "path":"folders/Objects/LightAttacks/Light Types.yy",
   },
   "parentObjectId":{
     "name":"obj_light",

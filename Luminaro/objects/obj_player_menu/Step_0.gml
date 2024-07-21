@@ -30,7 +30,7 @@ if(!init){
 }
 
 	
-if(keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_f1)){
+if(keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_f1) || (mouse_check_button_pressed(mb_left) && state == E_PLAYER_MENU_STATE.LEVEL_UP)){
 	global.game_state = E_GAME_STATE.PLAYING;
 	instance_activate_all();
 	//destroy this menu

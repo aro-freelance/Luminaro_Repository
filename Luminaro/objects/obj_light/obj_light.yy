@@ -14,8 +14,8 @@
   "name":"obj_light",
   "overriddenProperties":[],
   "parent":{
-    "name":"Light",
-    "path":"folders/Objects/Light.yy",
+    "name":"LightAttacks",
+    "path":"folders/Objects/LightAttacks.yy",
   },
   "parentObjectId":null,
   "persistent":false,

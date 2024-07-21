@@ -190,7 +190,7 @@ if(attack_state == E_ATTACK_STATE.prism){
 
 #region Level Up
 
-if(xp > 100){
+if(xp >= 100){
 	xp = xp - 100;
 	global.game_state = E_GAME_STATE.IN_GAME_MENU;
 	global.player_menu = instance_create_layer(0, 0, "UI", obj_player_menu);

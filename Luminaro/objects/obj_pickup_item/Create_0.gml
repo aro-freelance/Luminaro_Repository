@@ -12,3 +12,7 @@ amount = 20;
 //if this pickup plays a message, this is the message
 message_string = "";
 
+should_move_to_player = true;
+
+move_to_player_speed = 5;
+

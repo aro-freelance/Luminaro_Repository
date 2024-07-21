@@ -15,6 +15,8 @@ global.player = noone;
 
 global.player_menu = noone;
 
+global.lighting_effects = noone;
+
 
 #endregion
 
