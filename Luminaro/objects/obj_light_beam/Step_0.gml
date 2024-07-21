@@ -9,11 +9,11 @@ event_inherited();
 
 
 
-#region End Collision
+#region Collision
 
-if(place_meeting(x, y, obj_enemy)){
+if(place_meeting(x, y, obj_enemy) && is_on){
 	
-	show_debug_message("light step: collide enemy");
+	//show_debug_message("light step: collide enemy");
 	
 	var obj = instance_place(x, y, obj_enemy);
 	var distance = point_distance(x, y, obj.x, obj.y);
@@ -23,9 +23,9 @@ if(place_meeting(x, y, obj_enemy)){
 	
 	is_colliding = true;
 }
-else if(place_meeting(x, y, obj_mirror)){
+else if(place_meeting(x, y, obj_mirror) && is_on){
 	
-	show_debug_message("light step: collide mirror");
+	//show_debug_message("light step: collide mirror");
 	
 	var obj = instance_place(x, y, obj_mirror);
 	var distance = point_distance(x, y, obj.x, obj.y);
@@ -35,21 +35,33 @@ else if(place_meeting(x, y, obj_mirror)){
 	
 	is_colliding = true;
 }
-else if(place_meeting(x, y, obj_solid)){
+else if(place_meeting(x, y, layer_tilemap_get_id("Tiles")) && is_on){
 	
-	show_debug_message("light step: collide solid");
-	var obj = instance_place(x, y, obj_solid);
-	var distance = point_distance(x, y, obj.x, obj.y);
-	depth = -50;
-	image_xscale = 1
-	image_xscale = distance / sprite_get_width(sprite_index);
-	show_debug_message("distance = " + string(distance) + ". width = " + string(sprite_get_width(sprite_index)) + ". scale = " + string(image_xscale));
+	//show_debug_message("light step: collide tiles");
 	
-	is_colliding = true;
+	//var obj = instance_place(x, y, layer_tilemap_get_id("Tiles"));
+	//var distance = point_distance(x, y, obj.x, obj.y);
+	
+	var average_collision_point = scr_get_tm_collision_point(x, y, "Tiles");
+	
+	//if((array_get(average_collision_point, 0) == 0 && array_get(average_collision_point, 1) != 0) || (array_get(average_collision_point, 0) != 0 && array_get(average_collision_point, 1) == 0) || (array_get(average_collision_point, 0) != 0 && array_get(average_collision_point, 1) != 0)   ){
+	if(array_length(average_collision_point) == 2){
+		var distance = point_distance(x, y, array_get(average_collision_point, 0), array_get(average_collision_point, 1));
+	
+		//show_debug_message("light beam: x = " + string(x) + ". y = " + string(y) + ". cpx = " + string( array_get(average_collision_point, 0)) + ". cpy = " + string( array_get(average_collision_point, 1)));
+	
+		depth = -50;
+		image_xscale = 1
+		image_xscale = distance / sprite_get_width(sprite_index);
+		
+		//show_debug_message("distance = " + string(distance) + ". width = " + string(sprite_get_width(sprite_index)) + ". scale = " + string(image_xscale));
+	
+		is_colliding = true;
+	}
 }
-else if(place_meeting(x, y, obj_shadow)){
+else if(place_meeting(x, y, obj_shadow) && is_on){
 	
-	show_debug_message("light step: collide shadow");
+	//show_debug_message("light step: collide shadow");
 	
 	var obj = instance_place(x, y, obj_shadow);
 	var distance = point_distance(x, y, obj.x, obj.y);
@@ -59,9 +71,9 @@ else if(place_meeting(x, y, obj_shadow)){
 	
 	is_colliding = true;
 }
-else if(place_meeting(x, y, obj_projectile_weapon_enemy)){
+else if(place_meeting(x, y, obj_projectile_weapon_enemy) && is_on){
 	
-	show_debug_message("light step: collide bullet");
+	//show_debug_message("light step: collide bullet");
 	
 	var obj = instance_place(x, y, obj_projectile_weapon_enemy);
 	var distance = point_distance(x, y, obj.x, obj.y);
@@ -74,7 +86,7 @@ else if(place_meeting(x, y, obj_projectile_weapon_enemy)){
 else if (is_colliding){
 	depth = -9;
 	is_colliding = false;
-	show_debug_message("light step: stopped colliding");
+	//show_debug_message("light step: stopped colliding");
 }
 
 #endregion

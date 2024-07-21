@@ -5,8 +5,8 @@ if(!init){
 	//pause the game
 	instance_deactivate_all(true);
 	
-	//unpause this.. TODO test without this?
 	instance_activate_object(self);
+	instance_activate_object(obj_lighting_effects);
 	
 	
 	#region Level up

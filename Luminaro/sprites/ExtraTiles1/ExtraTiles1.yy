@@ -3,10 +3,10 @@
   "%Name":"ExtraTiles1",
   "bboxMode":0,
   "bbox_bottom":63,
-  "bbox_left":1,
+  "bbox_left":5,
   "bbox_right":255,
   "bbox_top":0,
-  "collisionKind":1,
+  "collisionKind":0,
   "collisionTolerance":0,
   "DynamicTexturePage":false,
   "edgeFiltering":false,
@@ -14,8 +14,8 @@
   "frames":[
     {"$GMSpriteFrame":"","%Name":"9da8eeab-7a72-4b51-91a0-148adca072ab","name":"9da8eeab-7a72-4b51-91a0-148adca072ab","resourceType":"GMSpriteFrame","resourceVersion":"2.0",},
   ],
-  "gridX":0,
-  "gridY":0,
+  "gridX":32,
+  "gridY":32,
   "height":224,
   "HTile":false,
   "layers":[

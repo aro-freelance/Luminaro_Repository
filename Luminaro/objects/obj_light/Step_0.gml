@@ -43,14 +43,26 @@ if(is_on){
 			
 			var mirror = instance_place(x, y, obj_mirror);
 			
+			var point = scr_get_obj_collision_point(x, y, mirror);
 			
 			show_debug_message("collision with mirror. bounce counter = " + string(bounce_counter));
 			
 			if(mirror.beam == noone){
+				
+				show_debug_message("light step: bounce: create beam");
+				
 				//make the beam
-				mirror.beam = instance_create_layer(mirror.x, mirror.y, "Weapons", obj_light_beam);
-				mirror.beam.holder = mirror;
-				mirror.beam.light_type = E_LIGHT_TYPES.MIRROR_BEAM;
+				//mirror.beam = instance_create_layer(mirror.x, mirror.y, "Weapons", obj_light_beam);
+				if(array_length(point) == 2){
+					mirror.beam = instance_create_layer(array_get(point, 0), array_get(point, 1), "Weapons", obj_light_beam);
+					mirror.beam.holder = mirror;
+					mirror.beam.light_type = E_LIGHT_TYPES.MIRROR_BEAM;
+				}
+			}
+			else{
+				show_debug_message("light step: bounce: move beam. x = " + string(mirror.beam.x) + ". y = " + string(mirror.beam.y) + ". point x =" + string(array_get(point, 0)) + ". point y = " + string(array_get(point, 1)) );
+				mirror.beam.x = array_get(point, 0);
+				mirror.beam.y = array_get(point, 1);
 			}
 		
 		
@@ -64,7 +76,6 @@ if(is_on){
 			}
 			else{
 				mirror.beam.image_angle = global.player.beam.image_angle - 90;
-				mirror.beam.sprite_rotation = mirror.beam.image_angle;
 				show_debug_message("beam exists. angle = " + string(mirror.beam.image_angle));
 			}
 		*/

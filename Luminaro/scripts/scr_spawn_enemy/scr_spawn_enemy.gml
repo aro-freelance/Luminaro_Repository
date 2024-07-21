@@ -6,7 +6,7 @@
 
 function scr_spawn_enemy(type, location, supercharged){
 	
-	show_debug_message("spawn enemy. type = " + string(type));
+	//show_debug_message("spawn enemy. type = " + string(type));
 	
 	if(type == E_ENEMY_TYPES.BIG){
 		var enemy_obj = obj_enemy_big;

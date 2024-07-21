@@ -11,7 +11,7 @@ if(is_on){
 	
 		
 		other.hp = other.hp - intensity;
-		show_debug_message("obj_light collision obj_enemy: enemy collision with lantern. hp = " + string(other.hp));
+		//show_debug_message("obj_light collision obj_enemy: shadow collision with lantern. hp = " + string(other.hp));
 
 	}
 
@@ -30,7 +30,7 @@ if(is_on){
 			other.hp = other.hp - ((intensity * (global.player.on_timer/global.player.battery)) / 2);
 		}
 		
-		show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.hp));
+		//show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.hp));
 		
 	}
 	
@@ -48,7 +48,7 @@ if(is_on){
 		}
 		
 		
-		show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.hp));
+		//show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.hp));
 		
 	}
 	
@@ -65,7 +65,7 @@ if(is_on){
 		}
 		
 		
-		show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.hp));
+		//show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.hp));
 		
 	}
 	

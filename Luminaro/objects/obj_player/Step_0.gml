@@ -53,11 +53,11 @@ if(sprite_index != prev_sprite_index) image_index = 0;
 
 #region Ground player / Fall
 
-if(place_meeting(x, y + global.grav, obj_solid)){
+if(place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles"))){
 	jump_state = E_JUMP_STATE.GROUNDED;
 	
 }
-if(!place_meeting(x, y, obj_solid) && jump_current == 0 && jump_state == E_JUMP_STATE.GROUNDED && y != (room_height - sprite_height)){
+if(!place_meeting(x, y, layer_tilemap_get_id("Tiles")) && jump_current == 0 && jump_state == E_JUMP_STATE.GROUNDED && y != (room_height - sprite_height)){
 	jump_state = E_JUMP_STATE.FALLING;
 	
 }
@@ -77,7 +77,9 @@ if(jump_state == E_JUMP_STATE.GROUNDED && jump_current > 0){
 
 #region keep player on screen
 
-//TODO: scroll the screen and make larger rooms?
+
+/*
+TODO: remove this was disabled after room was made much larger for scrolling. could instead make dead happen if player is off screen?
 
 if(x < 0) x = 0;
 if(x > (room_width - sprite_width)) x = room_width - sprite_width;
@@ -88,6 +90,7 @@ if(y > (room_height - sprite_height)){
 	y = room_height - sprite_height;
 	jump_state = E_JUMP_STATE.GROUNDED;
 }
+*/
 
 #endregion
 
@@ -102,11 +105,14 @@ if(jump_state != E_JUMP_STATE.GROUNDED){
 	//and not jumping OR past the jump hover time
 	if( jump_state != E_JUMP_STATE.JUMPING || (jump_float_counter >= dynamic_jump_float_time)){
 		
-		//apply gravity
-		y = y + global.grav;
+		//if applying gravity will not put the player in collision
+		if(!place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles"))){
+			//apply gravity
+			 y = y + global.grav;
 		
-		//plus more gravity when "falling"
-		if(jump_state == E_JUMP_STATE.FALLING) y = y + (.5 * global.grav);
+			//plus more gravity when "falling"
+			if(jump_state == E_JUMP_STATE.FALLING) y = y + (.5 * global.grav);
+		}
 	
 	}
 }
@@ -221,8 +227,7 @@ if(keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)){
 		global.button_held_time = 0;
 		global.button_held = E_BUTTON_HELD.NONE;
 		facing = E_FACING.left;
-		//if(!place_meeting(x - movement_speed, y, obj_solid)) 
-		x = x - dynamic_movement_speed;
+		if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles"))) x = x - dynamic_movement_speed;
 		//if(place_meeting(x, y, obj_wall)) x = xprevious;
 	}
 }
@@ -235,8 +240,7 @@ if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
 }
 
 if(global.button_held == E_BUTTON_HELD.LEFT){
-	//if(!place_meeting(x - movement_speed, y, obj_solid)) 
-	if(!place_meeting(x - dynamic_movement_speed, y, obj_wall)){
+	if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles"))){
 		x = x - dynamic_movement_speed/2;
 		//if(place_meeting(x, y, obj_wall)) x = xprevious;
 	}
@@ -252,8 +256,7 @@ if(keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)){
 		global.button_held_time = 0;
 		global.button_held = E_BUTTON_HELD.NONE;
 		facing = E_FACING.right;
-		//if(!place_meeting(x + movement_speed, y, obj_solid)) 
-		x = x + dynamic_movement_speed;
+		if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles"))) x = x + dynamic_movement_speed;
 		//if(place_meeting(x, y, obj_wall)) x = xprevious;
 	}
 }
@@ -267,7 +270,7 @@ if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
 }
 
 if(global.button_held == E_BUTTON_HELD.RIGHT){
-	if(!place_meeting(x + dynamic_movement_speed, y, obj_wall)){
+	if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles"))){
 		x = x + dynamic_movement_speed/2;
 		//if(place_meeting(x, y, obj_wall)) x = xprevious;
 	}
@@ -294,7 +297,7 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 		
 		jump_current++;
 		
-		if(!place_meeting(x, y - dynamic_jump_height, obj_solid)) y = y - dynamic_jump_height;
+		if(!place_meeting(x, y - dynamic_jump_height, layer_tilemap_get_id("Tiles"))) y = y - dynamic_jump_height;
 		
 			
 		instance_create_layer(x, bbox_bottom, "Effects", obj_effect_jump);
@@ -308,7 +311,7 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 			//double jump
 			jump_current++;
 			
-			if(!place_meeting(x, y - dynamic_jump_height, obj_solid)) y = y - dynamic_jump_height;
+			if(!place_meeting(x, y - dynamic_jump_height, layer_tilemap_get_id("Tiles"))) y = y - dynamic_jump_height;
 			
 			
 			instance_create_layer(x, bbox_bottom,  "Effects", obj_effect_jump);
@@ -382,7 +385,7 @@ if(mouse_check_button(mb_left)){
 	
 	}
 	else{
-		show_debug_message("TODO: play effect and sound to tell player battery is dead. and text?  ");
+		//show_debug_message("TODO: play effect and sound to tell player battery is dead. and text?  ");
 	}
 	
 }

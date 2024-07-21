@@ -35,7 +35,7 @@ if(is_on){
 
 #region Collision with Solid
 
-if(place_meeting(x, y, obj_solid)){
+if(place_meeting(x, y, layer_tilemap_get_id("Tiles"))){
 	
 	//destroy on impact if it cannot bounce
 	if(!can_bounce){
@@ -46,6 +46,9 @@ if(place_meeting(x, y, obj_solid)){
 	//bounce
 	else{
 		//TODO: handle bouncing
+		//var bounce_collision_pt = scr_get_tm_collision_point(x, y, "Tiles");
+		
+		image_angle = image_angle - 90;
 	}
 }
 

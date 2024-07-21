@@ -99,10 +99,10 @@ if(sprite_index != prev_sprite_index) image_index = 0;
 
 #region Ground enemy / Fall
 
-if(place_meeting(x, y, obj_solid)){
+if(place_meeting(x, y, layer_tilemap_get_id("Tiles"))){
 	if(jump_state != E_ENEMY_JUMP_STATE.FLOATING) jump_state = E_ENEMY_JUMP_STATE.GROUNDED;
 }
-if(!place_meeting(x, y, obj_solid) && jump_state == E_ENEMY_JUMP_STATE.GROUNDED && y != (room_height - sprite_height)){
+if(!place_meeting(x, y, layer_tilemap_get_id("Tiles")) && jump_state == E_ENEMY_JUMP_STATE.GROUNDED && y != (room_height - sprite_height)){
 	if(can_float){
 		jump_state = E_ENEMY_JUMP_STATE.FLOATING;
 	}
@@ -237,12 +237,12 @@ if(can_move){
 	//if it is time to attack
 	if(attack_timer >= attack_rate){
 		
-		show_debug_message("Enemy Step: Attack timer ready: distance goal = " + string(distance_goal) + ". current distance = " + string(distance_to_object(obj_player)) );
+		//show_debug_message("Enemy Step: Attack timer ready: distance goal = " + string(distance_goal) + ". current distance = " + string(distance_to_object(obj_player)) );
 		
 		//if in melee range, make melee attack
 		if(distance_to_object(obj_player) <= melee_attack_range){
 			tactic_state = E_ENEMY_TACTIC_STATE.KEEP_DISTANCE;
-			show_debug_message("spawn melee attack");
+			//show_debug_message("spawn melee attack");
 			attack_timer = 0;
 			melee_weapon = instance_create_layer(x, y, "Weapons", obj_melee_weapon_enemy);
 			melee_weapon.owner = self;
@@ -259,7 +259,7 @@ if(can_move){
 				ds_list_add(projectiles, projectile);
 			}
 			else{
-				show_debug_message("cannot shoot. and out of melee range");
+				//show_debug_message("cannot shoot. and out of melee range");
 				tactic_state = E_ENEMY_TACTIC_STATE.CHASE;
 			}
 		}

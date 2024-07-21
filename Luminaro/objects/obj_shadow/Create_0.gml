@@ -1,6 +1,6 @@
 /// @description basic shadow object
 
-show_debug_message("create shadow");
+//show_debug_message("create shadow");
 
 depth = -8;
 
@@ -20,11 +20,11 @@ charge_rate = 500;
 
 //timer until next spawn (when in spawning state)
 spawn_timer = 0;
-spawn_rate = 500;
+spawn_rate = 2000;
 
 //timer until supercharged (when in spawning state)
 supercharge_timer = 0;
-supercharge_rate = 2500;
+supercharge_rate = 8000;
 supercharged = false;
 
 

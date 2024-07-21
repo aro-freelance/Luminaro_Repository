@@ -1,6 +1,5 @@
 /// @description base enemy class
 
-show_debug_message("create ENEMY BASIC. x = " + string(x) + ". y = " + string(y));
 
 depth = -20;
 
