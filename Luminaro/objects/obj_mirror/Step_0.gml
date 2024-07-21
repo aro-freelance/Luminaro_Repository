@@ -1,4 +1,5 @@
 
+if(global.game_state == E_GAME_STATE.PLAYING){
 
 
 if(beam != noone){
@@ -17,4 +18,9 @@ if(beam != noone){
 	beam.sprite_rotation = beam.image_angle;
 	
 	if(!beam.is_on) beam.is_on = true;
+}
+
+
+
+
 }

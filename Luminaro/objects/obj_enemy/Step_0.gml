@@ -1,4 +1,6 @@
 
+if(global.game_state == E_GAME_STATE.PLAYING){
+
 #region init
 
 if(!parameter_init){
@@ -22,7 +24,7 @@ if(!parameter_init){
 		dynamic_hp = 3 * hp;
 		
 		show_debug_message("supercharged spawn");
-		sprite_color = c_blue;
+		image_blend = c_blue;
 		//TODO: add an effect on the enemy that shows it is supercharged
 	}
 	else{
@@ -242,7 +244,7 @@ if(can_move){
 			tactic_state = E_ENEMY_TACTIC_STATE.KEEP_DISTANCE;
 			show_debug_message("spawn melee attack");
 			attack_timer = 0;
-			melee_weapon = instance_create_layer(x, y, "Instances", obj_melee_weapon_enemy);
+			melee_weapon = instance_create_layer(x, y, "Weapons", obj_melee_weapon_enemy);
 			melee_weapon.owner = self;
 		}
 		//not in melee range, if can shoot, then shoot
@@ -251,7 +253,7 @@ if(can_move){
 			if(can_shoot){
 				tactic_state = E_ENEMY_TACTIC_STATE.KEEP_DISTANCE;
 				attack_timer = 0;
-				var projectile = instance_create_layer(x, y, "Instances", obj_projectile_weapon_enemy);
+				var projectile = instance_create_layer(x, y, "Weapons", obj_projectile_weapon_enemy);
 				projectile.owner = self;
 				
 				ds_list_add(projectiles, projectile);
@@ -312,12 +314,12 @@ if(variable_instance_exists(id, "dynamic_hp")){
 		var irand_xp_offset = irandom_range(-100, 100);
 		var irand_hp_offset = irandom_range(-100, 100) - irand_xp_offset;
 		
-		var xp_pickup = instance_create_layer(x + irand_xp_offset, y, "Instances", obj_xp_pickup);
+		var xp_pickup = instance_create_layer(x + irand_xp_offset, y, "Items", obj_xp_pickup);
 		xp_pickup.amount *= level;
 		
 		
 		if(irand_health > 90) {
-			var health_pickup = instance_create_layer(x + irand_hp_offset, y, "Instances", obj_health_pickup);
+			var health_pickup = instance_create_layer(x + irand_hp_offset, y, "Items", obj_health_pickup);
 			health_pickup.amount *= level;
 		}
 		
@@ -349,7 +351,13 @@ if(variable_instance_exists(id, "dynamic_hp")){
 #endregion
 
 
+}
+else{
 
+	x = xprevious;
+	y = yprevious;
+
+}
 
 
 

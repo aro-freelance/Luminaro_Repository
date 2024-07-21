@@ -1,2 +1,2 @@
 
-if(is_on) draw_sprite_ext(sprite_index, sprite_subimage, x, y, x_scale, y_scale, sprite_rotation, sprite_color, sprite_alpha);
+if(is_on) draw_sprite_ext(sprite_index, image_index, x, y, image_xscale, image_yscale, image_angle, image_blend, image_alpha);

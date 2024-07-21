@@ -1,4 +1,6 @@
 
+if(global.game_state == E_GAME_STATE.PLAYING){
+
 //raise to level of player (if the player is on the ground)
 
 
@@ -17,4 +19,4 @@ if(global.player.jump_state == E_JUMP_STATE.GROUNDED){
 
 
 
-
+}

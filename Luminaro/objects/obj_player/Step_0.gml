@@ -1,4 +1,5 @@
 
+if(global.game_state == E_GAME_STATE.PLAYING){
 
 #region Sprite Index
 
@@ -6,6 +7,7 @@
 
 //store previous sprite so we can compare to see if the sprite changed
 var prev_sprite_index = sprite_index;
+
 
 if(facing == E_FACING.right){
 	if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
@@ -48,7 +50,6 @@ if(sprite_index != prev_sprite_index) image_index = 0;
 
 
 #endregion
-
 
 #region Ground player / Fall
 
@@ -133,6 +134,67 @@ if(place_meeting(x, y, obj_pickup_item)){
 	//TODO: play effect
 	
 	instance_destroy(pickup);
+	
+}
+
+#endregion
+
+#region Battery
+
+if(!battery_charged || attack_state == E_ATTACK_STATE.idle){
+	//if the batter didn't fully die, decrement timer twice as fast as if it died
+	if(on_timer > 0) on_timer = clamp(on_timer - 2, 0, battery);
+	
+	battery_charge_timer++;
+	if( battery_charge_timer > battery_charge_delay ){
+		on_timer = 0;
+		battery_charge_timer = 0;
+		battery_charged = true;
+	}
+}
+
+
+if(attack_state == E_ATTACK_STATE.beam){
+	if(beam.is_on){
+		on_timer++;
+	}
+
+	if(on_timer > battery){
+		attack_state = E_ATTACK_STATE.idle;
+		beam.is_on = false;
+		battery_charged = false;
+	}
+
+}
+
+if(attack_state == E_ATTACK_STATE.prism){
+	if(ds_list_size(prism_beams) > 0){
+		for(j = 0; j <= dynamic_prism_beam_number; j++){
+			
+			var prism_beam = prism_beams[| j];
+			
+			if(prism_beam.is_on){
+				on_timer++;
+			}
+
+			if(on_timer > battery){
+				attack_state = E_ATTACK_STATE.idle;
+				prism_beam.is_on = false;
+				battery_charged = false;
+			}
+		}
+	}
+}
+
+#endregion
+
+#region Level Up
+
+if(xp > 100){
+	xp = xp - 100;
+	global.game_state = E_GAME_STATE.IN_GAME_MENU;
+	global.player_menu = instance_create_layer(0, 0, "UI", obj_player_menu);
+	global.player_menu.state = E_PLAYER_MENU_STATE.LEVEL_UP;
 	
 }
 
@@ -235,7 +297,7 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 		if(!place_meeting(x, y - dynamic_jump_height, obj_solid)) y = y - dynamic_jump_height;
 		
 			
-		instance_create_layer(x, bbox_bottom, "Instances", obj_effect_jump);
+		instance_create_layer(x, bbox_bottom, "Effects", obj_effect_jump);
 			
 			
 			
@@ -249,7 +311,7 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 			if(!place_meeting(x, y - dynamic_jump_height, obj_solid)) y = y - dynamic_jump_height;
 			
 			
-			instance_create_layer(x, bbox_bottom,  "Instances", obj_effect_jump);
+			instance_create_layer(x, bbox_bottom,  "Effects", obj_effect_jump);
 				
 		}
 	}
@@ -306,17 +368,17 @@ if(global.button_held == E_BUTTON_HELD.CROUCH){
 
 if(mouse_check_button(mb_left)){
 	
-	if(beam.battery_charged){
+	if(battery_charged){
 		
 		if(mouse_x > x) facing = E_FACING.right;
 		else facing = E_FACING.left;
 	
 		beam.image_angle = point_direction(x, y, mouse_x, mouse_y);
-		//beam.sprite_rotation = beam.image_angle;
-	
-	
+		
+		attack_state = E_ATTACK_STATE.beam;
 		lantern.is_on = false;
 		beam.is_on = true;
+		
 	
 	}
 	else{
@@ -327,6 +389,7 @@ if(mouse_check_button(mb_left)){
 
 if(mouse_check_button_released(mb_left)){
 	
+	attack_state = E_ATTACK_STATE.idle;
 	beam.is_on = false;
 	lantern.is_on = true;
 	
@@ -371,7 +434,7 @@ if(keyboard_check_released(vk_lalt)){
 
 if(mouse_check_button_pressed(mb_right)){
 	
-	var mirror = instance_create_layer(mouse_x, mouse_y, "Instances", obj_mirror);
+	var mirror = instance_create_layer(mouse_x, mouse_y, "Weapons", obj_mirror);
 	mirror.owner = self;
 	
 	//if there are already the max number, remove the oldest
@@ -386,40 +449,46 @@ if(mouse_check_button_pressed(mb_right)){
 
 #endregion
 
-
-#region INPUT: create prism beam
+#region INPUT: prism beam
 
 
 if(mouse_check_button(mb_middle)){
 	
-	//spawn the beams if they are not out
-	if(ds_list_size(prism_beams) <= 0){
-		for(i = 0; i <= dynamic_prism_beam_number; i++){
-			
-			var prism_beam = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Instances", obj_light_beam);
-			prism_beam.light_type = E_LIGHT_TYPES.PLAYER_PRISM_BEAM;
-			prism_beam.holder = self;
-			prism_beam.is_on = true;
-			
-			ds_list_add(prism_beams, prism_beam);
-		}
-	}
-	
-	
-	//if there are beams, set the angles of the beams
-	if(ds_list_size(prism_beams) > 0){
-		for(j = 0; j <= dynamic_prism_beam_number; j++){
-			
-			show_debug_message("j = " + string(j));
-			
-			var prism_beam = prism_beams[| j];
-			
-			var beam_gap_angle = prism_max_angle / dynamic_prism_beam_number;
+	if(battery_charged){
+		attack_state = E_ATTACK_STATE.prism;
 		
-			var start_point =  point_direction(x, y, mouse_x, mouse_y) - prism_max_angle/2;
-
-			prism_beam.image_angle = start_point + (j * beam_gap_angle);
+		//spawn the beams if they are not out
+		if(ds_list_size(prism_beams) <= 0){
+			for(i = 0; i <= dynamic_prism_beam_number; i++){
 			
+				var prism_beam = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Weapons", obj_light_beam);
+				prism_beam.light_type = E_LIGHT_TYPES.PLAYER_PRISM_BEAM;
+				prism_beam.holder = self;
+				prism_beam.is_on = true;
+			
+				lantern.is_on = false;
+			
+				ds_list_add(prism_beams, prism_beam);
+			}
+		}
+	
+	
+		//if there are beams, set the angles of the beams
+		if(ds_list_size(prism_beams) > 0){
+		
+			for(j = 0; j <= dynamic_prism_beam_number; j++){
+			
+				show_debug_message("j = " + string(j));
+			
+				var prism_beam = prism_beams[| j];
+			
+				var beam_gap_angle = prism_max_angle / dynamic_prism_beam_number;
+		
+				var start_point =  point_direction(x, y, mouse_x, mouse_y) - prism_max_angle/2;
+
+				prism_beam.image_angle = start_point + (j * beam_gap_angle);
+			
+			}
 		}
 	}
 }
@@ -435,6 +504,9 @@ if(mouse_check_button_released(mb_middle)){
 		}
 	}
 	
+	attack_state = E_ATTACK_STATE.idle;
+	lantern.is_on = true;
+	
 	//and clear the list
 	ds_list_clear(prism_beams);
 	
@@ -442,6 +514,13 @@ if(mouse_check_button_released(mb_middle)){
 
 
 #endregion
+
+
+
+
+}
+
+
 
 
 

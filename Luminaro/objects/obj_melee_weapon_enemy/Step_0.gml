@@ -1,5 +1,5 @@
 
-
+if(global.game_state == E_GAME_STATE.PLAYING){
 
 
 #region init
@@ -11,7 +11,7 @@ if(!init){
 	
 	distance_to_player = distance_to_object(obj_player);
 	
-	sprite_rotation = point_direction(x, y, global.player.x, global.player.y) - 90;
+	image_angle = point_direction(x, y, global.player.x, global.player.y) - 90;
 	
 	scale_distance_ratio = (distance_to_player + followthrough_distance) / sprite_get_height(sprite_index);
 	
@@ -31,15 +31,13 @@ y = owner.y;
 #region increase in size and reach towards player
 
 //if not at size to reach player's location
-if(y_scale < scale_distance_ratio){
+if(image_yscale < scale_distance_ratio){
 	//show_debug_message("meleeweapon: growing. range = " + string(owner.dynamic_melee_attack_range) + ". distance = " + string(distance_to_object(obj_player)));
 	
 	//if not touching player
 	if(!place_meeting(x, y, obj_player)){
 		//increase size
-		y_scale += growth_factor;
-		image_yscale = y_scale;
-		image_angle = sprite_rotation;
+		image_yscale += growth_factor;
 		//var _spr = object_get_sprite(object_index);
 		//mask_index = _spr;
 		//show_debug_message("y scale = " + string(image_yscale));
@@ -53,6 +51,7 @@ else{
 }
 
 #endregion
+
 
 #region Deal Damage
 
@@ -69,3 +68,7 @@ if(place_meeting(x + sprite_width, y + (sprite_height * y_scale), obj_player) ||
 
 
 #endregion
+
+
+
+}

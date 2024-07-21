@@ -9,4 +9,7 @@ window_set_size(width, height);
 
 spawn_point = [display_get_gui_width()/2, display_get_gui_height()/2];	
 
-global.player = instance_create_layer(array_get(spawn_point, 0), array_get(spawn_point, 1), "Instances", obj_player);
+
+if(global.player == noone) global.player = instance_create_layer(array_get(spawn_point, 0), array_get(spawn_point, 1), "Actors", obj_player);
+//TODO: set saved stats to player
+

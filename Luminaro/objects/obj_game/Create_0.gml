@@ -6,17 +6,21 @@
 enum E_GAME_STATE{
 	MAIN_MENU,
 	PLAYING,
+	IN_GAME_MENU,
 }
 
 global.game_state = E_GAME_STATE.MAIN_MENU;
 
 global.player = noone;
 
+global.player_menu = noone;
+
+
 #endregion
 
 #region World Parameters
 
-global.grav = 1.5;
+global.grav = 2.5;
 
 #endregion
 
@@ -35,6 +39,63 @@ global.button_held = E_BUTTON_HELD.NONE;
 
 global.button_held_time = 0;
 global.button_held_threshold = 20;
+
+#endregion
+
+#region UI
+
+margin = 20;
+
+#region HP / BATTERY / XP Bars
+
+
+hp_bar_width = 600;
+hp_bar_height = 50;
+
+
+hp_bar_x1 = display_get_gui_width() - margin - hp_bar_width;
+hp_bar_x2 = hp_bar_x1 + hp_bar_width;
+
+hp_bar_y1 = margin;
+hp_bar_y2 = hp_bar_y1 + hp_bar_height;
+
+
+battery_bar_width = 600;
+battery_bar_height = 50;
+battery_bar_color = c_green; //uncharged color is in draw gui
+
+battery_bar_x1 = display_get_gui_width() - margin - battery_bar_width;
+battery_bar_x2 = battery_bar_x1 + battery_bar_width;
+
+battery_bar_y1 = display_get_gui_height() - margin - battery_bar_height;
+battery_bar_y2 = battery_bar_y1 + battery_bar_height;
+
+
+xp_bar_width = 400;
+xp_bar_height = 30;
+
+xp_bar_x1 = margin;
+xp_bar_x2 = xp_bar_x1 + xp_bar_width;
+
+xp_bar_y1 = margin;
+xp_bar_y2 = xp_bar_y1 + xp_bar_height;
+
+#endregion
+
+
+#region In Game Menu
+
+enum E_PLAYER_MENU_STATE{
+	DISPLAY_STATS,
+	LEVEL_UP,
+	SETTINGS,
+	SAVE_LOAD_EXIT,
+}
+
+
+#endregion
+
+
 
 #endregion
 
@@ -73,6 +134,7 @@ enum E_STANDING_STATE{
 enum E_ATTACK_STATE{
 	idle,
 	beam,
+	prism,
 }
 
 enum E_REACT_STATE{
@@ -193,4 +255,5 @@ enum E_LIGHT_SIZE{
 }
 
 #endregion
+
 

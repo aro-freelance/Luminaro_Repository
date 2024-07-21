@@ -8,4 +8,5 @@ window_set_size(width, height);
 */
 
 
-//show_message("main menu");
+global.player = noone;
+global.player_menu = noone;

@@ -24,7 +24,7 @@ function scr_spawn_enemy(type, location, supercharged){
 		var enemy_obj = obj_enemy;
 	}
 	
-	var enemy = instance_create_layer(array_get(location, 0), array_get(location, 1), "Instances", enemy_obj);
+	var enemy = instance_create_layer(array_get(location, 0), array_get(location, 1), "Actors", enemy_obj);
 	
 	if(supercharged) enemy.supercharged = true;
 	

@@ -91,6 +91,7 @@
     {"id":{"name":"obj_message_pickup","path":"objects/obj_message_pickup/obj_message_pickup.yy",},},
     {"id":{"name":"obj_mirror","path":"objects/obj_mirror/obj_mirror.yy",},},
     {"id":{"name":"obj_pickup_item","path":"objects/obj_pickup_item/obj_pickup_item.yy",},},
+    {"id":{"name":"obj_player_menu","path":"objects/obj_player_menu/obj_player_menu.yy",},},
     {"id":{"name":"obj_player","path":"objects/obj_player/obj_player.yy",},},
     {"id":{"name":"obj_projectile_weapon_enemy","path":"objects/obj_projectile_weapon_enemy/obj_projectile_weapon_enemy.yy",},},
     {"id":{"name":"obj_shadow","path":"objects/obj_shadow/obj_shadow.yy",},},

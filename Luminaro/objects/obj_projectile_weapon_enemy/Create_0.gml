@@ -2,19 +2,7 @@
 
 
 
-
-#region Sprite
-
 depth = -21;
-
-sprite_subimage = 0;
-x_scale = 1;
-y_scale = 1;
-sprite_rotation = 0;
-sprite_color = c_white;
-sprite_alpha = 1;
-
-#endregion
 
 #region Weapon Identity and Init
 

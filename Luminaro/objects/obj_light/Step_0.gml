@@ -1,4 +1,5 @@
 
+if(global.game_state == E_GAME_STATE.PLAYING){
 
 var spr = object_get_sprite(object_index);
 if (sprite_index != spr)
@@ -47,7 +48,7 @@ if(is_on){
 			
 			if(mirror.beam == noone){
 				//make the beam
-				mirror.beam = instance_create_layer(mirror.x, mirror.y, "Instances", obj_light_beam);
+				mirror.beam = instance_create_layer(mirror.x, mirror.y, "Weapons", obj_light_beam);
 				mirror.beam.holder = mirror;
 				mirror.beam.light_type = E_LIGHT_TYPES.MIRROR_BEAM;
 			}
@@ -57,7 +58,7 @@ if(is_on){
 		
 			if(mirror.beam == noone){
 				//make the beam
-				mirror.beam = instance_create_layer(mirror.x, mirror.y, "Instances", obj_light_beam);
+				mirror.beam = instance_create_layer(mirror.x, mirror.y, "Weapons", obj_light_beam);
 				mirror.beam.image_angle = global.player.beam.image_angle - 90;
 				mirror.beam.is_on = true;
 			}
@@ -103,3 +104,7 @@ if(bounce_counter > 0){
 }
 
 #endregion
+
+
+
+}

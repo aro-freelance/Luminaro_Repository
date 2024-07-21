@@ -1,4 +1,6 @@
 
+if(global.game_state == E_GAME_STATE.PLAYING){
+
 
 #region init
 
@@ -9,7 +11,7 @@ if(!init){
 	
 	distance_to_player = distance_to_object(obj_player);
 	
-	sprite_rotation = point_direction(x, y, global.player.x, global.player.y) - 90;
+	image_angle = point_direction(x, y, global.player.x, global.player.y) - 90;
 	
 	//scale_distance_ratio = distance_to_player / sprite_get_height(sprite_index);
 	
@@ -22,7 +24,7 @@ if(!init){
 
 if(is_on){
 	
-	if(bounce_number < 1){
+	if(bounce_counter < 1){
 		move_towards_point(array_get(player_location_snapshot, 0), array_get(player_location_snapshot, 1), movement_speed);
 	}
 	
@@ -65,3 +67,4 @@ if(place_meeting(x, y, obj_player)){
 
 
 
+}

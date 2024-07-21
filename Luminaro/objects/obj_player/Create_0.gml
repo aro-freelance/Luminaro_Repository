@@ -34,7 +34,7 @@ max_mirrors = 3;
 
 prism_beam_number = 3;
 
-hp = 100;
+hp = 300;
 
 //TODO: get from save?
 xp = 0;
@@ -65,22 +65,36 @@ dynamic_hp = hp;
 #region Light
 
 
-lantern = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Instances", obj_light);
+lantern = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Weapons", obj_light);
 lantern.light_type = E_LIGHT_TYPES.PLAYER_LANTERN;
 lantern.holder = self;
 lantern.is_on = true;
 
 
-beam = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Instances", obj_light_beam);
+beam = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Weapons", obj_light_beam);
 beam.light_type = E_LIGHT_TYPES.PLAYER_BEAM;
 beam.holder = self;
 beam.is_on = false;
 
 prism_beams = ds_list_create();
-prism_max_angle = 160;
+prism_max_angle = 140;
 
 
 #endregion
+
+
+#region battery
+
+
+on_timer = 0; //drain battery counter
+battery = 250; //battery max on time
+
+battery_charge_timer = 0; //battery charge counter
+battery_charge_delay = 150; //how long does the battery take to charge?
+battery_charged = true; //is the battery ready?
+
+#endregion
+
 
 
 #region Mirrors
