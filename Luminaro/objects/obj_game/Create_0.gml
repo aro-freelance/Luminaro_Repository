@@ -22,7 +22,9 @@ global.lighting_effects = noone;
 
 #region World Parameters
 
-global.grav = 2.5;
+global.grav = 4;
+
+global.darkness_level = .7; //alpha value of obj_lighting_effect
 
 #endregion
 
@@ -45,6 +47,8 @@ global.button_held_threshold = 20;
 #endregion
 
 #region UI
+
+distance_between_player_and_camera_bottom = display_get_gui_height()/10;
 
 margin = 20;
 
@@ -164,6 +168,7 @@ enum E_ENEMY_TYPES{
 
 enum E_BOSS_TYPES{
 	BOSS_1,
+	BOSS_2,
 	last,
 }
 

@@ -24,7 +24,7 @@ else if (surface_exists(surface)) {
 	
 	surface_set_target(surface);
 	draw_set_color(c_black);
-	draw_set_alpha(0.8);
+	draw_set_alpha(global.darkness_level);
 	draw_rectangle(0, 0, camera_width, camera_height, false);
 	gpu_set_blendmode(bm_subtract);
 	

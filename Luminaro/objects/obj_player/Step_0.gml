@@ -9,6 +9,8 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 var prev_sprite_index = sprite_index;
 
 
+
+
 if(facing == E_FACING.right){
 	if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
 		sprite_index = spr_player;
@@ -53,11 +55,12 @@ if(sprite_index != prev_sprite_index) image_index = 0;
 
 #region Ground player / Fall
 
-if(place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles"))){
+if(place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor"))){
 	jump_state = E_JUMP_STATE.GROUNDED;
-	
 }
-if(!place_meeting(x, y, layer_tilemap_get_id("Tiles")) && jump_current == 0 && jump_state == E_JUMP_STATE.GROUNDED && y != (room_height - sprite_height)){
+if(!place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor")) 
+&& jump_current == 0 && jump_state == E_JUMP_STATE.GROUNDED 
+&& y != (room_height - sprite_height)){
 	jump_state = E_JUMP_STATE.FALLING;
 	
 }
@@ -106,12 +109,13 @@ if(jump_state != E_JUMP_STATE.GROUNDED){
 	if( jump_state != E_JUMP_STATE.JUMPING || (jump_float_counter >= dynamic_jump_float_time)){
 		
 		//if applying gravity will not put the player in collision
-		if(!place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles"))){
+		if(!place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor"))){
+			
 			//apply gravity
 			 y = y + global.grav;
 		
 			//plus more gravity when "falling"
-			if(jump_state == E_JUMP_STATE.FALLING) y = y + (.5 * global.grav);
+			//if(jump_state == E_JUMP_STATE.FALLING) y = y + (.5 * global.grav);
 		}
 	
 	}
@@ -223,12 +227,12 @@ if(variable_instance_exists(id, "dynamic_hp")){
 #region INPUT: left
 
 if(keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)){
-	if(!place_meeting(x - dynamic_movement_speed, y, obj_wall)){
-		global.button_held_time = 0;
-		global.button_held = E_BUTTON_HELD.NONE;
-		facing = E_FACING.left;
-		if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles"))) x = x - dynamic_movement_speed;
-		//if(place_meeting(x, y, obj_wall)) x = xprevious;
+	
+	global.button_held_time = 0;
+	global.button_held = E_BUTTON_HELD.NONE;
+	facing = E_FACING.left;
+	if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
+		x = x - dynamic_movement_speed;
 	}
 }
 
@@ -240,9 +244,8 @@ if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
 }
 
 if(global.button_held == E_BUTTON_HELD.LEFT){
-	if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles"))){
+	if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
 		x = x - dynamic_movement_speed/2;
-		//if(place_meeting(x, y, obj_wall)) x = xprevious;
 	}
 }
 
@@ -252,12 +255,11 @@ if(global.button_held == E_BUTTON_HELD.LEFT){
 #region INPUT: right
 
 if(keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)){
-	if(!place_meeting(x + dynamic_movement_speed, y, obj_wall)){
-		global.button_held_time = 0;
-		global.button_held = E_BUTTON_HELD.NONE;
-		facing = E_FACING.right;
-		if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles"))) x = x + dynamic_movement_speed;
-		//if(place_meeting(x, y, obj_wall)) x = xprevious;
+	global.button_held_time = 0;
+	global.button_held = E_BUTTON_HELD.NONE;
+	facing = E_FACING.right;
+	if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
+		x = x + dynamic_movement_speed;
 	}
 }
 
@@ -270,9 +272,8 @@ if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
 }
 
 if(global.button_held == E_BUTTON_HELD.RIGHT){
-	if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles"))){
+	if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
 		x = x + dynamic_movement_speed/2;
-		//if(place_meeting(x, y, obj_wall)) x = xprevious;
 	}
 }
 
@@ -297,7 +298,7 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 		
 		jump_current++;
 		
-		if(!place_meeting(x, y - dynamic_jump_height, layer_tilemap_get_id("Tiles"))) y = y - dynamic_jump_height;
+		if(!place_meeting(x, y - dynamic_jump_height, layer_tilemap_get_id("Tiles_Ceiling"))) y = y - dynamic_jump_height;
 		
 			
 		instance_create_layer(x, bbox_bottom, "Effects", obj_effect_jump);
@@ -311,7 +312,7 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 			//double jump
 			jump_current++;
 			
-			if(!place_meeting(x, y - dynamic_jump_height, layer_tilemap_get_id("Tiles"))) y = y - dynamic_jump_height;
+			if(!place_meeting(x, y - dynamic_jump_height, layer_tilemap_get_id("Tiles_Ceiling"))) y = y - dynamic_jump_height;
 			
 			
 			instance_create_layer(x, bbox_bottom,  "Effects", obj_effect_jump);

@@ -35,10 +35,10 @@ if(is_on){
 
 #region Collision with Solid
 
-if(place_meeting(x, y, layer_tilemap_get_id("Tiles"))){
+if(place_meeting(x, y, all)){
 	
-	//destroy on impact if it cannot bounce
-	if(!can_bounce){
+	//destroy on impact if it cannot bounce or player was hit
+	if(!can_bounce || place_meeting(x, y, obj_player)){
 		var index = ds_list_find_index(owner.projectiles, self);
 		ds_list_delete(owner.projectiles, index);
 		instance_destroy();
@@ -47,9 +47,18 @@ if(place_meeting(x, y, layer_tilemap_get_id("Tiles"))){
 	else{
 		//TODO: handle bouncing
 		//var bounce_collision_pt = scr_get_tm_collision_point(x, y, "Tiles");
-		
-		image_angle = image_angle - 90;
+		if(bounce_counter < bounce_number){
+			bounce_counter++;
+			direction = -direction;
+		}
 	}
+}
+
+
+if(place_meeting(x, y, obj_projectile_weapon_enemy)){
+	var index = ds_list_find_index(owner.projectiles, self);
+	ds_list_delete(owner.projectiles, index);
+	instance_destroy();	
 }
 
 

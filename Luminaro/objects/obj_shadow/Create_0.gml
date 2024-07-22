@@ -27,4 +27,3 @@ supercharge_timer = 0;
 supercharge_rate = 8000;
 supercharged = false;
 
-

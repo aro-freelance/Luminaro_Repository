@@ -15,8 +15,8 @@
     "path":"folders/Objects/Actors/Enemies/Enemy Types.yy",
   },
   "parentObjectId":{
-    "name":"obj_enemy",
-    "path":"objects/obj_enemy/obj_enemy.yy",
+    "name":"obj_boss",
+    "path":"objects/obj_boss/obj_boss.yy",
   },
   "persistent":false,
   "physicsAngularDamping":0.1,

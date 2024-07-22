@@ -15,7 +15,7 @@ function scr_get_obj_collision_point(input_x, input_y, obj){
 	var sprite_x_offset = sprite_get_width(obj.sprite_index) / 2;
 	var sprite_y_offset = sprite_get_height(obj.sprite_index) / 2;
 	
-	show_debug_message("obj bounds: x1 = " + string(obj.bbox_left) + ". y1 = " + string(obj.bbox_top) + ". x2 = "  + string(obj.bbox_right) + ". y2 = " + string(obj.bbox_bottom));
+	//show_debug_message("obj bounds: x1 = " + string(obj.bbox_left) + ". y1 = " + string(obj.bbox_top) + ". x2 = "  + string(obj.bbox_right) + ". y2 = " + string(obj.bbox_bottom));
 	
 	
 	//loop through the x and y bounds and use checker obj to check collision. add collision x,y arrays to list
@@ -80,7 +80,7 @@ function scr_get_obj_collision_point(input_x, input_y, obj){
 	
 	ds_list_destroy(collision_list);
 	
-	show_debug_message("scr obj collision: output array = " + string(output_array));
+	//show_debug_message("scr obj collision: output array = " + string(output_array));
 	
 	return output_array;
 

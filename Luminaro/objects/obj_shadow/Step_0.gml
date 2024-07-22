@@ -1,4 +1,5 @@
 
+
 #region Handle Activation
 
 if((place_meeting(x, y, obj_light))){
@@ -65,6 +66,7 @@ else if(shadow_state == E_SHADOW_STATE.SPAWNING || shadow_state == E_SHADOW_STAT
 #endregion
 
 
+
 #region Death
 
 if(hp <= 0){
@@ -88,3 +90,5 @@ if(hp <= 0){
 
 
 #endregion
+
+

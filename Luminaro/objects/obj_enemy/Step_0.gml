@@ -99,10 +99,10 @@ if(sprite_index != prev_sprite_index) image_index = 0;
 
 #region Ground enemy / Fall
 
-if(place_meeting(x, y, layer_tilemap_get_id("Tiles"))){
+if(place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor"))){
 	if(jump_state != E_ENEMY_JUMP_STATE.FLOATING) jump_state = E_ENEMY_JUMP_STATE.GROUNDED;
 }
-if(!place_meeting(x, y, layer_tilemap_get_id("Tiles")) && jump_state == E_ENEMY_JUMP_STATE.GROUNDED && y != (room_height - sprite_height)){
+if(!place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor")) && jump_state == E_ENEMY_JUMP_STATE.GROUNDED && y != (room_height - sprite_height)){
 	if(can_float){
 		jump_state = E_ENEMY_JUMP_STATE.FLOATING;
 	}
@@ -115,7 +115,7 @@ if(!place_meeting(x, y, layer_tilemap_get_id("Tiles")) && jump_state == E_ENEMY_
 #region keep enemy on screen
 
 //TODO: scroll the screen and make larger rooms?
-
+/*
 if(x < 0) x = 0;
 if(x > (room_width - sprite_width)) x = room_width - sprite_width;
 if(y < 0) y = 0;
@@ -125,15 +125,38 @@ if(y > (room_height - sprite_height)){
 	y = room_height - sprite_height;
 	if(jump_state != E_ENEMY_JUMP_STATE.FLOATING) jump_state = E_JUMP_STATE.GROUNDED;
 }
+*/
 
 #endregion
 
 
 #region gravity
 
-if(jump_state != E_JUMP_STATE.GROUNDED){
-	if(!can_float) y = y + global.grav;
+if(jump_state != E_ENEMY_JUMP_STATE.GROUNDED){
+	if(!place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor"))){
+		if(!can_float) y = y + global.grav;
+	}
 }
+
+
+//if not on the ground
+if(jump_state != E_ENEMY_JUMP_STATE.GROUNDED && jump_state != E_ENEMY_JUMP_STATE.FLOATING){
+	//and not jumping OR past the jump hover time
+	if( jump_state != E_JUMP_STATE.JUMPING || (jump_float_counter >= dynamic_jump_float_time)){
+		
+		//if applying gravity will not put the player in collision
+		if(!place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor"))){
+			
+			//apply gravity
+			 y = y + global.grav;
+		
+			//plus more gravity when "falling"
+			//if(jump_state == E_JUMP_STATE.FALLING) y = y + (.5 * global.grav);
+		}
+	
+	}
+}
+
 
 #endregion
 
@@ -146,6 +169,7 @@ if(jump_state != E_ENEMY_JUMP_STATE.FALLING && attack_state == E_ENEMY_ATTACK_ST
 }
 else can_move = false;
 
+
 if(can_move){
 	if(!is_at_distance_goal){
 		if(tactic_state == E_ENEMY_TACTIC_STATE.CHASE){
@@ -154,50 +178,232 @@ if(can_move){
 		
 			//if not touching player, move closer
 			if(!place_meeting(x, y, obj_player)) move_towards_point(global.player.x, global.player.y, dynamic_movement_speed);
+			
+			//move_contact_all(point_direction(x, y, global.player.x, global.player.y), dynamic_movement_speed);
 		
 		}
 		else if(tactic_state == E_ENEMY_TACTIC_STATE.KEEP_DISTANCE || tactic_state == E_ENEMY_TACTIC_STATE.MOVE_AWAY_TO_SHOOT){
 			//if too far, move closer
 			if(distance_to_object(obj_player) > distance_goal){
-				goal_point = [global.player.x, global.player.y];
+				//goal_point = [global.player.x, global.player.y];
 				move_towards_point(global.player.x, global.player.y, dynamic_movement_speed);
+				
+				//move_contact_all(point_direction(x, y, global.player.x, global.player.y), dynamic_movement_speed);
 			}
 			//else move away
-			else{
+			else if (distance_to_point(array_get(goal_point, 0), array_get(goal_point, 1)) > distance_goal){
 		
 				if(can_float){
 					var dir_away_from_player = point_direction(global.player.x, global.player.y, x, y - (dynamic_movement_speed/2));
-					var goal_point_x = lengthdir_x(distance_goal - distance_to_object(obj_player), dir_away_from_player);
-					var goal_point_y = lengthdir_y(distance_goal - distance_to_object(obj_player), dir_away_from_player);
+					var goal_point_x = lengthdir_x(distance_goal - distance_to_object(obj_player) , dir_away_from_player);
+					var goal_point_y = lengthdir_y(distance_goal - distance_to_object(obj_player) , dir_away_from_player);
 					goal_point = [goal_point_x, goal_point_y];
+					
+					
+					
+					
+					//check if something is in the way of the original goal point
+					if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Floor"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Floor");
+						if(array_length(local_goal_point) == 2){
+							var d = point_distance(global.player.x, global.player.y, array_get(goal_point, 0), array_get(goal_point, 1));
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff , dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff , dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+							
+							show_debug_message("========================  original goal x = " + string(goal_point_x) + ". y = " + string(goal_point_y) + ". new x = " + string(g_x) + ". y = " + string(g_y) + ". d diff = " + string(d_diff)+ ". d = " + string(d) + ". distance goal = " + string(distance_goal));
+						}
+						//show_debug_message("enemy goal point: collision with floor");
+					}
+					else if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Walls"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Walls");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with wall");
+					}
+					else if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Ceiling"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Ceiling");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with ceiling");
+					}
+					
 					move_towards_point(goal_point_x, goal_point_y, dynamic_movement_speed);
+					
+					//move_contact_all(point_direction(x, y, goal_point_x, goal_point_y), dynamic_movement_speed);
+					
 				}
 				else{
 					var dir_away_from_player = point_direction(global.player.x, global.player.y, x, y);
 					var goal_point_x = lengthdir_x(distance_goal - distance_to_object(obj_player), dir_away_from_player);
 					var goal_point_y = lengthdir_y(distance_goal - distance_to_object(obj_player), dir_away_from_player);
 					goal_point = [goal_point_x, goal_point_y];
+					
+					//check if something is in the way of the original goal point
+					if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Floor"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Floor");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with floor");
+					}
+					else if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Walls"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Walls");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with wall");
+					}
+					else if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Ceiling"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Ceiling");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with ceiling");
+					}
+					
 					move_towards_point(goal_point_x, goal_point_y, dynamic_movement_speed);
+					
+					//move_contact_all(point_direction(x, y, goal_point_x, goal_point_y), dynamic_movement_speed);
+					
 				}
 		
 			}
+			//else this enemy is at goal. start wandering
+			else
+			{
+				//show_debug_message(string(self) + " is wandering. TODO: handle wander");
+			}
+			
 		}
 		else if (tactic_state == E_ENEMY_TACTIC_STATE.MOVE_AWAY_TO_FLEE){
-			//move away
-			if(can_float){
-				var dir_away_from_player = direction_to_point(global.player.x, global.player.y, x, y - (dynamic_movement_speed/2));
-				var goal_point_x = lengthdir_x(distance_goal - distance_to_object(obj_player), dir_away_from_player);
-				var goal_point_y = lengthdir_y(distance_goal - distance_to_object(obj_player), dir_away_from_player);
-				goal_point = [goal_point_x, goal_point_y];
-				move_towards_point(goal_point_x, goal_point_y, dynamic_movement_speed);
+			
+			if (distance_to_point(array_get(goal_point, 0), array_get(goal_point, 1)) > distance_goal){
+				//move away
+				if(can_float){
+					var dir_away_from_player = direction_to_point(global.player.x, global.player.y, x, y - (dynamic_movement_speed/2));
+					var goal_point_x = lengthdir_x(distance_goal - distance_to_object(obj_player), dir_away_from_player);
+					var goal_point_y = lengthdir_y(distance_goal - distance_to_object(obj_player), dir_away_from_player);
+					goal_point = [goal_point_x, goal_point_y];
+				
+					//check if something is in the way of the original goal point
+					if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Floor"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Floor");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with floor");
+					}
+					else if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Walls"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Walls");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with wall");
+					}
+					else if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Ceiling"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Ceiling");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with ceiling");
+					}
+				
+					move_towards_point(goal_point_x, goal_point_y, dynamic_movement_speed);
+				
+					//move_contact_all(point_direction(x, y, goal_point_x, goal_point_y), dynamic_movement_speed);
+				
+				}
+				else{
+					var dir_away_from_player = direction_to_point(global.player.x, global.player.y, x, y);
+					var goal_point_x = lengthdir_x(distance_goal - distance_to_object(obj_player), dir_away_from_player);
+					var goal_point_y = lengthdir_y(distance_goal - distance_to_object(obj_player), dir_away_from_player);
+					goal_point = [goal_point_x, goal_point_y];
+				
+					//check if something is in the way of the original goal point
+					if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Floor"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Floor");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with floor");
+					}
+					else if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Walls"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Walls");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with wall");
+					}
+					else if(collision_line(x, y, goal_point_x, goal_point_y, layer_tilemap_get_id("Tiles_Ceiling"), false, false) != noone){
+						var local_goal_point = scr_get_tm_collision_point(goal_point_x, goal_point_y, "Tiles_Ceiling");
+						if(array_length(local_goal_point) == 2){
+							var d_diff = point_distance(array_get(goal_point, 0), array_get(goal_point, 1), array_get(local_goal_point, 0), array_get(local_goal_point, 1));
+							var g_x = lengthdir_x(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+							var g_y = lengthdir_y(distance_goal - distance_to_object(obj_player) - d_diff - goal_radius, dir_away_from_player);
+						
+							goal_point = [g_x, g_y];
+						}
+						//show_debug_message("enemy goal point: collision with ceiling");
+					}
+					
+					move_towards_point(goal_point_x, goal_point_y, dynamic_movement_speed);
+				
+					//move_contact_all(point_direction(x, y, goal_point_x, goal_point_y), dynamic_movement_speed);
+				
+				}
 			}
-			else{
-				var dir_away_from_player = direction_to_point(global.player.x, global.player.y, x, y);
-				var goal_point_x = lengthdir_x(distance_goal - distance_to_object(obj_player), dir_away_from_player);
-				var goal_point_y = lengthdir_y(distance_goal - distance_to_object(obj_player), dir_away_from_player);
-				goal_point = [goal_point_x, goal_point_y];
-				move_towards_point(goal_point_x, goal_point_y, dynamic_movement_speed);
+			//else this enemy is at goal. start wandering
+			else
+			{
+				//show_debug_message(string(self) + " is wandering. TODO: handle wander");
 			}
+			
+			
 		}
 	}
 	
@@ -352,13 +558,6 @@ if(variable_instance_exists(id, "dynamic_hp")){
 
 
 }
-else{
-
-	x = xprevious;
-	y = yprevious;
-
-}
-
 
 
 

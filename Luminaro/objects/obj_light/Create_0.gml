@@ -28,15 +28,6 @@ max_xscale = 2;
 xEnd = 0;
 yEnd = 0;
 
-bounce_beam1 = noone;
-bounce_beam2 = noone;
-bounce_beam3 = noone;
-bounce_beam4 = noone;
-bounce_beam5 = noone;
-
-bounce_point = [0, 0];
-
-
 
 can_bounce = false;
 
@@ -51,3 +42,8 @@ bounce_damage_mod = .75;
 
 //what percent of intensity does a prism beam get?
 prism_damage_mod = .50;
+
+
+
+
+

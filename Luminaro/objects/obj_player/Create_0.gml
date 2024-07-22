@@ -25,9 +25,12 @@ facing = E_FACING.right;
 #region Static Player Parameters
 
 static_movement_speed = 20;
-static_jump_height = 100;
+static_jump_height = 150;
 static_jump_number = 2; //How many jumps the player can make
 static_jump_float_time = 12; //how long after jump does player hover
+
+fall_acceleration = 1.1;
+run_acceleration = 1.5;
 
 //how many mirrors can player have?
 max_mirrors = 3;
@@ -51,6 +54,9 @@ dynamic_jump_number = static_jump_number; //How many jumps the player can make
 dynamic_jump_float_time = static_jump_float_time //how long after jump does player hover
 jump_float_counter = 0; //how long has player been floating? (compared to dynamic_jump_float_tme)
 
+x_speed = 0;
+y_speed = 0;
+
 dynamic_max_mirrors = max_mirrors;
 
 dynamic_prism_beam_number = prism_beam_number;
@@ -71,7 +77,8 @@ lantern.holder = self;
 lantern.is_on = true;
 
 
-beam = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Weapons", obj_light_beam);
+beam_holding_height = 3*sprite_get_height(sprite_index)/4;
+beam = instance_create_layer(x, y - beam_holding_height, "Weapons", obj_light_beam);
 beam.light_type = E_LIGHT_TYPES.PLAYER_BEAM;
 beam.holder = self;
 beam.is_on = false;
