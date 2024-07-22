@@ -4,7 +4,7 @@
 if((place_meeting(x, y, obj_light))){
 	var light = instance_place(x, y, obj_light);
 	if(light.is_on){
-		show_debug_message("light hit shadow. type = " + string(light.light_type));
+		//show_debug_message("light hit shadow. type = " + string(light.light_type));
 		shadow_state = E_SHADOW_STATE.DEACTIVATED;
 		supercharged = false;
 		supercharge_timer = 0;

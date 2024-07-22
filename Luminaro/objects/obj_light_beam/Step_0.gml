@@ -9,6 +9,45 @@ event_inherited();
 
 
 
+if(is_on){
+
+	//top left
+	if(bbox_left < holder.bbox_left && bbox_bottom < holder.bbox_bottom){
+		//show_debug_message("top left");
+		var point = [bbox_left, bbox_top];
+	}
+	//top right
+	else if(bbox_right > holder.bbox_right && bbox_bottom < holder.bbox_bottom){
+		//show_debug_message("top right");
+		var point = [bbox_right , bbox_top];
+	}
+	//bottom left
+	else if(bbox_left < holder.bbox_left && bbox_top > holder.bbox_top){
+		//show_debug_message("bottom left");
+		var point = [bbox_left , bbox_bottom];
+	}
+	//bottom right
+	else if(bbox_right > holder.bbox_right && bbox_top > holder.bbox_top){
+		//show_debug_message("bottom right");
+		var point = [bbox_right , bbox_bottom];
+	}
+	else{
+		var point = [];
+	}
+
+	if(array_length(point) == 2){
+		var collision_obj = collision_line(x, y, array_get(point, 0), array_get(point, 1), id, true, true);
+	
+		if(collision_obj != noone){
+			show_debug_message("collision obj = " + string(collision_obj));
+		}
+	}
+
+}
+
+
+
+
 #region Collision
 
 if(place_meeting(x, y, obj_enemy) && is_on){
@@ -25,13 +64,15 @@ if(place_meeting(x, y, obj_enemy) && is_on){
 }
 else if(place_meeting(x, y, obj_mirror) && is_on){
 	
-	//show_debug_message("light step: collide mirror");
+	
 	
 	var obj = instance_place(x, y, obj_mirror);
 	var distance = point_distance(x, y, obj.x, obj.y);
 	depth = -50;
 	image_xscale = 1
 	image_xscale = distance / sprite_get_width(sprite_index);
+	
+	//show_debug_message("light step: collide mirror. xscale = " + string(image_xscale));
 	
 	is_colliding = true;
 }

@@ -76,6 +76,7 @@ beam.light_type = E_LIGHT_TYPES.PLAYER_BEAM;
 beam.holder = self;
 beam.is_on = false;
 
+
 prism_beams = ds_list_create();
 prism_max_angle = 140;
 
