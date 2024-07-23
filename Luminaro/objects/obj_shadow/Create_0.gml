@@ -13,14 +13,13 @@ level = 1;
 hp = 200;
 
 
-
 //timer until spawning starts (when in charging state)
 charge_timer = 0;
-charge_rate = 500;
+charge_rate = 3000;
 
 //timer until next spawn (when in spawning state)
 spawn_timer = 0;
-spawn_rate = 2000;
+spawn_rate = 3000;
 
 //timer until supercharged (when in spawning state)
 supercharge_timer = 0;

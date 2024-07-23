@@ -225,8 +225,6 @@ if(current_catalyst_charges < dynamic_catalyst_number){
 #region Level Up
 
 if(xp >= 100){
-	global.button_held_time = 0;
-	global.button_held = E_BUTTON_HELD.NONE;
 	
 	xp = xp - 100;
 	global.game_state = E_GAME_STATE.IN_GAME_MENU;

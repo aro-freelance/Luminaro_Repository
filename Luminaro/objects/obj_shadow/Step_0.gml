@@ -1,5 +1,6 @@
 
 
+
 #region Handle Activation
 
 if((place_meeting(x, y, obj_light))){
@@ -45,6 +46,7 @@ if(shadow_state == E_SHADOW_STATE.CHARGING){
 	charge_timer++;
 	if(charge_timer > charge_rate){
 		charge_timer = 0;
+		
 		spawn_timer = spawn_rate;
 		
 		shadow_state = E_SHADOW_STATE.SPAWNING;
@@ -55,6 +57,7 @@ else if(shadow_state == E_SHADOW_STATE.SPAWNING || shadow_state == E_SHADOW_STAT
 		spawn_timer = 0;
 		
 		randomize();
+		
 		var enemy_type = irandom_range(E_ENEMY_TYPES.BASIC, (E_ENEMY_TYPES.last - 1));
 		scr_spawn_enemy(enemy_type, [x, y], supercharged);
 	}

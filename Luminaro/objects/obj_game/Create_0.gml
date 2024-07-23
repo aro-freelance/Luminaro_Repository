@@ -222,8 +222,8 @@ global.baseline_lantern_size_mod = 1; //the multiplier applied to the lantern si
 global.baseline_beam_length_mod = 1; //the multiplier applied to beam length
 
 
-global.baseline_catalyst_number = 1; //how many catalysts can be held max
-global.baseline_catalyst_charge_delay = 400; //how long does a catalyst take to charge?
+global.baseline_catalyst_number = 2; //how many catalysts can be held max
+global.baseline_catalyst_charge_delay = 500; //how long does a catalyst take to charge?
 global.baseline_catalyst_size_mod = 1; //the multiplier applied to the catalyst size
  
 
