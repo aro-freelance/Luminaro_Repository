@@ -13,7 +13,7 @@ if (sprite_index != spr)
 
 if(light_type != E_LIGHT_TYPES.MIRROR_BEAM){
 	if(holder != noone){
-		if(holder == global.player){
+		if(holder.id == global.player){
 			if (holder.facing == E_FACING.left){
 			    x_offset = -hold_distance;
 			} else {
@@ -111,9 +111,17 @@ if(bounce_counter > 0){
 #endregion
 
 
+#region Set Lantern Size
+
+if(light_type == E_LIGHT_TYPES.PLAYER_LANTERN){
+	if(is_on){
+		if(image_xscale != global.player.dynamic_lantern_size_mod) image_xscale = global.player.dynamic_lantern_size_mod;
+		if(image_yscale != global.player.dynamic_lantern_size_mod) image_yscale = global.player.dynamic_lantern_size_mod;
+	}
+}
 
 
-
+#endregion
 
 
 

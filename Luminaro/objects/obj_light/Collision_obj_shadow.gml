@@ -1,5 +1,4 @@
-/// @description Insert description here
-// You can write your code in this editor
+/// @description obj_light collision with obj_shadow
 
 if(global.game_state == E_GAME_STATE.PLAYING){
 
@@ -10,7 +9,7 @@ if(is_on){
 	if(light_type == E_LIGHT_TYPES.PLAYER_LANTERN){
 	
 		
-		other.hp = other.hp - intensity;
+		other.hp = other.hp - (intensity*global.player.dynamic_light_intensity_mod);
 		//show_debug_message("obj_light collision obj_enemy: shadow collision with lantern. hp = " + string(other.hp));
 
 	}
@@ -21,13 +20,13 @@ if(is_on){
 		
 	
 		if(size = E_LIGHT_SIZE.NORMAL){
-			other.hp = other.hp - (intensity + (global.player.on_timer/global.player.battery) );
+			other.hp = other.hp - ((intensity*global.player.dynamic_light_intensity_mod) + (global.player.on_timer/global.player.dynamic_battery) );
 		}
 		else if (size = E_LIGHT_SIZE.NARROW){
-			other.hp = other.hp - (intensity * (global.player.on_timer/global.player.battery) * 2);
+			other.hp = other.hp - ((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) * 2);
 		}
 		else if (size = E_LIGHT_SIZE.WIDE){
-			other.hp = other.hp - ((intensity * (global.player.on_timer/global.player.battery)) / 2);
+			other.hp = other.hp - (((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery)) / 2);
 		}
 		
 		//show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.hp));
@@ -38,13 +37,13 @@ if(is_on){
 	else if(light_type == E_LIGHT_TYPES.MIRROR_BEAM){
 		
 		if(size = E_LIGHT_SIZE.NORMAL){
-			other.hp = other.hp - (intensity * (global.player.on_timer/global.player.battery) * bounce_damage_mod);
+			other.hp = other.hp - ((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) * bounce_damage_mod);
 		}
 		else if (size = E_LIGHT_SIZE.NARROW){
-			other.hp = other.hp - (intensity * (global.player.on_timer/global.player.battery) * bounce_damage_mod * 2);
+			other.hp = other.hp - ((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) * bounce_damage_mod * 2);
 		}
 		else if (size = E_LIGHT_SIZE.WIDE){
-			other.hp = other.hp - ((intensity * (global.player.on_timer/global.player.battery) * bounce_damage_mod) / 2);
+			other.hp = other.hp - (((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) * bounce_damage_mod) / 2);
 		}
 		
 		
@@ -55,13 +54,13 @@ if(is_on){
 	else if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
 		
 		if(size = E_LIGHT_SIZE.NORMAL){
-			other.hp = other.hp - (intensity * (global.player.on_timer/global.player.battery) * prism_damage_mod);
+			other.hp = other.hp - ((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) * prism_damage_mod);
 		}
 		else if (size = E_LIGHT_SIZE.NARROW){
-			other.hp = other.hp - (intensity * (global.player.on_timer/global.player.battery) * prism_damage_mod * 2);
+			other.hp = other.hp - ((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) * prism_damage_mod * 2);
 		}
 		else if (size = E_LIGHT_SIZE.WIDE){
-			other.hp = other.hp - ((intensity * (global.player.on_timer/global.player.battery) * prism_damage_mod) / 2);
+			other.hp = other.hp - (((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) * prism_damage_mod) / 2);
 		}
 		
 		

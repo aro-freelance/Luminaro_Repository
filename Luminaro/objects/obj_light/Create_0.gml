@@ -15,10 +15,11 @@ is_colliding = false;
 
 
 light_type = E_LIGHT_TYPES.PLAYER_LANTERN;
-intensity = .5;
-size = E_LIGHT_SIZE.NORMAL;
-hold_distance = 30; // how far ahead of player is the weapon held?
 
+size = E_LIGHT_SIZE.NORMAL;
+hold_distance = 80; // how far ahead of player is the weapon held?
+
+intensity = .5;
 xscale_growth = .01;
 min_xscale = .4;
 max_xscale = 2;
@@ -38,10 +39,10 @@ bounce_number = 1;
 bounce_counter = 0;
 
 //what percent of intensity does a bounce get?
-bounce_damage_mod = .75;
+bounce_damage_mod = .5;
 
 //what percent of intensity does a prism beam get?
-prism_damage_mod = .50;
+prism_damage_mod = .80;
 
 
 

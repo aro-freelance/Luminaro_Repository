@@ -1,6 +1,19 @@
 /// @description this controls the game
 
 
+#region Inputs
+
+
+//TODO: put controls here and convert to using left instead of vk_left / "A" etc
+
+
+
+#endregion
+
+
+
+
+
 #region Game Parameters
 
 enum E_GAME_STATE{
@@ -125,6 +138,8 @@ enum E_PICKUP_TYPES{
 
 #region Player
 
+#region player states
+
 enum E_JUMP_STATE{
 	GROUNDED,
 	JUMPING,
@@ -154,6 +169,107 @@ enum E_FACING{
 }
 
 #endregion
+
+
+
+#region parameters baseline
+
+//the parameters to display and which can be upgraded
+enum E_PLAYER_PARAMETERS{
+	MOVEMENT_SPEED,
+	JUMP_HEIGHT,
+	//JUMP_NUMBER,
+	JUMP_FLOAT_TIME,
+	BEAM_SPEED,
+	BEAM_INTENSITY_MOD,
+	//MAX_MIRRORS,
+	PRISM_BEAM_NUMBER,
+	BATTERY,
+	BATTERY_CHARGE_DELAY,
+	LANTERN_SIZE_MOD,
+	BEAM_LENGTH_MOD,
+	CATALYST_NUMBER,
+	CATALYST_CHARGE_DELAY,
+	CATALYST_SIZE_MOD,
+	HP,
+	last,
+}
+
+
+
+global.baseline_movement_speed = 15; //20
+global.baseline_jump_height = 120; //150
+//global.baseline_jump_number = 1; //2  //How many jumps the player can make
+global.baseline_jump_float_time = 10; //12 //how long after jump does player hover
+
+
+global.baseline_beam_speed = .025; //.03
+global.baseline_light_intensity_mod = 1; //1.2
+
+//how many mirrors can player have?
+//global.baseline_max_mirrors = 1; //3
+
+global.baseline_prism_beam_number = 3; //4
+
+
+global.baseline_battery = 200; //250 //battery max on time
+global.baseline_battery_charge_delay = 200; //150 //how long does the battery take to charge?
+ 
+ 
+global.baseline_lantern_size_mod = 1; //the multiplier applied to the lantern size
+
+
+global.baseline_beam_length_mod = 1; //the multiplier applied to beam length
+
+
+global.baseline_catalyst_number = 1; //how many catalysts can be held max
+global.baseline_catalyst_charge_delay = 400; //how long does a catalyst take to charge?
+global.baseline_catalyst_size_mod = 1; //the multiplier applied to the catalyst size
+ 
+
+global.baseline_hp = 100; //300
+
+#endregion
+
+
+
+#region stats per upgrade
+
+global.d_movement_speed = 1; 
+global.d_jump_height = 10; 
+//global.d_jump_number = 1; 
+global.d_jump_float_time = .5;
+
+
+global.d_beam_speed = .005; 
+global.d_light_intensity_mod= .1;
+
+//how many mirrors can player have?
+//global.d_max_mirrors = 1; //3
+
+global.d_prism_beam_number = 1; 
+
+
+global.d_battery = 50;
+global.d_battery_charge_delay = -20;
+
+global.d_lantern_size_mod = .1;
+
+global.d_beam_length_mod = .1;
+
+global.d_catalyst_number = 1;
+global.d_catalyst_charge_delay = -20;
+global.d_catalyst_size_mod = .1;
+
+global.d_hp = 50; //300
+
+#endregion
+
+
+
+#endregion
+
+
 
 #region Enemies
 

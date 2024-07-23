@@ -12,7 +12,10 @@
     "name":"Shadow Types",
     "path":"folders/Objects/Shadows/Shadow Types.yy",
   },
-  "parentObjectId":null,
+  "parentObjectId":{
+    "name":"obj_shadow",
+    "path":"objects/obj_shadow/obj_shadow.yy",
+  },
   "persistent":false,
   "physicsAngularDamping":0.1,
   "physicsDensity":0.5,

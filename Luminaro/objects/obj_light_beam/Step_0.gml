@@ -8,7 +8,6 @@ event_inherited();
 
 
 
-
 #region Set Collision bool for growth
 
 
@@ -150,15 +149,19 @@ else if (is_colliding){
 
 #region Grow Beam Over Time
 
+if(is_on){
+	growth_deceleration = clamp(growth_deceleration + deceleration_rate , 0, global.player.dynamic_beam_speed/2)
+}
+
 
 if(!is_on){
 	image_xscale = min_xscale;
 	mask_index = sprite_index;
 }
 
-if(image_xscale < max_xscale){
+if(image_xscale < (max_xscale*global.player.dynamic_beam_length_mod)){
 	if(!is_colliding){
-		image_xscale += xscale_growth;
+		image_xscale += global.player.dynamic_beam_speed - growth_deceleration;
 		mask_index = sprite_index;
 	}
 }

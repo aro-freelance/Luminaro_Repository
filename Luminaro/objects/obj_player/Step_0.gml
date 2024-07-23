@@ -129,8 +129,8 @@ if(place_meeting(x, y, obj_pickup_item)){
 	var pickup = instance_place(x, y, obj_pickup_item);
 	
 	if(pickup.type == E_PICKUP_TYPES.HEALTH){
-		hp += pickup.amount;
-		show_debug_message("hp = " + string(hp));
+		dynamic_hp += pickup.amount;
+		show_debug_message("hp = " + string(dynamic_hp));
 	}
 	else if(pickup.type == E_PICKUP_TYPES.XP){
 		xp += pickup.amount;
@@ -153,10 +153,10 @@ if(place_meeting(x, y, obj_pickup_item)){
 
 if(!battery_charged || attack_state == E_ATTACK_STATE.idle){
 	//if the batter didn't fully die, decrement timer twice as fast as if it died
-	if(on_timer > 0) on_timer = clamp(on_timer - 2, 0, battery);
+	if(on_timer > 0) on_timer = clamp(on_timer - 2, 0, dynamic_battery);
 	
 	battery_charge_timer++;
-	if( battery_charge_timer > battery_charge_delay ){
+	if( battery_charge_timer > dynamic_battery_charge_delay ){
 		on_timer = 0;
 		battery_charge_timer = 0;
 		battery_charged = true;
@@ -169,7 +169,8 @@ if(attack_state == E_ATTACK_STATE.beam){
 		on_timer++;
 	}
 
-	if(on_timer > battery){
+	if(on_timer > dynamic_battery){
+		show_debug_message("beam battery died");
 		attack_state = E_ATTACK_STATE.idle;
 		beam.is_on = false;
 		battery_charged = false;
@@ -179,28 +180,54 @@ if(attack_state == E_ATTACK_STATE.beam){
 
 if(attack_state == E_ATTACK_STATE.prism){
 	if(ds_list_size(prism_beams) > 0){
-		for(j = 0; j <= dynamic_prism_beam_number; j++){
+		other.on_timer++;
+		
+		if(on_timer > dynamic_battery){
 			
-			var prism_beam = prism_beams[| j];
+			with(obj_light){
+				if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
+					instance_destroy();
+				}
+			}
 			
-			if(prism_beam.is_on){
-				on_timer++;
-			}
-
-			if(on_timer > battery){
-				attack_state = E_ATTACK_STATE.idle;
-				prism_beam.is_on = false;
-				battery_charged = false;
-			}
+			//and clear the list
+			ds_list_clear(prism_beams);
+			battery_charged = false;
+	
+			attack_state = E_ATTACK_STATE.idle;
+			lantern.is_on = true;
+	
 		}
 	}
 }
 
 #endregion
 
+#region Catalyst Charging
+
+//if we are not at max catalyst charges
+if(current_catalyst_charges < dynamic_catalyst_number){
+	catalyst_charge_timer++; 
+	
+	//if the timer is ready
+	if(catalyst_charge_timer > dynamic_catalyst_charge_delay){
+		catalyst_charge_timer = 0;
+		
+		//add a catalyst charge
+		current_catalyst_charges++; 
+		show_debug_message("obj player: catalyst timer ready. current catalyst charges = " + string(current_catalyst_charges));
+	}
+}
+
+
+#endregion
+
 #region Level Up
 
 if(xp >= 100){
+	global.button_held_time = 0;
+	global.button_held = E_BUTTON_HELD.NONE;
+	
 	xp = xp - 100;
 	global.game_state = E_GAME_STATE.IN_GAME_MENU;
 	global.player_menu = instance_create_layer(0, 0, "UI", obj_player_menu);
@@ -279,7 +306,7 @@ if(global.button_held == E_BUTTON_HELD.RIGHT){
 
 #endregion
 
-#region INPUT: stop
+#region Hold stop
 
 if(keyboard_check_released(ord("A")) || keyboard_check_released(vk_left) || keyboard_check_released(ord("D")) || keyboard_check_released(vk_right)){
 	global.button_held_time = 0;
@@ -372,18 +399,18 @@ if(global.button_held == E_BUTTON_HELD.CROUCH){
 
 if(mouse_check_button(mb_left)){
 	
-	if(battery_charged){
+	if(battery_charged && !beam.is_on) beam.is_on = true;
+		
+	if(beam.is_on){
+		if(lantern.is_on) lantern.is_on = false;
+		if(attack_state != E_ATTACK_STATE.beam) attack_state = E_ATTACK_STATE.beam;
 		
 		if(mouse_x > x) facing = E_FACING.right;
 		else facing = E_FACING.left;
 	
-		beam.image_angle = point_direction(x, y, mouse_x, mouse_y);
+		beam.image_angle = point_direction(x + beam.x_offset, y - beam_holding_height, device_mouse_x(0), device_mouse_y(0));
 		
-		attack_state = E_ATTACK_STATE.beam;
-		lantern.is_on = false;
-		beam.is_on = true;
 		
-	
 	}
 	else{
 		//show_debug_message("TODO: play effect and sound to tell player battery is dead. and text?  ");
@@ -408,11 +435,25 @@ if(keyboard_check_pressed(vk_lshift)){
 	if(beam.is_on){
 		beam.size = E_LIGHT_SIZE.WIDE;
 	}
+	if(ds_list_size(prism_beams) > 0){
+		with(obj_light){
+			if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
+				size = E_LIGHT_SIZE.WIDE;
+			}
+		}
+	}
 }
 
 if(keyboard_check_released(vk_lshift)){
 	if(beam.is_on){
 		beam.size = E_LIGHT_SIZE.NORMAL;
+	}
+	if(ds_list_size(prism_beams) > 0){
+		with(obj_light){
+			if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
+				size = E_LIGHT_SIZE.NORMAL;
+			}
+		}
 	}
 }
 
@@ -424,21 +465,53 @@ if(keyboard_check_pressed(vk_lalt)){
 	if(beam.is_on){
 		beam.size = E_LIGHT_SIZE.NARROW;
 	}
+	if(ds_list_size(prism_beams) > 0){
+		with(obj_light){
+			if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
+				size = E_LIGHT_SIZE.NARROW;
+			}
+		}
+	}
 }
 
 if(keyboard_check_released(vk_lalt)){
 	if(beam.is_on){
 		beam.size = E_LIGHT_SIZE.NORMAL;
 	}
+	if(ds_list_size(prism_beams) > 0){
+		with(obj_light){
+			if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
+				size = E_LIGHT_SIZE.NARROW;
+			}
+		}
+	}
 }
 
 #endregion
 
-#region INPUT: create a mirror
+#region INPUT: create a .... catalyst    (previously mirror)
 
 if(mouse_check_button_pressed(mb_right)){
+
+	//if we have a catalyst charge
+	if(current_catalyst_charges > 0){
+		current_catalyst_charges--;
+		
+		//if we do not have the max number of catalysts currently out make one where the mouse is
+		if(current_spawned_catalysts < dynamic_catalyst_number){
+			current_spawned_catalysts++; //decremented in obj_explosive_catalyst when clean up
+			
+			var catalyst = instance_create_layer(device_mouse_x(0), device_mouse_y(0), "Weapons", obj_explosive_catalyst);
+			catalyst.max_size *= dynamic_catalyst_size_mod;
+			
+		}
 	
-	var mirror = instance_create_layer(mouse_x, mouse_y, "Weapons", obj_mirror);
+	}
+	
+	
+	
+	/*
+	var mirror = instance_create_layer(device_mouse_x_to_gui(0), device_mouse_y_to_gui(0), "Weapons", obj_mirror);
 	mirror.owner = self;
 	
 	//if there are already the max number, remove the oldest
@@ -448,6 +521,7 @@ if(mouse_check_button_pressed(mb_right)){
 	}
 	
 	array_push(mirrors, mirror);
+	*/
 	
 }
 
@@ -463,7 +537,7 @@ if(mouse_check_button(mb_middle)){
 		
 		//spawn the beams if they are not out
 		if(ds_list_size(prism_beams) <= 0){
-			for(i = 0; i <= dynamic_prism_beam_number; i++){
+			for(i = 0; i < dynamic_prism_beam_number; i++){
 			
 				var prism_beam = instance_create_layer(x, y - sprite_get_height(sprite_index)/2, "Weapons", obj_light_beam);
 				prism_beam.light_type = E_LIGHT_TYPES.PLAYER_PRISM_BEAM;
@@ -480,7 +554,7 @@ if(mouse_check_button(mb_middle)){
 		//if there are beams, set the angles of the beams
 		if(ds_list_size(prism_beams) > 0){
 		
-			for(j = 0; j <= dynamic_prism_beam_number; j++){
+			for(j = 0; j < dynamic_prism_beam_number; j++){
 			
 				show_debug_message("j = " + string(j));
 			
@@ -488,7 +562,7 @@ if(mouse_check_button(mb_middle)){
 			
 				var beam_gap_angle = prism_max_angle / dynamic_prism_beam_number;
 		
-				var start_point =  point_direction(x, y, mouse_x, mouse_y) - prism_max_angle/2;
+				var start_point =  point_direction(x + beam.x_offset, y - beam_holding_height, device_mouse_x(0), device_mouse_y(0)) - prism_max_angle/2;
 
 				prism_beam.image_angle = start_point + (j * beam_gap_angle);
 			
@@ -500,6 +574,15 @@ if(mouse_check_button(mb_middle)){
 
 if(mouse_check_button_released(mb_middle)){
 	
+	
+	with(obj_light){
+		if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
+			instance_destroy();
+		}
+	}
+	
+	
+	/*
 	//delete each beam
 	if(ds_list_size(prism_beams) > 0){
 		for(j = 0; j <= dynamic_prism_beam_number; j++){
@@ -507,6 +590,7 @@ if(mouse_check_button_released(mb_middle)){
 			instance_destroy(prism_beam);
 		}
 	}
+	*/
 	
 	attack_state = E_ATTACK_STATE.idle;
 	lantern.is_on = true;

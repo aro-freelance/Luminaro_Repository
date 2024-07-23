@@ -1,4 +1,4 @@
-/// @description destroy hit projectiles
+/// @description obj_light collision with enemy projectile
 
 if(global.game_state == E_GAME_STATE.PLAYING){
 

@@ -520,8 +520,10 @@ if(variable_instance_exists(id, "dynamic_hp")){
 		var irand_xp_offset = irandom_range(-100, 100);
 		var irand_hp_offset = irandom_range(-100, 100) - irand_xp_offset;
 		
+		var irand_xp_variance = irandom_range(1, 1.3*level);
+		
 		var xp_pickup = instance_create_layer(x + irand_xp_offset, y, "Items", obj_xp_pickup);
-		xp_pickup.amount *= level;
+		xp_pickup.amount *= irand_xp_variance;
 		
 		
 		if(irand_health > 90) {
