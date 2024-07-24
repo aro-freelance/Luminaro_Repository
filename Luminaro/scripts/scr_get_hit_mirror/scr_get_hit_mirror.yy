@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_get_hit_mirror",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Physics Scripts",
+    "path":"folders/Scripts/Physics Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

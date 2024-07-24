@@ -477,37 +477,7 @@ if(can_move){
 #endregion
 
 
-#region Take Damage
 
-/* handled in light collision event 
-
-if(global.player.lantern.is_on){
-	if(place_meeting(x, y, global.player.lantern)){
-		show_debug_message("obj_enemy step: enemy collision with lantern");
-		dynamic_hp = dynamic_hp - global.player.lantern.intensity;
-	}
-}
-
-if(global.player.beam.is_on){
-	if(place_meeting(x, y, global.player.beam)){
-		show_debug_message("obj_enemy step: enemy collision with light beam");
-	
-		if(global.player.beam.size = E_LIGHT_SIZE.NORMAL){
-			dynamic_hp = dynamic_hp - global.player.beam.intensity;
-		}
-		else if (global.player.beam.size = E_LIGHT_SIZE.NARROW){
-			dynamic_hp = dynamic_hp - (global.player.beam.intensity * 2);
-		}
-		else if (global.player.beam.size = E_LIGHT_SIZE.WIDE){
-			dynamic_hp = dynamic_hp - (global.player.beam.intensity / 2);
-		}
-	
-	}
-}
-*/
-
-
-#endregion
 
 
 #region Death
@@ -522,13 +492,18 @@ if(variable_instance_exists(id, "dynamic_hp")){
 		var irand_hp_offset = irandom_range(-100, 100) - irand_xp_offset;
 		
 		var xp_pickup = instance_create_layer(x + irand_xp_offset, y, "Items", obj_xp_pickup);
-		xp_pickup.amount *= level;
+		xp_pickup.amount *= level + 5;
 		
 		
-		if(irand_health > 90) {
+		if(irand_health > 10) {
 			var health_pickup = instance_create_layer(x + irand_hp_offset, y, "Items", obj_health_pickup);
-			health_pickup.amount *= level;
+			health_pickup.amount *= level + 5;
 		}
+		
+	
+		var inventory_pickup = instance_create_layer(x + irand_xp_offset, y, "Items", obj_inventory_pickup);
+		//TODO: design a more complex pairing of inventory items and boss types?
+		inventory_pickup.inventory_item_type = enemy_type;
 		
 		instance_destroy();
 	}

@@ -5,8 +5,8 @@
   "isDnD":false,
   "name":"scr_set_player_stats",
   "parent":{
-    "name":"Scripts",
-    "path":"folders/Scripts.yy",
+    "name":"Player Parameter Scripts",
+    "path":"folders/Scripts/Player Parameter Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

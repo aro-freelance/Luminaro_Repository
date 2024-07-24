@@ -186,3 +186,12 @@ current_catalyst_charges = 0;
 current_spawned_catalysts = 0;
 
 #endregion
+
+
+#region Inventory
+
+inventory_max = 36;
+
+inventory = [];
+
+#endregion

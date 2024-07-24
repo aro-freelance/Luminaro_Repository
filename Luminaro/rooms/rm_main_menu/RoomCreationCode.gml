@@ -8,5 +8,3 @@ window_set_size(width, height);
 */
 
 
-global.player = noone;
-global.player_menu = noone;

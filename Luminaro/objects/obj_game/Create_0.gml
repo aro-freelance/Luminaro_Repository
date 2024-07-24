@@ -109,6 +109,7 @@ enum E_PLAYER_MENU_STATE{
 	LEVEL_UP,
 	SETTINGS,
 	SAVE_LOAD_EXIT,
+	INVENTORY,
 }
 
 
@@ -131,8 +132,33 @@ enum E_PICKUP_TYPES{
 	MESSAGE,
 	HEALTH,
 	XP,
+	last_before_perm,
+	INVENTORY,
 	last
 }
+
+
+enum E_INVENTORY_ITEM_TYPES{
+	TYPE_0,	
+	TYPE_1,
+	TYPE_2,
+	TYPE_3,
+	TYPE_4,
+	TYPE_5,
+	TYPE_6,
+	TYPE_7,
+	last
+}
+
+global.combine_descriptions = ds_grid_create(E_INVENTORY_ITEM_TYPES.last - 1, E_INVENTORY_ITEM_TYPES.last - 1);
+
+global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_0, E_INVENTORY_ITEM_TYPES.TYPE_0] = "Item 0";
+global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_1, E_INVENTORY_ITEM_TYPES.TYPE_1] = "Item 1";
+global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_2, E_INVENTORY_ITEM_TYPES.TYPE_2] = "Item 2";
+
+
+global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_0, E_INVENTORY_ITEM_TYPES.TYPE_1] = "Item 0 , 1";
+global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_1, E_INVENTORY_ITEM_TYPES.TYPE_0] = "Item 1 , 0";
 
 #endregion
 

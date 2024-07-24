@@ -51,6 +51,28 @@ if(keyboard_check_pressed(vk_f5)){
 #endregion
 
 
+#region INPUT: add inventory item
+
+if(keyboard_check_pressed(vk_f2)){	
+	randomize();
+	
+	//var item_type = irandom_range(0, (E_INVENTORY_ITEM_TYPES.last - 1));
+	
+	var item_type = irandom_range(0, 2);
+	
+	if(array_length(global.player.inventory) < global.player.inventory_max){
+			array_push(global.player.inventory, item_type);
+			show_debug_message("add item type " + string(item_type));
+		 }
+		 else{
+			//TODO: tell play inventory full
+			show_debug_message("inventory is full");
+		 }
+
+}
+
+#endregion
+
 
 
 }

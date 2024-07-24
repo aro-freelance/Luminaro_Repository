@@ -139,6 +139,20 @@ if(place_meeting(x, y, obj_pickup_item)){
 	else if(pickup.type == E_PICKUP_TYPES.MESSAGE){
 		show_message(pickup.message_string);
 	}
+	else if (pickup.type == E_PICKUP_TYPES.INVENTORY){
+		 
+		 //add the item type E_INVENTORY_ITEM_TYPES to the inventory
+		 if(array_length(inventory) < inventory_max){
+			array_push(inventory, pickup.inventory_item_type);
+			show_debug_message("inventory pickup. inventory size = " + string(array_length(inventory)) + ". last added = " + string(pickup.inventory_item_type));
+		 }
+		 else{
+			//TODO: tell play inventory full
+			show_debug_message("inventory is full");
+		 }
+		 
+		 
+	}
 	
 	//TODO: play sound
 	//TODO: play effect
@@ -240,6 +254,7 @@ if(xp >= 100){
 if(variable_instance_exists(id, "dynamic_hp")){
 	if(dynamic_hp <= 0){
 		show_debug_message("player " + string(id) + " death.");
+		instance_deactivate_all(true);
 		room_goto(rm_death_screen);
 	}
 }

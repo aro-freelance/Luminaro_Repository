@@ -7,6 +7,7 @@ window_set_size(width, height);
 }
 */
 
+
 spawn_point = [display_get_gui_width()/2, display_get_gui_height()/2];	
 
 
@@ -14,3 +15,4 @@ if(global.player == noone) global.player = instance_create_layer(array_get(spawn
 //TODO: set saved stats to player
 
 global.lighting_effects = instance_create_layer(0, 0, "Effects", obj_lighting_effects);
+

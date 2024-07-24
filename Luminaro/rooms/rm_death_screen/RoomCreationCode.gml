@@ -8,4 +8,3 @@ window_set_size(width, height);
 */
 
 
-//show_message("main menu");

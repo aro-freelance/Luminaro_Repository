@@ -114,12 +114,43 @@ else if(state == E_PLAYER_MENU_STATE.LEVEL_UP){
 
 #endregion
 
+#region Inventory
 
-#region Save / Load / Exit
+else if(state == E_PLAYER_MENU_STATE.INVENTORY){
 
-else if(state == E_PLAYER_MENU_STATE.SAVE_LOAD_EXIT){
-
-
+	draw_rectangle_color(display_center_x + sprite_get_width(spr_inventory_item), y1 + margin, x2 - margin, y2 - margin, c_aqua, c_aqua, c_aqua, c_aqua, false);
+	
+	draw_set_font(ft_1);
+	draw_set_color(c_black);
+	draw_set_valign(fa_top);
+	draw_set_halign(fa_left);
+	
+	var combine_item_x = display_center_x + margin + 1*sprite_get_width(spr_inventory_item);
+	var combine_item_y =  y1 + 2*margin;
+	//var c_1_string = "description 1 mmmmmmmm description 1 description 1 description 1"  //example string.  end of mmms in max length of one line. max four lines.
+	if(selected_item_type_1 != -1) {
+		var type_1_string = global.combine_descriptions[# selected_item_type_1, selected_item_type_1];
+		
+		draw_sprite_ext(spr_inventory_item, selected_item_type_1, combine_item_x, combine_item_y, combine_sprite_scale, combine_sprite_scale, 0, c_white, 1);
+		draw_rectangle(combine_item_x + margin + combine_sprite_scale*sprite_get_width(spr_inventory_item), combine_item_y, combine_item_x + margin + 3*combine_sprite_scale*sprite_get_width(spr_inventory_item), y1 + 2*margin + combine_sprite_scale*sprite_get_height(spr_inventory_item), true);
+		draw_text_ext(combine_item_x + margin + combine_sprite_scale*sprite_get_width(spr_inventory_item) + combine_text_spacing, combine_item_y, type_1_string, sep, 2*combine_sprite_scale*sprite_get_width(spr_inventory_item));
+	}
+	if(selected_item_type_2 != -1) {
+		var type_2_string = global.combine_descriptions[# selected_item_type_2, selected_item_type_2];
+		
+		draw_sprite_ext(spr_inventory_item, selected_item_type_2, combine_item_x, combine_item_y + ( margin + combine_sprite_scale*sprite_get_height(spr_inventory_item)), combine_sprite_scale, combine_sprite_scale, 0, c_white, 1);
+		draw_rectangle(combine_item_x + margin + combine_sprite_scale*sprite_get_width(spr_inventory_item), combine_item_y + ( margin + combine_sprite_scale*sprite_get_height(spr_inventory_item)), combine_item_x + margin + 3*combine_sprite_scale*sprite_get_width(spr_inventory_item), y1 + 2*margin + ( margin + 2*combine_sprite_scale*sprite_get_height(spr_inventory_item)), true);
+		draw_text_ext(combine_item_x + margin + combine_sprite_scale*sprite_get_width(spr_inventory_item) + combine_text_spacing, combine_item_y + ( margin + combine_sprite_scale*sprite_get_height(spr_inventory_item)), type_2_string, sep, 2*combine_sprite_scale*sprite_get_width(spr_inventory_item));
+	}
+	if(selected_item_type_1 != -1 && selected_item_type_2 != -1) {
+		var combine_string = global.combine_descriptions[# selected_item_type_1, selected_item_type_2];
+		
+		draw_sprite_ext(spr_inventory_item_blank, 0, combine_item_x, combine_item_y + 2*( margin + combine_sprite_scale*sprite_get_height(spr_inventory_item)), combine_sprite_scale, combine_sprite_scale, 0, c_white, 1);	
+		draw_rectangle(combine_item_x + margin + combine_sprite_scale*sprite_get_width(spr_inventory_item), combine_item_y + ( 2*margin + 2*combine_sprite_scale*sprite_get_height(spr_inventory_item)), combine_item_x + margin + 3*combine_sprite_scale*sprite_get_width(spr_inventory_item), y1 + 2*margin + ( 2*margin + 3*combine_sprite_scale*sprite_get_height(spr_inventory_item)), true);
+		draw_text_ext(combine_item_x + margin + combine_sprite_scale*sprite_get_width(spr_inventory_item) + combine_text_spacing, combine_item_y + ( 2*margin + 2*combine_sprite_scale*sprite_get_height(spr_inventory_item)), combine_string, sep, 2*combine_sprite_scale*sprite_get_width(spr_inventory_item));
+	}
+	
+	
 
 }
 
@@ -135,6 +166,20 @@ else if(state == E_PLAYER_MENU_STATE.SETTINGS){
 }
 
 #endregion
+
+
+#region Save / Load / Exit
+
+else if(state == E_PLAYER_MENU_STATE.SAVE_LOAD_EXIT){
+
+
+
+}
+
+#endregion
+
+
+
 	
 	
 

@@ -1,6 +1,14 @@
 /// @description clean up player menu
 
 
-with(obj_template_player_menu_mode_button){
+with(obj_player_menu_mode_button){
+	instance_destroy();
+}
+
+with(obj_inventory_button){
+	instance_destroy();
+}
+
+with(obj_combine_button){
 	instance_destroy();
 }

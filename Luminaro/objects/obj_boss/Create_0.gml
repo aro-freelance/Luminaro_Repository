@@ -27,7 +27,7 @@ can_attack = false;
 
 #region static parameters
 
-enemy_type = E_ENEMY_TYPES.BASIC;
+enemy_type = E_BOSS_TYPES.BOSS_1;
 
 static_movement_speed = 3;
 

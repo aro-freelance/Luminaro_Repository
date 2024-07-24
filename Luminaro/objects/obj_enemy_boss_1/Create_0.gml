@@ -21,6 +21,8 @@ tactic_state = E_ENEMY_TACTIC_STATE.CHASE;
 
 #region static parameters
 
+enemy_type = E_BOSS_TYPES.BOSS_1;
+
 static_movement_speed = 3;
 
 melee_attack_range = 600;

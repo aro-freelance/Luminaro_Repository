@@ -17,7 +17,7 @@ if(!init){
 	#endregion
 	
 	//remove buttons
-	with(obj_template_player_menu_mode_button){
+	with(obj_player_menu_mode_button){
 		instance_destroy();
 	}
 
@@ -27,20 +27,21 @@ if(!init){
 	if(state == E_PLAYER_MENU_STATE.DISPLAY_STATS){
 		show_debug_message("player menu init: display stats");
 
-		var button1 = instance_create_layer(display_center_x - menu_width/2 + margin + button_width/2, display_center_y + menu_height/2 - margin - button_height/2, "UI", obj_template_player_menu_mode_button);
-		button1.destination_type = E_PLAYER_MENU_STATE.SETTINGS;
-		button1.label = "Settings";
-
+		var button1 = instance_create_layer(display_center_x - menu_width/2 + margin + button_width/2, display_center_y + menu_height/2 - margin - button_height/2, "UI", obj_player_menu_mode_button);
+		button1.destination_type = E_PLAYER_MENU_STATE.INVENTORY;
+		button1.label = "Inventory";
 		
-		var button2 = instance_create_layer(display_center_x + menu_width/2 - margin - button_width/2, display_center_y + menu_height/2 - margin - button_height/2, "UI", obj_template_player_menu_mode_button);
-		button2.destination_type = E_PLAYER_MENU_STATE.SAVE_LOAD_EXIT;
-		button2.label = "Save/Load/Exit";
+		var button2 = instance_create_layer(display_center_x + menu_width/2 - margin - button_width/2, display_center_y + menu_height/2 - margin - button_height/2, "UI", obj_player_menu_mode_button);
+		button2.destination_type = E_PLAYER_MENU_STATE.SETTINGS;
+		button2.label = "Settings";
 		
+		var button3 = instance_create_layer(display_center_x, display_center_y + menu_height/2 - margin - button_height/2, "UI", obj_player_menu_mode_button);
+		button3.destination_type = E_PLAYER_MENU_STATE.SAVE_LOAD_EXIT;
+		button3.label = "Save/Load/Exit";
 
 	}
 
 	#endregion
-	
 	
 	#region Level up
 	
@@ -50,7 +51,7 @@ if(!init){
 	
 		#region Increase Random Stat
 	
-	//TODO: for loop here for multiple stat increase
+		//TODO: for loop here for multiple stat increase
 		randomize();
 	
 		var random_parameter = irandom_range(0, (E_PLAYER_PARAMETERS.last - 1));
@@ -131,16 +132,42 @@ if(!init){
 		
 	#endregion
 
-	#region Save / Load / Exit
+	#region Inventory
 
-	else if(state == E_PLAYER_MENU_STATE.SAVE_LOAD_EXIT){
-		show_debug_message("player menu init: save load exit");
-		//TODO: show stuff for save load and exit
-
+	else if(state == E_PLAYER_MENU_STATE.INVENTORY){
+		show_debug_message("player menu init: inventory");
+		
+		var counter = 0; 
+		var previous_column = 0;
+		for(i = 0; i< array_length(global.player.inventory); i++){
+			
+			var item_type = array_get(global.player.inventory, i);
+			
+			#region Setup Grid Location
+			var height = y1 + margin + (counter * (margin + sprite_get_height(spr_inventory_item)));
+			var column = floor( (height + sprite_get_height(spr_inventory_item) - y1) / menu_height) + previous_column;
+			var width = x1 + margin + (column * (margin + sprite_get_width(spr_inventory_item)));
+			if(column > previous_column){
+				counter = 0;
+				height = y1 + margin + (counter * (margin + sprite_get_height(spr_inventory_item)));
+			}
+			previous_column = column;
+			counter++;
+			
+			#endregion 
+			
+			var inventory_button = instance_create_layer(width, height, "UI", obj_inventory_button);
+			inventory_button.item_type = item_type;
+			
+		}
+		
+		
+		
+		var combine_button = instance_create_layer(combine_x, y2 - button_height - margin, "UI", obj_combine_button );
+		//set things on combine button here if needed
 	}
 
 	#endregion
-
 
 	#region Settings
 
@@ -152,11 +179,36 @@ if(!init){
 
 	#endregion
 
+	#region Save / Load / Exit
+
+	else if(state == E_PLAYER_MENU_STATE.SAVE_LOAD_EXIT){
+		show_debug_message("player menu init: save load exit");
+		//TODO: show stuff for save load and exit
+
+	}
+
+	#endregion
+
 	
 }
 
 #endregion
 
+
+
+
+
+#region Display Stats
+
+if(state == E_PLAYER_MENU_STATE.INVENTORY){
+
+	
+
+
+
+}
+
+#endregion
 
 
 
