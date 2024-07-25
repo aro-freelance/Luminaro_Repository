@@ -24,6 +24,8 @@ facing = E_FACING.right;
 
 #region Stat Levels
 
+level = 1;
+
 //how many times have parameters been improved? for each level in these parameters we apply d_stat to the baseline_stat
 
 l_movement_speed = 0;
@@ -49,11 +51,10 @@ l_catalyst_number = 0;
 l_catalyst_charge_delay = 0;
 l_catalyst_size_mod = 0;
 
-l_hp = 0;
+//l_hp = 0;
 
 
 #endregion
-
 
 
 #region Static Player Parameters
@@ -88,7 +89,7 @@ static_catalyst_charge_delay = global.baseline_catalyst_charge_delay + (l_cataly
 static_catalyst_size_mod = global.baseline_catalyst_size_mod + (l_catalyst_size_mod * global.d_catalyst_size_mod);
 
 
-static_hp = global.baseline_hp + (l_hp * global.d_hp); //aka total hp
+static_hp = global.baseline_hp + (level * global.d_hp); //aka total hp
 
 
 #endregion
@@ -110,7 +111,9 @@ dynamic_light_intensity_mod = static_light_intensity_mod;
 
 dynamic_prism_beam_number = static_prism_beam_number;
 
+
 dynamic_battery = static_battery;
+
 dynamic_battery_charge_delay = static_battery_charge_delay;
 
 dynamic_lantern_size_mod = static_lantern_size_mod;
@@ -195,3 +198,45 @@ inventory_max = 36;
 inventory = [];
 
 #endregion
+
+
+#region Game Stats
+
+//store the enemy types in here. for counting to display on end screen and possibly on player menu
+enemies_defeated = [];
+bosses_defeated = [];
+shadows_defeated = []; //spawn points
+
+//count the time in the game
+time_counter = 0;
+
+
+
+#endregion
+
+
+#region Display Constants
+
+display_message_offset_y = -200;
+display_message_on = false;
+display_message_timer = 0;
+display_message_time_duration = 5;
+display_message = "";
+display_message_color = c_white;
+
+special_display_message_offset_y = -400;
+special_display_message_on = false;
+special_display_message_timer = 0;
+special_display_message_time_duration = 10;
+special_display_message = "";
+special_display_message_color = c_white;
+
+
+#endregion
+
+
+
+
+
+
+

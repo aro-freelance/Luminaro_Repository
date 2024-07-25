@@ -109,18 +109,15 @@ if(!init){
 				global.player.l_catalyst_size_mod++;
 				show_debug_message("catalyst size mod up");
 				break;
-			case E_PLAYER_PARAMETERS.HP:
-				global.player.l_hp++;
-				show_debug_message("hp up");
-				break;
 			default:
-				global.player.l_hp++;
-				show_debug_message("hp up");
+				show_debug_message("ERROR: DEFAULT CASE ON RANDOM LEVEL UP");
 				break;
 			
 		}
 	
 		#endregion
+		
+		global.player.level++;
 	
 		array_push(level_up_results, random_parameter);
 		scr_set_player_stats(global.player);

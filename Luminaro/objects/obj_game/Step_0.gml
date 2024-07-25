@@ -25,55 +25,80 @@ if(keyboard_check_pressed(vk_f1)){
 #endregion
 
 
-#region INPUT: show enemy states
+#region Testing
 
-if(keyboard_check_pressed(vk_f8)){
+	#region INPUT: show enemy states
+
+	if(keyboard_check_pressed(vk_f8)){
 	
-	with(obj_enemy){
-		show_debug_message("enemy states: type = " + string(enemy_type) + ". jump state = " + string(jump_state) + ". standing state = " + string(standing_state) + ". attack state = " + string(attack_state) + ". react state = " + string(react_state) + ". tactics state = " + string(tactic_state) );
+		with(obj_enemy){
+			show_debug_message("enemy states: type = " + string(enemy_type) + ". jump state = " + string(jump_state) + ". standing state = " + string(standing_state) + ". attack state = " + string(attack_state) + ". react state = " + string(react_state) + ". tactics state = " + string(tactic_state) );
+		}
 	}
-}
 
+
+	#endregion
+
+
+
+	#region INPUT: level up
+
+
+	if(keyboard_check_pressed(vk_f5)){
+	
+		global.player.xp += 90;
+
+	}
+
+	#endregion
+
+
+	#region INPUT: add inventory item
+
+	if(keyboard_check_pressed(vk_f2)){	
+		randomize();
+	
+		//var item_type = irandom_range(0, (E_INVENTORY_ITEM_TYPES.last - 1));
+	
+		var item_type = irandom_range(0, 2);
+	
+		if(array_length(global.player.inventory) < global.player.inventory_max){
+				array_push(global.player.inventory, item_type);
+				show_debug_message("add item type " + string(item_type));
+			 }
+			 else{
+				//TODO: tell play inventory full
+				show_debug_message("inventory is full");
+			 }
+
+	}
+
+	#endregion
+
+
+	#region INPUT: show message
+	
+	if(keyboard_check_pressed(vk_f9)){	
+		var message_window = instance_create_layer(display_get_gui_width()/2, display_get_gui_height()/2, "UI", obj_message);
+		message_window.text_array = ["first string", "second string", "third string"];
+		var long_string = " fourth string: mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmm";
+		array_push(message_window.text_array, long_string);
+		message_window.x_scale = .3;
+		message_window.y_scale = .75;
+	}
+	
+	#endregion
+	
+	
+	#region INPUT: damage player
+	
+	if(keyboard_check_pressed(vk_end)){
+		global.player.dynamic_hp -= 20;
+	}
+	
+	#endregion
 
 #endregion
-
-
-
-#region INPUT: level up
-
-
-if(keyboard_check_pressed(vk_f5)){
-	
-	global.player.xp += 90;
-
-}
-
-#endregion
-
-
-#region INPUT: add inventory item
-
-if(keyboard_check_pressed(vk_f2)){	
-	randomize();
-	
-	//var item_type = irandom_range(0, (E_INVENTORY_ITEM_TYPES.last - 1));
-	
-	var item_type = irandom_range(0, 2);
-	
-	if(array_length(global.player.inventory) < global.player.inventory_max){
-			array_push(global.player.inventory, item_type);
-			show_debug_message("add item type " + string(item_type));
-		 }
-		 else{
-			//TODO: tell play inventory full
-			show_debug_message("inventory is full");
-		 }
-
-}
-
-#endregion
-
-
 
 }
 

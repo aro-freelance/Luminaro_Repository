@@ -20,9 +20,12 @@ enum E_GAME_STATE{
 	MAIN_MENU,
 	PLAYING,
 	IN_GAME_MENU,
+	DEATH_SCREEN,
 }
 
 global.game_state = E_GAME_STATE.MAIN_MENU;
+
+global.current_level = E_LEVELS.LEVEL_1;
 
 global.player = noone;
 
@@ -40,6 +43,21 @@ global.grav = 4;
 global.darkness_level = .7; //alpha value of obj_lighting_effect
 
 #endregion
+
+#region Levels
+
+enum E_LEVELS{
+	LEVEL_1,
+	LEVEL_2,
+	last
+}
+
+global.levels = [];
+array_insert(global.levels, E_LEVELS.LEVEL_1, rm_level1);
+array_insert(global.levels, E_LEVELS.LEVEL_2, rm_level2);
+
+#endregion
+
 
 #region Button Inputs
 
@@ -150,6 +168,13 @@ enum E_INVENTORY_ITEM_TYPES{
 	last
 }
 
+global.item_descriptions = ds_grid_create(E_INVENTORY_ITEM_TYPES.last - 1, E_INVENTORY_ITEM_TYPES.last - 1);
+
+global.item_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_0, E_INVENTORY_ITEM_TYPES.TYPE_0] = "Item 0";
+global.item_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_1, E_INVENTORY_ITEM_TYPES.TYPE_1] = "Item 1";
+global.item_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_2, E_INVENTORY_ITEM_TYPES.TYPE_2] = "Item 2";
+
+
 global.combine_descriptions = ds_grid_create(E_INVENTORY_ITEM_TYPES.last - 1, E_INVENTORY_ITEM_TYPES.last - 1);
 
 global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_0, E_INVENTORY_ITEM_TYPES.TYPE_0] = "Item 0";
@@ -238,7 +263,7 @@ global.baseline_light_intensity_mod = 1; //1.2
 global.baseline_prism_beam_number = 3; //4
 
 
-global.baseline_battery = 200; //250 //battery max on time
+global.baseline_battery = 3.555555;  //battery max on time
 global.baseline_battery_charge_delay = 200; //150 //how long does the battery take to charge?
  
  
@@ -294,7 +319,6 @@ global.d_hp = 50; //300
 
 
 #endregion
-
 
 
 #region Enemies

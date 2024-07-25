@@ -31,7 +31,7 @@ function scr_set_player_stats(player){
 	player.static_catalyst_size_mod = global.baseline_catalyst_size_mod + (player.l_catalyst_size_mod * global.d_catalyst_size_mod);
 	
 
-	player.static_hp = global.baseline_hp + (player.l_hp * global.d_hp); //aka total hp
+	player.static_hp = global.baseline_hp + (player.level * global.d_hp); //aka total hp
 
 
 	#endregion

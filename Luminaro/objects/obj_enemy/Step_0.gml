@@ -475,10 +475,6 @@ if(can_move){
 
 #endregion
 
-
-
-
-
 #region Death
 
 if(variable_instance_exists(id, "dynamic_hp")){
@@ -500,6 +496,9 @@ if(variable_instance_exists(id, "dynamic_hp")){
 			var health_pickup = instance_create_layer(x + irand_hp_offset, y, "Items", obj_health_pickup);
 			health_pickup.amount *= level;
 		}
+		
+		//add self.enemy_type to the player's list of defeated enemies
+		array_push(global.player.enemies_defeated, enemy_type);
 		
 		instance_destroy();
 	}

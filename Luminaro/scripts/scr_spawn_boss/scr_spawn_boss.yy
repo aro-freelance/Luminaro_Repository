@@ -6,7 +6,7 @@
   "name":"scr_spawn_boss",
   "parent":{
     "name":"Spawn Scripts",
-    "path":"folders/Scripts/Spawn Scripts.yy",
+    "path":"folders/Scripts/Level Scripts/Spawn Scripts.yy",
   },
   "resourceType":"GMScript",
   "resourceVersion":"2.0",

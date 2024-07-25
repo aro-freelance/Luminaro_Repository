@@ -1,6 +1,6 @@
 {
   "$GMFont":"",
-  "%Name":"ft_1",
+  "%Name":"ft_story_box",
   "AntiAlias":1,
   "applyKerning":0,
   "ascender":24,
@@ -117,7 +117,7 @@
   "last":0,
   "lineHeight":28,
   "maintainGms1Font":false,
-  "name":"ft_1",
+  "name":"ft_story_box",
   "parent":{
     "name":"Fonts",
     "path":"folders/Fonts.yy",

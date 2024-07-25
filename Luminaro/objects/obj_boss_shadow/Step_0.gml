@@ -84,6 +84,11 @@ if(hp <= 0){
 		var health_pickup = instance_create_layer(x + irand_hp_offset, y, "Items", obj_health_pickup);
 		health_pickup.amount *= (level * 5);
 	}
+	
+	//add self.shadow_type to the player's list of defeated enemies
+	array_push(global.player.shadows_defeated, shadow_type);
+	
+	scr_level_transition(global.current_level++);
 		
 	instance_destroy();
 }

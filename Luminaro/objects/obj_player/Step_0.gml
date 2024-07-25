@@ -1,6 +1,17 @@
 
 if(global.game_state == E_GAME_STATE.PLAYING){
 
+#region timer
+
+//store time in seconds	
+time_counter = time_counter + (delta_time / 1000000);
+if(keyboard_check_pressed(ord("T"))){
+	show_debug_message(string(time_counter));
+}
+
+#endregion
+
+
 #region Sprite Index
 
 //handle all sprite changes using states here
@@ -125,6 +136,20 @@ if(jump_state != E_JUMP_STATE.GROUNDED){
 
 #region pickup item
 
+if(display_message_on){
+	display_message_timer = display_message_timer + (delta_time / 1000000);
+	if(display_message_timer > display_message_time_duration){
+		display_message_on = false;
+	}
+}
+
+if(special_display_message_on){
+	special_display_message_timer = special_display_message_timer + (delta_time / 1000000);
+	if(special_display_message_timer > special_display_message_time_duration){
+		special_display_message_on = false;
+	}
+}
+
 if(place_meeting(x, y, obj_pickup_item)){
 	var pickup = instance_place(x, y, obj_pickup_item);
 	
@@ -180,7 +205,8 @@ if(!battery_charged || attack_state == E_ATTACK_STATE.idle){
 
 if(attack_state == E_ATTACK_STATE.beam){
 	if(beam.is_on){
-		on_timer++;
+		//on_timer++;
+		on_timer = on_timer + (delta_time / 1000000);
 	}
 
 	if(on_timer > dynamic_battery){
@@ -254,6 +280,7 @@ if(xp >= 100){
 if(variable_instance_exists(id, "dynamic_hp")){
 	if(dynamic_hp <= 0){
 		show_debug_message("player " + string(id) + " death.");
+		global.game_state = E_GAME_STATE.DEATH_SCREEN;
 		instance_deactivate_all(true);
 		room_goto(rm_death_screen);
 	}

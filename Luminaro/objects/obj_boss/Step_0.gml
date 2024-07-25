@@ -505,6 +505,10 @@ if(variable_instance_exists(id, "dynamic_hp")){
 		//TODO: design a more complex pairing of inventory items and boss types?
 		inventory_pickup.inventory_item_type = enemy_type;
 		
+		//add self.enemy_type to the player's list of defeated bosses
+		array_push(global.player.bosses_defeated, enemy_type);
+		
+		
 		instance_destroy();
 	}
 }
