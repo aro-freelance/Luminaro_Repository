@@ -27,3 +27,6 @@ text_color = c_black;
 text_halign = fa_left;
 text_valign = fa_top;
 text_font = fnt_story_box;
+
+is_transition = false;
+transition_room = rm_main_menu;

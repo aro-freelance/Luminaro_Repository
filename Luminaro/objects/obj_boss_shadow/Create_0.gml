@@ -1,10 +1,12 @@
-/// @description Insert description here
-// You can write your code in this editor
 
 // Inherit the parent event
 event_inherited();
 
+spawn_distance_to_player = 200;
+boss_type = E_BOSS_TYPES.BOSS_1;
+supercharged = false;
 
+/*
 shadow_state = E_SHADOW_STATE.DEACTIVATED;
 shadow_type = E_SHADOW_TYPE.PUDDLE;
 
@@ -25,4 +27,6 @@ spawn_rate = 2000;
 //timer until supercharged (when in spawning state)
 supercharge_timer = 0;
 supercharge_rate = 8000;
-supercharged = false;
+*/
+
+

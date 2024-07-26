@@ -478,8 +478,6 @@ if(can_move){
 
 
 
-
-
 #region Death
 
 if(variable_instance_exists(id, "dynamic_hp")){

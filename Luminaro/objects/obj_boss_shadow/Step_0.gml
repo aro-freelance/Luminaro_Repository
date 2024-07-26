@@ -1,5 +1,18 @@
 
 
+if(distance_to_object(global.player) < spawn_distance_to_player) {
+
+	scr_spawn_boss(boss_type, [x, y], supercharged);
+	
+	//TODO: play fade effect
+	
+	instance_destroy();
+
+}
+
+
+/*
+
 #region Handle Activation
 
 if((place_meeting(x, y, obj_light))){
@@ -96,4 +109,5 @@ if(hp <= 0){
 
 #endregion
 
+*/
 

@@ -12,7 +12,22 @@ window_set_size(width, height);
 spawn_point = [display_get_gui_width()/2, display_get_gui_height()/2];	
 
 
-if(global.player == noone) global.player = instance_create_layer(array_get(spawn_point, 0), array_get(spawn_point, 1), "Actors", obj_player);
+if(global.player == noone) {
+	global.player = instance_create_layer(array_get(spawn_point, 0), array_get(spawn_point, 1), "Actors", obj_player);
+}
+else{
+	global.player.x = array_get(spawn_point, 0)
+	global.player.y = array_get(spawn_point, 1);
+	
+	scr_reset_player();
+	
+	
+	global.game_state = E_GAME_STATE.PLAYING;
+}
+
+
+
+
 //TODO: set saved stats to player
 
 global.lighting_effects = instance_create_layer(0, 0, "Effects", obj_lighting_effects);
@@ -22,7 +37,7 @@ obj_intro_story = instance_create_layer(display_get_gui_width()/2, display_get_g
 obj_intro_story.is_fullscreen = true;
 
 //Build Story
-array_push(obj_intro_story.text_array, "Level 2 Story");
+array_push(obj_intro_story.text_array, "Intro Story");
 array_push(obj_intro_story.text_array, "First line, of the story is here the first line");
 array_push(obj_intro_story.text_array, "Second line, of the story is here the second... line");
 array_push(obj_intro_story.text_array, "Third line, of the story is here the third line... ");

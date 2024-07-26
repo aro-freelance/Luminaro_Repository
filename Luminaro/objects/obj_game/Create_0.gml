@@ -20,12 +20,16 @@ enum E_GAME_STATE{
 	MAIN_MENU,
 	PLAYING,
 	IN_GAME_MENU,
+	LEVEL_TRANSITION,
+	WIN_SCREEN,
 	DEATH_SCREEN,
 }
 
 global.game_state = E_GAME_STATE.MAIN_MENU;
 
 global.current_level = E_LEVELS.LEVEL_1;
+
+global.start_room = rm_level2;
 
 global.player = noone;
 
@@ -38,7 +42,7 @@ global.lighting_effects = noone;
 
 #region World Parameters
 
-global.grav = 4;
+global.grav = 6;
 
 global.darkness_level = .7; //alpha value of obj_lighting_effect
 
@@ -249,9 +253,9 @@ enum E_PLAYER_PARAMETERS{
 
 
 global.baseline_movement_speed = 15; //20
-global.baseline_jump_height = 120; //150
+global.baseline_jump_height = 170; //150
 //global.baseline_jump_number = 1; //2  //How many jumps the player can make
-global.baseline_jump_float_time = 10; //12 //how long after jump does player hover
+global.baseline_jump_float_time = .27; //12 //how long after jump does player hover
 
 
 global.baseline_beam_speed = .025; //.03
@@ -270,7 +274,7 @@ global.baseline_battery_charge_delay = 200; //150 //how long does the battery ta
 global.baseline_lantern_size_mod = 1; //the multiplier applied to the lantern size
 
 
-global.baseline_beam_length_mod = 1; //the multiplier applied to beam length
+global.baseline_beam_length_mod = 1.5; //the multiplier applied to beam length
 
 
 global.baseline_catalyst_number = 2; //how many catalysts can be held max
@@ -289,7 +293,7 @@ global.baseline_hp = 100; //300
 global.d_movement_speed = 1; 
 global.d_jump_height = 10; 
 //global.d_jump_number = 1; 
-global.d_jump_float_time = .5;
+global.d_jump_float_time = .01;
 
 
 global.d_beam_speed = .005; 
@@ -306,7 +310,7 @@ global.d_battery_charge_delay = -20;
 
 global.d_lantern_size_mod = .1;
 
-global.d_beam_length_mod = .1;
+global.d_beam_length_mod = .25;
 
 global.d_catalyst_number = 1;
 global.d_catalyst_charge_delay = -20;

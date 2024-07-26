@@ -12,7 +12,7 @@ button_height = sprite_get_height(spr_button);
 
 start_button = instance_create_layer(display_width/2, display_height/2 - button_height/2, "UI", obj_button_room_change);
 start_button.label = "Start";
-start_button.destination_room = rm_level1;
+start_button.destination_room = global.start_room;
 
 
 //Handle all of the following with a main menu obj

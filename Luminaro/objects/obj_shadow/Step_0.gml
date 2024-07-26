@@ -43,7 +43,9 @@ if(!supercharged && supercharge_timer > supercharge_rate){
 #region Handle Charging
 
 if(shadow_state == E_SHADOW_STATE.CHARGING){
-	charge_timer++;
+	
+	charge_timer = charge_timer + (delta_time / 1000000);
+	
 	if(charge_timer > charge_rate){
 		charge_timer = 0;
 		
@@ -53,7 +55,7 @@ if(shadow_state == E_SHADOW_STATE.CHARGING){
 	}
 }
 else if(shadow_state == E_SHADOW_STATE.SPAWNING || shadow_state == E_SHADOW_STATE.SUPERCHARGED){
-	if(spawn_timer > spawn_rate){
+	if(spawn_timer > spawn_rate && (distance_to_object(global.player) < spawn_distance_to_player)){
 		spawn_timer = 0;
 		
 		randomize();
@@ -62,7 +64,8 @@ else if(shadow_state == E_SHADOW_STATE.SPAWNING || shadow_state == E_SHADOW_STAT
 		scr_spawn_enemy(enemy_type, [x, y], supercharged);
 	}
 	
-	spawn_timer++;
+	spawn_timer = spawn_timer + (delta_time / 1000000);
+	
 	if(!supercharged) supercharge_timer++;
 }
 

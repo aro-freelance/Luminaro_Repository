@@ -41,7 +41,7 @@ ranged_attack_range = 700;
 
 attack_rate = 800;
 
-hp = 100;
+hp = 2000;
 
 level = 1;
 

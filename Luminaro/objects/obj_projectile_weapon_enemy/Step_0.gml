@@ -8,10 +8,13 @@ if(!init){
 	init = true;
 
 	player_location_snapshot = [global.player.x, global.player.y];
+	//[global.player.x - camera_get_view_x(view_camera[0]), global.player.y - camera_get_view_y(view_camera[0])];
 	
 	distance_to_player = distance_to_object(obj_player);
 	
-	image_angle = point_direction(x, y, global.player.x, global.player.y) - 90;
+	image_angle = point_direction(x, y, array_get(player_location_snapshot, 0), array_get(player_location_snapshot, 1)) - 90;
+	
+	//global.player.x - camera_get_view_x(view_camera[0]), global.player.y) - camera_get_view_y(view_camera[0]) - 90;
 	
 	//scale_distance_ratio = distance_to_player / sprite_get_height(sprite_index);
 	

@@ -1,11 +1,13 @@
 /// @description create the player character
 
+show_debug_message("player create");
 
 depth = -10; //draw in front of background
 
 global.game_state = E_GAME_STATE.PLAYING;
 
 global.player = self;
+
 
 #region Player State 
 
@@ -133,7 +135,8 @@ xp = 0;
 
 jump_current = 0; //How many jumps the player has used (compared to dynamic_jump_number to determine if player is allowed to jump)
 jump_float_counter = 0; //how long has player been floating? (compared to dynamic_jump_float_tme)
-
+jump_y_counter = 0;
+jump_y_increment = dynamic_jump_height/8;
 
 #endregion
 

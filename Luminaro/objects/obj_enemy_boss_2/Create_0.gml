@@ -25,17 +25,17 @@ enemy_type = E_BOSS_TYPES.BOSS_2;
 
 static_movement_speed = 3;
 
-melee_attack_range = 600;
+melee_attack_range = 400;
 
 can_float = true;
 
 can_shoot = true;
 
-ranged_attack_range = 800;
+ranged_attack_range = 600;
 
 attack_rate = 800;
 
-hp = 100;
+hp = 300;
 
 level = 1;
 

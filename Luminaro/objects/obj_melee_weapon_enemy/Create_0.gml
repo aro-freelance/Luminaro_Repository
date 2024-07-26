@@ -1,4 +1,4 @@
-/// @description enemy melee class. 
+/// @description enemy melee class
 //this is used to make a reaching attack toward the player that grows in size 
 
 

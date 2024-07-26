@@ -69,6 +69,9 @@ if(sprite_index != prev_sprite_index) image_index = 0;
 if(place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor"))){
 	jump_state = E_JUMP_STATE.GROUNDED;
 }
+
+
+
 if(!place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor")) 
 && jump_current == 0 && jump_state == E_JUMP_STATE.GROUNDED 
 && y != (room_height - sprite_height)){
@@ -84,12 +87,13 @@ if(!place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor"))
 if(jump_state == E_JUMP_STATE.GROUNDED && jump_current > 0){
 	jump_float_counter = 0;
 	jump_current = 0;
+	jump_y_counter = 0;
 	
 }
 
 #endregion
 
-#region keep player on screen
+#region level block transition
 
 
 /*
@@ -111,7 +115,7 @@ if(y > (room_height - sprite_height)){
 #region gravity and jumping
 
 if(jump_state == E_JUMP_STATE.JUMPING && jump_float_counter < dynamic_jump_float_time){
-	jump_float_counter++;
+	jump_float_counter = jump_float_counter + (delta_time / 1000000);
 }
 
 //if not on the ground
@@ -129,6 +133,23 @@ if(jump_state != E_JUMP_STATE.GROUNDED){
 			//if(jump_state == E_JUMP_STATE.FALLING) y = y + (.5 * global.grav);
 		}
 	
+	}
+}
+
+//if hit ceiling, fall 
+if(jump_state == E_JUMP_STATE.JUMPING){
+	
+	show_debug_message("jump_y_counter = " + string(jump_y_counter));
+	
+	if(jump_y_counter < dynamic_jump_height){
+		if(place_meeting(x, y + jump_y_increment, layer_tilemap_get_id("Tiles_Ceiling"))){
+			y = y + global.grav;
+			jump_state = E_JUMP_STATE.FALLING;
+		}
+		else{
+			jump_y_counter += jump_y_increment;
+			y -= jump_y_increment;
+		}
 	}
 }
 
@@ -289,6 +310,24 @@ if(variable_instance_exists(id, "dynamic_hp")){
 
 #endregion
 
+#region Transition
+
+if(array_length(bosses_defeated) == (global.current_level + 1)){
+	
+	global.game_state = E_GAME_STATE.LEVEL_TRANSITION;
+	
+		
+	show_debug_message("obj player: going to next room. current level = " + string(global.current_level));
+	
+	global.current_level++;
+	scr_level_transition(global.current_level);
+	
+}
+
+
+
+#endregion
+
 
 
 #region INPUT: left
@@ -348,7 +387,7 @@ if(global.button_held == E_BUTTON_HELD.RIGHT){
 
 #region Hold stop
 
-if(keyboard_check_released(ord("A")) || keyboard_check_released(vk_left) || keyboard_check_released(ord("D")) || keyboard_check_released(vk_right)){
+if(keyboard_check_released(ord("A")) || keyboard_check_released(vk_left) || keyboard_check_released(ord("D")) || keyboard_check_released(vk_right) || keyboard_check(ord("C")) || keyboard_check(vk_lcontrol) || keyboard_check_pressed(ord("S"))){
 	global.button_held_time = 0;
 	global.button_held = E_BUTTON_HELD.NONE;
 }
@@ -357,7 +396,7 @@ if(keyboard_check_released(ord("A")) || keyboard_check_released(vk_left) || keyb
 
 #region INPUT: jump
 	
-if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space)){
+if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard_check_pressed(ord("W"))){
 		
 	if(jump_state != E_JUMP_STATE.JUMPING){
 			
@@ -365,9 +404,12 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 		
 		jump_current++;
 		
-		if(!place_meeting(x, y - dynamic_jump_height, layer_tilemap_get_id("Tiles_Ceiling"))) y = y - dynamic_jump_height;
-		
-			
+		if(!place_meeting(x, y + 1, layer_tilemap_get_id("Tiles_Ceiling"))){
+			jump_y_counter += jump_y_increment;
+			y -= jump_y_increment;
+		}
+	
+	
 		instance_create_layer(x, bbox_bottom, "Effects", obj_effect_jump);
 			
 			
@@ -375,11 +417,19 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 	}
 	else if(jump_state == E_JUMP_STATE.JUMPING){
 		if(jump_current < dynamic_jump_number){
-				
+			
+			jump_y_counter = 0;
+			
 			//double jump
 			jump_current++;
 			
-			if(!place_meeting(x, y - dynamic_jump_height, layer_tilemap_get_id("Tiles_Ceiling"))) y = y - dynamic_jump_height;
+			
+			if(!place_meeting(x, y + 1, layer_tilemap_get_id("Tiles_Ceiling"))){
+				jump_y_counter += jump_y_increment;
+				y -= jump_y_increment;
+			}
+			
+			//if(!place_meeting(x, y - dynamic_jump_height, layer_tilemap_get_id("Tiles_Ceiling"))) y = y - dynamic_jump_height;
 			
 			
 			instance_create_layer(x, bbox_bottom,  "Effects", obj_effect_jump);
@@ -394,7 +444,7 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 
 #region INPUT: crouch and prone
 
-if(keyboard_check_pressed(ord("C")) || keyboard_check_pressed(vk_lcontrol)){
+if(keyboard_check_pressed(ord("C")) || keyboard_check_pressed(vk_lcontrol) || keyboard_check_pressed(ord("S"))){
 	
 	global.button_held_time = 0;
 	global.button_held = E_BUTTON_HELD.NONE;
@@ -417,7 +467,7 @@ if(keyboard_check_pressed(ord("C")) || keyboard_check_pressed(vk_lcontrol)){
 	}	
 }
 
-if(keyboard_check(ord("C")) || keyboard_check(vk_lcontrol)){
+if(keyboard_check(ord("C")) || keyboard_check(vk_lcontrol) || keyboard_check_pressed(ord("S"))){
 	global.button_held_time++;
 	if(global.button_held_time > global.button_held_threshold){
 		global.button_held = E_BUTTON_HELD.CROUCH;

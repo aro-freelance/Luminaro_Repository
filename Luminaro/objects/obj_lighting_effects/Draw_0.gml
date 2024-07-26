@@ -39,7 +39,7 @@ else if (surface_exists(surface)) {
 				draw_sprite_ext(spr_light_effect, 0, x -cx, y -cy, image_xscale, image_yscale, image_angle, c_white, 1);	
 			}
 			else{
-				draw_sprite_ext(spr_light_beam_effect, 0, x - cx, y -cy, image_xscale, image_yscale, image_angle, c_white, 1);			   
+				draw_sprite_ext(spr_light_beam_effect, 0, x - cx, y -cy, 1.01*image_xscale, 1.5*image_yscale, image_angle, c_white, 1);			   
 			}
 		}
 	}
