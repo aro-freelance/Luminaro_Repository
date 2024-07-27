@@ -2,6 +2,8 @@
 //turn off all weapons and reset player to static stats
 
 function scr_reset_player(){
+	
+	show_debug_message("ping reset player")
 
 	global.button_held =  E_BUTTON_HELD.NONE;
 

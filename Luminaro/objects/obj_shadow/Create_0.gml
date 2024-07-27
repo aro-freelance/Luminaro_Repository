@@ -15,7 +15,7 @@ hp = 200;
 
 
 //timer until spawning starts (when in charging state)
-charge_timer = 0;
+charge_timer = 5;
 charge_rate = 10;
 
 //timer until next spawn (when in spawning state)

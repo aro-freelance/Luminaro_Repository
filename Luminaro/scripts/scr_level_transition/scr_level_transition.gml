@@ -15,7 +15,9 @@ global.game_state = E_GAME_STATE.LEVEL_TRANSITION;
 		var message_box = instance_create_layer(display_get_gui_width()/2, display_get_gui_height()/2, "UI", obj_message);
 		message_box.text_array = obj_game.current_end_story;
 		
-		global.game_state = E_GAME_STATE.PLAYING;
+		global.player.init = false;
+		
+		//global.game_state = E_GAME_STATE.PLAYING;
 	
 	}
 	//else go to the win screen

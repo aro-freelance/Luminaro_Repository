@@ -3,7 +3,7 @@
 //draw behind player
 depth = -9;
 
-
+show_debug_message("light created");
 
 //the actor holding the light
 holder = noone;

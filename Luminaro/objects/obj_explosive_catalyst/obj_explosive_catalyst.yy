@@ -16,7 +16,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Catalysts",
-    "path":"folders/Objects/Objects/Pickups/Catalysts.yy",
+    "path":"folders/Objects/LightAttacks/Catalysts.yy",
   },
   "parentObjectId":null,
   "persistent":false,

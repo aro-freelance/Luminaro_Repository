@@ -170,20 +170,20 @@ enum E_INVENTORY_ITEM_TYPES{
 
 global.item_descriptions = [];
 
-array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_0, "Item 0");
-array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_1, "Item 1");
-array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_2, "Item 2");
+array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_0, "Flamestone");
+array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_1, "Mythril");
+array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_2, "Fire Mythril");
 
 
 global.combine_descriptions = ds_grid_create(E_INVENTORY_ITEM_TYPES.last - 1, E_INVENTORY_ITEM_TYPES.last - 1);
 
-global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_0, E_INVENTORY_ITEM_TYPES.TYPE_0] = "Item 0";
-global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_1, E_INVENTORY_ITEM_TYPES.TYPE_1] = "Item 1";
-global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_2, E_INVENTORY_ITEM_TYPES.TYPE_2] = "Item 2";
+global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_0, E_INVENTORY_ITEM_TYPES.TYPE_0] = "Flamestone";
+global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_1, E_INVENTORY_ITEM_TYPES.TYPE_1] = "Mythril";
+global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_2, E_INVENTORY_ITEM_TYPES.TYPE_2] = "Fire Mythril";
 
 
-global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_0, E_INVENTORY_ITEM_TYPES.TYPE_1] = "Item 0 , 1";
-global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_1, E_INVENTORY_ITEM_TYPES.TYPE_0] = "Item 1 , 0";
+global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_0, E_INVENTORY_ITEM_TYPES.TYPE_1] = "Fire Mythril";
+global.combine_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_1, E_INVENTORY_ITEM_TYPES.TYPE_0] = "Fire Mythril";
 
 #endregion
 

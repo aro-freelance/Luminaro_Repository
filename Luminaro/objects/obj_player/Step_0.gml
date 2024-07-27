@@ -1,4 +1,6 @@
 
+
+
 if(global.game_state == E_GAME_STATE.PLAYING){
 
 #region timer
@@ -10,6 +12,7 @@ if(keyboard_check_pressed(ord("T"))){
 }
 
 #endregion
+
 
 
 #region Sprite Index
@@ -148,7 +151,7 @@ if(jump_state != E_JUMP_STATE.GROUNDED){
 //if hit ceiling, fall 
 if(jump_state == E_JUMP_STATE.JUMPING){
 	
-	show_debug_message("jump_y_counter = " + string(jump_y_counter));
+	//show_debug_message("jump_y_counter = " + string(jump_y_counter));
 	
 	if(jump_y_counter < dynamic_jump_height){
 		if(place_meeting(x, y + jump_y_increment, layer_tilemap_get_id("Tiles_Ceiling"))){
@@ -306,6 +309,25 @@ if(xp >= 100){
 
 #endregion
 
+#region Contact Damage
+
+if(place_meeting(x, y, obj_enemy)){
+	show_debug_message("enemy collision with player");
+
+	dynamic_hp = dynamic_hp - other.level;
+
+}
+
+if(place_meeting(x, y, obj_boss)){
+	show_debug_message("boss collision with player");
+
+	dynamic_hp = dynamic_hp - 3*other.level;
+
+}
+
+
+#endregion
+
 #region Death
 
 if(variable_instance_exists(id, "dynamic_hp")){
@@ -371,24 +393,24 @@ if(array_length(bosses_defeated) == (global.current_level + 1) && !boss_init){
 	
 	
 	
-		if(collision_line(x, y, x + 100, y - sprite_get_height(spr_player), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
-			var level_transition = instance_create_layer(x + 100, y - sprite_get_height(spr_player), "Items", obj_level_transition);
+		if(collision_line(x, y, x + 100, y - sprite_get_height(spr_player_idle), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
+			var level_transition = instance_create_layer(x + 100, y - sprite_get_height(spr_player_idle), "Items", obj_level_transition);
 			show_debug_message("scr player spawn level transition: spawn A");
 		}
-		else if(collision_line(x, y, x - 100, y - sprite_get_height(spr_player), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
-			var level_transition = instance_create_layer(x - 100, y - sprite_get_height(spr_player), "Items", obj_level_transition);
+		else if(collision_line(x, y, x - 100, y - sprite_get_height(spr_player_idle), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
+			var level_transition = instance_create_layer(x - 100, y - sprite_get_height(spr_player_idle), "Items", obj_level_transition);
 			show_debug_message("scr player spawn level transition: spawn b");
 		}
-		else if(collision_line(x, y, x, y - 100 - sprite_get_height(spr_player), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
-			var level_transition = instance_create_layer(x, y - 100 - sprite_get_height(spr_player), "Items", obj_level_transition);
+		else if(collision_line(x, y, x, y - 100 - sprite_get_height(spr_player_idle), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
+			var level_transition = instance_create_layer(x, y - 100 - sprite_get_height(spr_player_idle), "Items", obj_level_transition);
 			show_debug_message("scr player spawn level transition: spawn c");
 		}
-		else if (collision_line(x, y, x, y + 100 - sprite_get_height(spr_player), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
-			var level_transition = instance_create_layer(x, y + 100 - sprite_get_height(spr_player), "Items", obj_level_transition);
+		else if (collision_line(x, y, x, y + 100 - sprite_get_height(spr_player_idle), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
+			var level_transition = instance_create_layer(x, y + 100 - sprite_get_height(spr_player_idle), "Items", obj_level_transition);
 			show_debug_message("scr player spawn level transition: spawn d");
 		}
 		else{
-			var level_transition = instance_create_layer(x, y - sprite_get_height(spr_player)/2, "Items", obj_level_transition);
+			var level_transition = instance_create_layer(x, y - sprite_get_height(spr_player_idle)/2, "Items", obj_level_transition);
 			show_debug_message("scr player spawn level transition: spawn e");
 		}
 	

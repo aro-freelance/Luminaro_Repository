@@ -44,6 +44,14 @@ else if (surface_exists(surface)) {
 		}
 	}
 	
+	with (obj_explosive_catalyst){
+		var sw = sprite_get_width(sprite_index) / 2;
+		var sh = sprite_get_height(sprite_index) / 2;
+			
+		draw_sprite_ext(spr_light_effect, 0, x -cx, y -cy, image_xscale/2, image_yscale/2, image_angle, c_white, 1);	
+	}
+	
+	
 	gpu_set_blendmode(bm_normal);
 	draw_set_alpha(1);
 	surface_reset_target();

@@ -94,6 +94,7 @@ if(keyboard_check_pressed(vk_f1)){
 	
 	if(keyboard_check_pressed(vk_end)){
 		global.player.dynamic_hp -= 20;
+		
 	}
 	
 	#endregion

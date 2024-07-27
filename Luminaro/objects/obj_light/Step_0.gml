@@ -125,5 +125,4 @@ if(light_type == E_LIGHT_TYPES.PLAYER_LANTERN){
 
 
 
-
 }

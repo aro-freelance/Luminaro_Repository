@@ -4,9 +4,11 @@ show_debug_message("player create");
 
 depth = -10; //draw in front of background
 
-global.game_state = E_GAME_STATE.PLAYING;
 
 global.player = self;
+
+global.game_state = E_GAME_STATE.PLAYING;
+
 
 
 #region Player State 
@@ -92,6 +94,8 @@ static_catalyst_size_mod = global.baseline_catalyst_size_mod + (l_catalyst_size_
 
 
 static_hp = global.baseline_hp + (level * global.d_hp); //aka total hp
+
+show_debug_message("player create: static_hp = " + string(static_hp));
 
 
 #endregion

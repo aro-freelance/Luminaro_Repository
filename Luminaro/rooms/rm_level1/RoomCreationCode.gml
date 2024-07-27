@@ -16,7 +16,10 @@ if(global.player == noone) global.player = instance_create_layer(array_get(spawn
 else{
 	global.player.x = array_get(spawn_point, 0)
 	global.player.y = array_get(spawn_point, 1);
-	
+
+	show_debug_message("ping!!!!!!!!!!!!!!!");
+
+	scr_set_player_stats(global.player);
 	scr_reset_player();
 	
 	global.game_state = E_GAME_STATE.PLAYING;

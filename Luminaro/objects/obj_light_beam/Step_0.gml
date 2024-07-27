@@ -172,7 +172,6 @@ if(image_xscale < (max_xscale*global.player.dynamic_beam_length_mod)){
 #endregion
 
 
-
 }
 
 
