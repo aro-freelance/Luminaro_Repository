@@ -74,19 +74,20 @@ if(standing_state == E_ENEMY_STANDING_STATE.STANDING && jump_state == E_ENEMY_JU
 	sprite_index = spr_enemy;
 }
 else if(standing_state == E_ENEMY_STANDING_STATE.CROUCHING && jump_state == E_ENEMY_JUMP_STATE.GROUNDED && attack_state == E_ENEMY_ATTACK_STATE.IDLE && react_state == E_ENEMY_REACT_STATE.IDLE){
-	sprite_index = spr_crouching_enemy;
+	sprite_index = spr_enemy_crouching;
 }
+/*
 else if(standing_state == E_ENEMY_STANDING_STATE.PRONE && jump_state == E_ENEMY_JUMP_STATE.GROUNDED && attack_state == E_ENEMY_ATTACK_STATE.IDLE && react_state == E_ENEMY_REACT_STATE.IDLE){
-	sprite_index = spr_prone_enemy;
-}
+	sprite_index = spr_enemy_prone;
+}*/
 else if(standing_state == E_ENEMY_STANDING_STATE.STANDING && jump_state == E_ENEMY_JUMP_STATE.JUMPING && attack_state == E_ENEMY_ATTACK_STATE.IDLE && react_state == E_ENEMY_REACT_STATE.IDLE){
-	sprite_index = spr_jumping_enemy;
+	sprite_index = spr_enemy_jumping;
 }
 else if(standing_state == E_ENEMY_STANDING_STATE.STANDING && jump_state == E_ENEMY_JUMP_STATE.FALLING && attack_state == E_ENEMY_ATTACK_STATE.IDLE && react_state == E_ENEMY_REACT_STATE.IDLE){
-	sprite_index = spr_falling_enemy;
+	sprite_index = spr_enemy_falling;
 }
 else if(standing_state == E_ENEMY_STANDING_STATE.STANDING && jump_state == E_ENEMY_JUMP_STATE.FLOATING && attack_state == E_ENEMY_ATTACK_STATE.IDLE && react_state == E_ENEMY_REACT_STATE.IDLE){
-	sprite_index = spr_floating_enemy;
+	sprite_index = spr_enemy_floating;
 }
 
 

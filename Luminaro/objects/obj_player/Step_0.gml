@@ -24,36 +24,45 @@ var prev_sprite_index = sprite_index;
 
 if(facing == E_FACING.right){
 	if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_player;
+		sprite_index = spr_player_idle;		
+	}
+	else if(standing_state == E_STANDING_STATE.WALKING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_player_walking;		
 	}
 	else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_crouching_player;
+		sprite_index = spr_player_crouching;
 	}
-	else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_prone_player;
-	}
-	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.JUMPING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_jumping_player;
+/*	else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_player_prone;
+	}*/
+	else if(jump_state == E_JUMP_STATE.JUMPING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		//removed standing_state == E_STANDING_STATE.STANDING && so that this works when moving or not moving
+		sprite_index = spr_player_jumping;
 	}
 	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_falling_player;
+		sprite_index = spr_player_falling;
 	}
 }
 else if(facing == E_FACING.left){
+		
 	if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_player_l;
+		sprite_index = spr_player_idle_l;		
+	}
+	else if(standing_state == E_STANDING_STATE.WALKING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_player_walking_l;		
 	}
 	else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_crouching_player_l;
+		sprite_index = spr_player_crouching_l;
 	}
-	else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_prone_player_l;
-	}
-	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.JUMPING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_jumping_player_l;
+/*	else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		sprite_index = spr_player_prone_l;
+	} */
+	else if(jump_state == E_JUMP_STATE.JUMPING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+		//removed standing_state == E_STANDING_STATE.STANDING && so that this works when moving or not moving
+		sprite_index = spr_player_jumping_l;
 	}
 	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_falling_player_l;
+		sprite_index = spr_player_falling_l;
 	}
 }
 
@@ -403,6 +412,7 @@ if(keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)){
 	global.button_held = E_BUTTON_HELD.NONE;
 	facing = E_FACING.left;
 	if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
+		standing_state = E_STANDING_STATE.WALKING;
 		x = x - dynamic_movement_speed;
 	}
 }
@@ -416,6 +426,7 @@ if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
 
 if(global.button_held == E_BUTTON_HELD.LEFT){
 	if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
+		standing_state = E_STANDING_STATE.WALKING;
 		x = x - dynamic_movement_speed/2;
 	}
 }
@@ -430,6 +441,7 @@ if(keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)){
 	global.button_held = E_BUTTON_HELD.NONE;
 	facing = E_FACING.right;
 	if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
+		standing_state = E_STANDING_STATE.WALKING;
 		x = x + dynamic_movement_speed;
 	}
 }
@@ -444,6 +456,7 @@ if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
 
 if(global.button_held == E_BUTTON_HELD.RIGHT){
 	if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
+		standing_state = E_STANDING_STATE.WALKING;
 		x = x + dynamic_movement_speed/2;
 	}
 }
@@ -455,6 +468,7 @@ if(global.button_held == E_BUTTON_HELD.RIGHT){
 if(keyboard_check_released(ord("A")) || keyboard_check_released(vk_left) || keyboard_check_released(ord("D")) || keyboard_check_released(vk_right) || keyboard_check(ord("C")) || keyboard_check(vk_lcontrol) || keyboard_check_pressed(ord("S"))){
 	global.button_held_time = 0;
 	global.button_held = E_BUTTON_HELD.NONE;
+	standing_state = E_STANDING_STATE.STANDING;
 }
 
 #endregion
@@ -464,7 +478,7 @@ if(keyboard_check_released(ord("A")) || keyboard_check_released(vk_left) || keyb
 if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard_check_pressed(ord("W"))){
 		
 	if(jump_state != E_JUMP_STATE.JUMPING){
-			
+		
 		jump_state = E_JUMP_STATE.JUMPING;
 		
 		jump_current++;
@@ -518,16 +532,15 @@ if(keyboard_check_pressed(ord("C")) || keyboard_check_pressed(vk_lcontrol) || ke
 		
 		standing_state = E_STANDING_STATE.CROUCHING;
 		
-		dynamic_movement_speed = dynamic_movement_speed / 2;
+		//dynamic_movement_speed = dynamic_movement_speed / 2;
 	
 	}
 	else{
 		
 		standing_state = E_STANDING_STATE.STANDING;
 		
-		//TODO: y + half of the sprite size I think. sprite is too low when we change back. 
 		
-		dynamic_movement_speed = static_movement_speed;
+		//dynamic_movement_speed = static_movement_speed;
 		
 	}	
 }
@@ -539,12 +552,14 @@ if(keyboard_check(ord("C")) || keyboard_check(vk_lcontrol) || keyboard_check_pre
 	}
 }
 
+//REMOVED for now
 if(global.button_held == E_BUTTON_HELD.CROUCH){
-	standing_state = E_STANDING_STATE.PRONE;
+	//standing_state = E_STANDING_STATE.PRONE;
 		
-	dynamic_movement_speed = dynamic_movement_speed / 2.5;
+	//dynamic_movement_speed = dynamic_movement_speed / 2.5;
 	
 }
+
 
 
 

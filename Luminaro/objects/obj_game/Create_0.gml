@@ -199,6 +199,7 @@ enum E_JUMP_STATE{
 
 enum E_STANDING_STATE{
 	STANDING,
+	WALKING,
 	CROUCHING,
 	PRONE,
 }
@@ -389,26 +390,13 @@ enum E_SHADOW_STATE{
 
 enum E_SHADOW_TYPE{
 	PUDDLE,
-	WALL,
-	CEILING,
-	CORNER,
+	TALL,
+	DIAMOND,
+	CIRCLE,
+	last
 }
 
-//in relation to the shadow placement, where should the shadows spawn?
-//this is a solution to the issue of spawning shadow mobs in the floor / wall. 
-//TODO: alternately we could move them out of the wall if they are in the wall using a block in their step code?
-enum E_SHADOW_SPAWN_ORIENTATION{
-	top_left,
-	top_center,
-	top_right,
-	center_left,
-	center,
-	center_right,
-	bottom_left,
-	bottom_center,
-	bottom_right,
-	
-}
+
 
 #endregion
 

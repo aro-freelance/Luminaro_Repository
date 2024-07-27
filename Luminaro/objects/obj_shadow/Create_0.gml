@@ -6,7 +6,8 @@ depth = -8;
 
 
 shadow_state = E_SHADOW_STATE.DEACTIVATED;
-shadow_type = E_SHADOW_TYPE.PUDDLE;
+shadow_type = E_SHADOW_TYPE.CIRCLE;
+
 
 level = 1;
 

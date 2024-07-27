@@ -33,8 +33,8 @@
   "resourceVersion":"2.0",
   "solid":false,
   "spriteId":{
-    "name":"spr_shadows",
-    "path":"sprites/spr_shadows/spr_shadows.yy",
+    "name":"spr_shadow_circle",
+    "path":"sprites/spr_shadow_circle/spr_shadow_circle.yy",
   },
   "spriteMaskId":null,
   "visible":true,
