@@ -242,7 +242,7 @@ if(attack_state == E_ATTACK_STATE.beam){
 
 if(attack_state == E_ATTACK_STATE.prism){
 	if(ds_list_size(prism_beams) > 0){
-		other.on_timer++;
+		on_timer = on_timer + (delta_time / 1000000);
 		
 		if(on_timer > dynamic_battery){
 			
@@ -311,17 +311,81 @@ if(variable_instance_exists(id, "dynamic_hp")){
 
 #endregion
 
-#region Transition
+#region Level Transition
 
-if(array_length(bosses_defeated) == (global.current_level + 1)){
+if(array_length(bosses_defeated) == (global.current_level + 1) && !boss_init){	
+
+	#region check item requirement
 	
-	global.game_state = E_GAME_STATE.LEVEL_TRANSITION;
+	if(global.current_level == E_LEVELS.LEVEL_1){
+		if(array_contains(inventory, E_INVENTORY_ITEM_TYPES.TYPE_0)){
+			has_required_item = true;
+		}
+	}
+	else if(global.current_level == E_LEVELS.LEVEL_2){
+		if(array_contains(inventory, E_INVENTORY_ITEM_TYPES.TYPE_2)){
+			has_required_item = true;
+		}
+	}
 	
+	#endregion
+	
+	
+	#region Transition
+
+	if(has_required_item){
 		
-	show_debug_message("obj player: going to next room. current level = " + string(global.current_level));
+		boss_init = true;
 	
-	global.current_level++;
-	scr_level_transition(global.current_level);
+		show_debug_message("obj player: going to next room. current level = " + string(global.current_level));
+	
+	
+		var message_box = instance_create_layer(display_get_gui_width()/2, display_get_gui_height()/2, "UI", obj_message);
+		message_box.text_array = obj_game.current_boss_story;
+	
+	
+		with(obj_enemy){
+			instance_destroy();
+		}
+	
+		with(obj_boss){
+			instance_destroy();
+		}
+	
+		with(obj_projectile_weapon_enemy){
+			instance_destroy();
+		}
+	
+		with(obj_melee_weapon_enemy){
+			instance_destroy();
+		}
+	
+	
+	
+		if(collision_line(x, y, x + 100, y - sprite_get_height(spr_player), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
+			var level_transition = instance_create_layer(x + 100, y - sprite_get_height(spr_player), "Items", obj_level_transition);
+			show_debug_message("scr player spawn level transition: spawn A");
+		}
+		else if(collision_line(x, y, x - 100, y - sprite_get_height(spr_player), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
+			var level_transition = instance_create_layer(x - 100, y - sprite_get_height(spr_player), "Items", obj_level_transition);
+			show_debug_message("scr player spawn level transition: spawn b");
+		}
+		else if(collision_line(x, y, x, y - 100 - sprite_get_height(spr_player), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
+			var level_transition = instance_create_layer(x, y - 100 - sprite_get_height(spr_player), "Items", obj_level_transition);
+			show_debug_message("scr player spawn level transition: spawn c");
+		}
+		else if (collision_line(x, y, x, y + 100 - sprite_get_height(spr_player), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
+			var level_transition = instance_create_layer(x, y + 100 - sprite_get_height(spr_player), "Items", obj_level_transition);
+			show_debug_message("scr player spawn level transition: spawn d");
+		}
+		else{
+			var level_transition = instance_create_layer(x, y - sprite_get_height(spr_player)/2, "Items", obj_level_transition);
+			show_debug_message("scr player spawn level transition: spawn e");
+		}
+	
+	}
+	
+	#endregion
 	
 }
 

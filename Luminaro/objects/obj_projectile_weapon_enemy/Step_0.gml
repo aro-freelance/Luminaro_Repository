@@ -103,7 +103,8 @@ if(place_meeting(x, y, obj_projectile_weapon_enemy)){
 	instance_destroy();	
 }
 
-if(place_meeting(x, y, [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")])){
+//layer_tilemap_get_id("Tiles_Ceiling"),
+if(place_meeting(x, y, [layer_tilemap_get_id("Tiles_Walls"),  layer_tilemap_get_id("Tiles_Floor")])){
 	show_debug_message("collision with tiles");
 	
 	//TODO: handle bouncing

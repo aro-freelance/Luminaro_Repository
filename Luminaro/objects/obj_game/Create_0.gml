@@ -10,10 +10,6 @@
 
 #endregion
 
-
-
-
-
 #region Game Parameters
 
 enum E_GAME_STATE{
@@ -172,11 +168,11 @@ enum E_INVENTORY_ITEM_TYPES{
 	last
 }
 
-global.item_descriptions = ds_grid_create(E_INVENTORY_ITEM_TYPES.last - 1, E_INVENTORY_ITEM_TYPES.last - 1);
+global.item_descriptions = [];
 
-global.item_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_0, E_INVENTORY_ITEM_TYPES.TYPE_0] = "Item 0";
-global.item_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_1, E_INVENTORY_ITEM_TYPES.TYPE_1] = "Item 1";
-global.item_descriptions[# E_INVENTORY_ITEM_TYPES.TYPE_2, E_INVENTORY_ITEM_TYPES.TYPE_2] = "Item 2";
+array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_0, "Item 0");
+array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_1, "Item 1");
+array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_2, "Item 2");
 
 
 global.combine_descriptions = ds_grid_create(E_INVENTORY_ITEM_TYPES.last - 1, E_INVENTORY_ITEM_TYPES.last - 1);
@@ -434,3 +430,49 @@ enum E_LIGHT_SIZE{
 #endregion
 
 
+#region Story
+
+//when creation code runs on level we will set the end story
+current_boss_story = [];
+current_end_story = [];
+
+level_1_begin_story = [];
+array_push(level_1_begin_story, "Your peaceful world has fallen to shadow!");
+array_push(level_1_begin_story, "But there is hope still...");
+array_push(level_1_begin_story, "A tale tells of hidden components spread throughout the world.");
+array_push(level_1_begin_story, "When combined they will create the Luminaro which will bring light back to the world and banish the shadows.");
+array_push(level_1_begin_story, "You have come to a small cave where you will find your first component.");
+array_push(level_1_begin_story, "Delve into the cave and banish the shadow with your light!");
+array_push(level_1_begin_story, " Movement: WASD or arrow keys \n Light Beam: Hold Left Mouse \n Explosive Catalyst: Right mouse \n Prism Beam: Middle Mouse \n Narrow Beam (increase damage): Left Alt \n Widen Beam (lower damage but more area): Left Shift ");
+
+level_1_boss_story = [];
+array_push(level_1_boss_story, "You have found " + global.item_descriptions[0] + "!");
+
+level_1_end_story = [];
+array_push(level_1_end_story, "After finding " + global.item_descriptions[0] + " you leave in pursuit of the next component.");
+
+
+level_2_begin_story = [];
+array_push(level_2_begin_story, "You have found your way to the next component");
+array_push(level_2_begin_story, "Delve into the cave and banish the shadow with your light!");
+
+
+level_2_boss_story = [];
+array_push(level_2_boss_story, "You have found " + global.item_descriptions[1] + "! \nYou now have two items which can be combined.");
+array_push(level_2_boss_story, "Open the menu using F1 and then open the inventory. \nCombine " + global.item_descriptions[0] + " and " + global.item_descriptions[1] + " to create " + global.item_descriptions[2] + ".");
+
+
+level_2_end_story = [];
+array_push(level_2_end_story, "You have created " + global.item_descriptions[2] + " and you are well on your way to banishing the shadow!");
+array_push(level_2_end_story, "This is the end of the version of the game completed for the Jam! The journey to defeat the shadow is still being written.");
+array_push(level_2_end_story, "Thank you for playing!")
+
+
+
+
+win_story = level_2_end_story;
+//array_push(win_story, "Game Jam Version complete!")
+
+
+
+#endregion

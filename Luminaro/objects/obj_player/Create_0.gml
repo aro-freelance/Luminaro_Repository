@@ -213,7 +213,9 @@ shadows_defeated = []; //spawn points
 //count the time in the game
 time_counter = 0;
 
+boss_init = false;
 
+has_required_item = false;
 
 #endregion
 

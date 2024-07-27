@@ -3,6 +3,7 @@
 
 function scr_reset_player(){
 
+	global.button_held =  E_BUTTON_HELD.NONE;
 
 	with(global.player){
 	
@@ -12,6 +13,8 @@ function scr_reset_player(){
 		react_state = E_REACT_STATE.idle;
 		facing = E_FACING.right;
 	
+		boss_init = false;
+		has_required_item = false;
 	
 		dynamic_movement_speed = static_movement_speed;
 		dynamic_jump_height = static_jump_height;
@@ -44,7 +47,7 @@ function scr_reset_player(){
 		current_catalyst_charges = 0;
 		current_spawned_catalysts = 0;
 
-		inventory = [];
+		//inventory = [];
 		
 		display_message_on = false;
 		display_message_timer = 0;
