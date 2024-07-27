@@ -214,7 +214,7 @@ if(can_move){
 						
 							goal_point = [g_x, g_y];
 							
-							show_debug_message("========================  original goal x = " + string(goal_point_x) + ". y = " + string(goal_point_y) + ". new x = " + string(g_x) + ". y = " + string(g_y) + ". d diff = " + string(d_diff)+ ". d = " + string(d) + ". distance goal = " + string(distance_goal));
+							//show_debug_message("========================  original goal x = " + string(goal_point_x) + ". y = " + string(goal_point_y) + ". new x = " + string(g_x) + ". y = " + string(g_y) + ". d diff = " + string(d_diff)+ ". d = " + string(d) + ". distance goal = " + string(distance_goal));
 						}
 						//show_debug_message("enemy goal point: collision with floor");
 					}

@@ -7,7 +7,7 @@ event_inherited();
 
 type = E_PICKUP_TYPES.XP;
 
-amount = 10;
+amount = 20;
 
 should_move_to_player = true;
 

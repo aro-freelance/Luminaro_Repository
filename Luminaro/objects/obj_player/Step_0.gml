@@ -233,6 +233,7 @@ if(attack_state == E_ATTACK_STATE.beam){
 	if(on_timer > dynamic_battery){
 		show_debug_message("beam battery died");
 		attack_state = E_ATTACK_STATE.idle;
+		beam.size = E_LIGHT_SIZE.NORMAL;
 		beam.is_on = false;
 		battery_charged = false;
 	}

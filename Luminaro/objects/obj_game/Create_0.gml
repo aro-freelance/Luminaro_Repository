@@ -29,7 +29,7 @@ global.game_state = E_GAME_STATE.MAIN_MENU;
 
 global.current_level = E_LEVELS.LEVEL_1;
 
-global.start_room = rm_level2;
+global.start_room = rm_level1;
 
 global.player = noone;
 
