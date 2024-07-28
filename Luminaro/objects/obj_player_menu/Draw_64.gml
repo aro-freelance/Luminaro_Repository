@@ -14,21 +14,23 @@ if(state == E_PLAYER_MENU_STATE.DISPLAY_STATS){
 		draw_set_valign(fa_middle);
 		draw_set_halign(fa_left);
 		
-
+		if(os_browser != browser_not_a_browser){
+			draw_set_font(fnt_1_small);
+		}
 		
-		draw_text(display_center_x + 2*margin, y1 + (3*margin), "Movement Speed Upgrades: " + string(global.player.l_movement_speed));
-		draw_text(display_center_x + 2*margin, y1 + (5*margin), "Jump Height Upgrades: " + string(global.player.l_jump_height));
-		draw_text(display_center_x + 2*margin, y1 + (7*margin), "Jump Float Time Upgrades: " + string(global.player.l_jump_float_time));
-		draw_text(display_center_x + 2*margin, y1 + (9*margin), "Beam Growth Speed Upgrades: " + string(global.player.l_beam_speed));
-		draw_text(display_center_x + 2*margin, y1 + (11*margin), "Light Intensity Mod Upgrades: " + string(global.player.l_light_intensity_mod));
-		draw_text(display_center_x + 2*margin, y1 + (13*margin), "Prism Beam Number Upgrades: " + string(global.player.l_prism_beam_number));
-		draw_text(display_center_x + 2*margin, y1 + (15*margin), "Battery Max Upgrades: " + string(global.player.l_battery));
-		draw_text(display_center_x + 2*margin, y1 + (17*margin), "Battery Charge Delay Upgrades: " + string(global.player.l_battery_charge_delay));
-		draw_text(display_center_x + 2*margin, y1 + (19*margin), "Lantern Size Upgrades: " + string(global.player.l_lantern_size_mod));
-		draw_text(display_center_x + 2*margin, y1 + (21*margin), "Beam Length Upgrades: " + string(global.player.l_beam_length_mod));
-		draw_text(display_center_x + 2*margin, y1 + (23*margin), "Catalyst Number Upgrades: " + string(global.player.l_catalyst_number));
-		draw_text(display_center_x + 2*margin, y1 + (25*margin), "Catalyst Charge Delay Upgrades: " + string(global.player.l_catalyst_charge_delay));
-		draw_text(display_center_x + 2*margin, y1 + (27*margin), "Catalyst Size Mod Upgrades: " + string(global.player.l_catalyst_size_mod));
+		draw_text(display_center_x + margin, y1 + (3*margin), "Movement Speed Upgrades: " + string(global.player.l_movement_speed));
+		draw_text(display_center_x + margin, y1 + (5*margin), "Jump Height Upgrades: " + string(global.player.l_jump_height));
+		draw_text(display_center_x + margin, y1 + (7*margin), "Jump Float Time Upgrades: " + string(global.player.l_jump_float_time));
+		draw_text(display_center_x + margin, y1 + (9*margin), "Beam Growth Speed Upgrades: " + string(global.player.l_beam_speed));
+		draw_text(display_center_x + margin, y1 + (11*margin), "Light Intensity Mod Upgrades: " + string(global.player.l_light_intensity_mod));
+		draw_text(display_center_x + margin, y1 + (13*margin), "Prism Beam Number Upgrades: " + string(global.player.l_prism_beam_number));
+		draw_text(display_center_x + margin, y1 + (15*margin), "Battery Max Upgrades: " + string(global.player.l_battery));
+		draw_text(display_center_x + margin, y1 + (17*margin), "Battery Charge Delay Upgrades: " + string(global.player.l_battery_charge_delay));
+		draw_text(display_center_x + margin, y1 + (19*margin), "Lantern Size Upgrades: " + string(global.player.l_lantern_size_mod));
+		draw_text(display_center_x + margin, y1 + (21*margin), "Beam Length Upgrades: " + string(global.player.l_beam_length_mod));
+		draw_text(display_center_x + margin, y1 + (23*margin), "Catalyst Number Upgrades: " + string(global.player.l_catalyst_number));
+		draw_text(display_center_x + margin, y1 + (25*margin), "Catalyst Charge Delay Upgrades: " + string(global.player.l_catalyst_charge_delay));
+		draw_text(display_center_x + margin, y1 + (27*margin), "Catalyst Size Mod Upgrades: " + string(global.player.l_catalyst_size_mod));
 		
 		
 		draw_text(x1 + 2*margin, y1 + (3*margin), "Player Level: " + string(global.player.level));

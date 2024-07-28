@@ -12,7 +12,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Mirrors",
-    "path":"folders/Objects/Objects/Mirrors.yy",
+    "path":"folders/Objects/GamePieces/Mirrors.yy",
   },
   "parentObjectId":null,
   "persistent":false,

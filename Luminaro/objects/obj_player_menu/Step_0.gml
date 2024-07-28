@@ -4,6 +4,9 @@
 if(!init){
 	init = true;
 	
+	
+	
+	
 	#region Pause the game
 	
 		global.button_held_time = 0;
@@ -31,13 +34,15 @@ if(!init){
 		button1.destination_type = E_PLAYER_MENU_STATE.INVENTORY;
 		button1.label = "Inventory";
 		
-		var button2 = instance_create_layer(display_center_x + menu_width/2 - margin - button_width/2, display_center_y + menu_height/2 - margin - button_height/2, "UI", obj_player_menu_mode_button);
+		/*
+		var button2 = instance_create_layer(display_center_x, display_center_y + menu_height/2 - margin - button_height/2, "UI", obj_player_menu_mode_button);
 		button2.destination_type = E_PLAYER_MENU_STATE.SETTINGS;
 		button2.label = "Settings";
-		
-		var button3 = instance_create_layer(display_center_x, display_center_y + menu_height/2 - margin - button_height/2, "UI", obj_player_menu_mode_button);
-		button3.destination_type = E_PLAYER_MENU_STATE.SAVE_LOAD_EXIT;
-		button3.label = "Save/Load/Exit";
+		*/
+	
+		var button3 = instance_create_layer(display_center_x + menu_width/2 - margin - button_width/2, display_center_y + menu_height/2 - margin - button_height/2, "UI", obj_button_room_change);
+		button3.destination_room = rm_main_menu;
+		button3.label = "Exit"; //"Save/Load/Exit";
 
 	}
 

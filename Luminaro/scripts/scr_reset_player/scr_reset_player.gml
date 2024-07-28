@@ -15,8 +15,9 @@ function scr_reset_player(){
 		react_state = E_REACT_STATE.idle;
 		facing = E_FACING.right;
 	
-		boss_init = false;
+		boss_defeated = false;
 		has_required_item = false;
+		transition_spawned = false;
 	
 		dynamic_movement_speed = static_movement_speed;
 		dynamic_jump_height = static_jump_height;

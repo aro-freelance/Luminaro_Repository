@@ -1,15 +1,24 @@
-/*
-if (browser_width != width || browser_height != height)
-{
-width = browser_width-5;
-height = browser_height-5;
-window_set_size(width, height);
+if(os_browser != browser_not_a_browser){
+	
+	//show_message("resize");
+	
+	var _dw = 99*browser_width/100;
+	var _dh = 99*browser_height/100;
+	
+	display_set_gui_size(_dw, _dh);
+	//window_set_size(_dw, _dh);
+	camera_set_view_size(view_camera[0], _dw, _dh);
+	surface_resize(application_surface, _dw, _dh);
+	window_set_rectangle(0, 0, _dw, _dh);
+	
+	display_set_gui_size(_dw, _dh);
+	global.dg_width = display_get_width();
+	global.dg_height = display_get_height();
 }
-*/
 
 
 
-spawn_point = [display_get_gui_width()/2, display_get_gui_height()/2];	
+spawn_point = [global.dg_width/2, global.dg_height/2];	
 
 
 if(global.player == noone) global.player = instance_create_layer(array_get(spawn_point, 0), array_get(spawn_point, 1), "Actors", obj_player);
@@ -32,7 +41,7 @@ else{
 global.lighting_effects = instance_create_layer(0, 0, "Effects", obj_lighting_effects);
 
 
-obj_intro_story = instance_create_layer(display_get_gui_width()/2, display_get_gui_height()/2, "UI", obj_message);
+obj_intro_story = instance_create_layer(global.dg_width/2, global.dg_height/2, "UI", obj_message);
 obj_intro_story.is_fullscreen = true;
 
 

@@ -17,8 +17,8 @@ background_sprite = spr_message_background_1;
 background_width = sprite_get_width(background_sprite);
 background_height = sprite_get_height(background_sprite);
 
-display_width = display_get_gui_width();
-display_height = display_get_gui_height();
+display_width = global.dg_width;
+display_height = global.dg_height;
 
 sep = 40;
 margin = 20;

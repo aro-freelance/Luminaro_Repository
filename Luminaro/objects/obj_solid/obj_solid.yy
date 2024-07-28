@@ -9,7 +9,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Solid Objects",
-    "path":"folders/Objects/Objects/Solid Objects.yy",
+    "path":"folders/Objects/GamePieces/Solid Objects.yy",
   },
   "parentObjectId":null,
   "persistent":false,

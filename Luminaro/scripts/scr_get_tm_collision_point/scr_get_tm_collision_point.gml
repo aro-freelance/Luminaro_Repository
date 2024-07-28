@@ -26,7 +26,7 @@ function scr_get_tm_collision_point(input_x, input_y, tile_layer_name){
 		for(var _y = y1; _y <= y2; _y++){
 	
 			//get the specific tile in the set that we are looking at
-			var tile = tile_get_index(tilemap_get(tile_map, _x, _y));
+			var tile = tile_get_index(tilemap_get_at_pixel(tile_map, _x, _y));
 			
 			//if it exists
 			if(tile){

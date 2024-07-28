@@ -3,8 +3,8 @@
 
 depth = -50;
 
-display_width = display_get_gui_width();
-display_height = display_get_gui_height();
+display_width = global.dg_width;
+display_height = global.dg_height;
 
 //label to show on button
 label = "";

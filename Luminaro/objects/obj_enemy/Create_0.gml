@@ -4,6 +4,8 @@
 depth = -20;
 
 
+show_debug_message("enemy spawned");
+
 #region Enemy State
 
 

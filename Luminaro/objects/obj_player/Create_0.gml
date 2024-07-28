@@ -10,6 +10,8 @@ global.player = self;
 global.game_state = E_GAME_STATE.PLAYING;
 
 
+init = false;
+
 
 #region Player State 
 
@@ -217,9 +219,11 @@ shadows_defeated = []; //spawn points
 //count the time in the game
 time_counter = 0;
 
-boss_init = false;
-
+boss_defeated = false;
 has_required_item = false;
+transition_spawned = false;
+
+
 
 #endregion
 

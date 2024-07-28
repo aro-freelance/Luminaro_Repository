@@ -482,21 +482,14 @@ if(can_move){
 
 if(variable_instance_exists(id, "dynamic_hp")){
 	if(dynamic_hp <= 0){
-		show_debug_message("shadow " + string(id) + " death.");
+		show_debug_message("boss " + string(id) + " death.");
 		
 		randomize();
-		var irand_health = irandom_range(0, 100);
 		var irand_xp_offset = irandom_range(-100, 100);
-		var irand_hp_offset = irandom_range(-100, 100) - irand_xp_offset;
 		
 		var xp_pickup = instance_create_layer(x + irand_xp_offset, y, "Items", obj_xp_pickup);
 		xp_pickup.amount *= level + 5;
 		
-		
-		if(irand_health > 10) {
-			var health_pickup = instance_create_layer(x + irand_hp_offset, y, "Items", obj_health_pickup);
-			health_pickup.amount *= level + 5;
-		}
 		
 	
 		var inventory_pickup = instance_create_layer(x + irand_xp_offset, y, "Items", obj_inventory_pickup);
@@ -506,8 +499,32 @@ if(variable_instance_exists(id, "dynamic_hp")){
 		//add self.enemy_type to the player's list of defeated bosses
 		array_push(global.player.bosses_defeated, enemy_type);
 		
+		var message_box = instance_create_layer(global.dg_width/2, global.dg_height/2, "UI", obj_message);
+		message_box.text_array = obj_game.current_boss_story;
+	
+	
+		global.player.boss_defeated = true;
+	
+		with(obj_shadow){
+			instance_destroy();
+		}
+	
+		with(obj_enemy){
+			instance_destroy();
+		}
+	
+		with(obj_projectile_weapon_enemy){
+			instance_destroy();
+		}
+	
+		with(obj_melee_weapon_enemy){
+			instance_destroy();
+		}
 		
-		instance_destroy();
+		
+		with(obj_boss){
+			instance_destroy();
+		}
 	}
 }
 

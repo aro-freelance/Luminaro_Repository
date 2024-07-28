@@ -12,3 +12,7 @@ with(obj_inventory_button){
 with(obj_combine_button){
 	instance_destroy();
 }
+
+with(obj_button_room_change){
+	instance_destroy();
+}

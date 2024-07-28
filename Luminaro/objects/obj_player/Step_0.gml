@@ -1,7 +1,31 @@
 
 
-
 if(global.game_state == E_GAME_STATE.PLAYING){
+	
+#region init	
+
+if(init){
+	if(os_browser != browser_not_a_browser){
+		var _dw = 99*browser_width/100;
+		var _dh = 99*browser_height/100;
+	
+		display_set_gui_size(_dw, _dh);
+		//window_set_size(_dw, _dh);
+		camera_set_view_size(view_camera[0], _dw, _dh);
+		surface_resize(application_surface, _dw, _dh);
+		window_set_rectangle(0, 0, _dw, _dh);
+	
+		display_set_gui_size(_dw, _dh);
+		global.dg_width = display_get_width();
+		global.dg_height = display_get_height();
+	
+	}
+
+
+}
+
+#endregion
+	
 
 #region timer
 
@@ -26,45 +50,45 @@ var prev_sprite_index = sprite_index;
 
 
 if(facing == E_FACING.right){
-	if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+	if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED){
 		sprite_index = spr_player_idle;		
 	}
-	else if(standing_state == E_STANDING_STATE.WALKING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+	else if(standing_state == E_STANDING_STATE.WALKING && jump_state == E_JUMP_STATE.GROUNDED){
 		sprite_index = spr_player_walking;		
 	}
-	else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+	else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED ){
 		sprite_index = spr_player_crouching;
 	}
 /*	else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
 		sprite_index = spr_player_prone;
 	}*/
-	else if(jump_state == E_JUMP_STATE.JUMPING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+	else if(jump_state == E_JUMP_STATE.JUMPING){
 		//removed standing_state == E_STANDING_STATE.STANDING && so that this works when moving or not moving
 		sprite_index = spr_player_jumping;
 	}
-	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING){
 		sprite_index = spr_player_falling;
 	}
 }
 else if(facing == E_FACING.left){
 		
-	if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+	if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.GROUNDED){
 		sprite_index = spr_player_idle_l;		
 	}
-	else if(standing_state == E_STANDING_STATE.WALKING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+	else if(standing_state == E_STANDING_STATE.WALKING && jump_state == E_JUMP_STATE.GROUNDED){
 		sprite_index = spr_player_walking_l;		
 	}
-	else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+	else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED){
 		sprite_index = spr_player_crouching_l;
 	}
 /*	else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
 		sprite_index = spr_player_prone_l;
 	} */
-	else if(jump_state == E_JUMP_STATE.JUMPING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+	else if(jump_state == E_JUMP_STATE.JUMPING){
 		//removed standing_state == E_STANDING_STATE.STANDING && so that this works when moving or not moving
 		sprite_index = spr_player_jumping_l;
 	}
-	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
+	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING){
 		sprite_index = spr_player_falling_l;
 	}
 }
@@ -344,7 +368,8 @@ if(variable_instance_exists(id, "dynamic_hp")){
 
 #region Level Transition
 
-if(array_length(bosses_defeated) == (global.current_level + 1) && !boss_init){	
+if(boss_defeated){	
+
 
 	#region check item requirement
 	
@@ -364,34 +389,9 @@ if(array_length(bosses_defeated) == (global.current_level + 1) && !boss_init){
 	
 	#region Transition
 
-	if(has_required_item){
-		
-		boss_init = true;
+	if(has_required_item && !transition_spawned){
 	
-		show_debug_message("obj player: going to next room. current level = " + string(global.current_level));
-	
-	
-		var message_box = instance_create_layer(display_get_gui_width()/2, display_get_gui_height()/2, "UI", obj_message);
-		message_box.text_array = obj_game.current_boss_story;
-	
-	
-		with(obj_enemy){
-			instance_destroy();
-		}
-	
-		with(obj_boss){
-			instance_destroy();
-		}
-	
-		with(obj_projectile_weapon_enemy){
-			instance_destroy();
-		}
-	
-		with(obj_melee_weapon_enemy){
-			instance_destroy();
-		}
-	
-	
+		transition_spawned = true;
 	
 		if(collision_line(x, y, x + 100, y - sprite_get_height(spr_player_idle), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling"), layer_tilemap_get_id("Tiles_Floor")], false, false) == noone ){
 			var level_transition = instance_create_layer(x + 100, y - sprite_get_height(spr_player_idle), "Items", obj_level_transition);

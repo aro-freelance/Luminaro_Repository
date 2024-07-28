@@ -14,7 +14,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Pickups",
-    "path":"folders/Objects/Objects/Pickups.yy",
+    "path":"folders/Objects/GamePieces/Pickups.yy",
   },
   "parentObjectId":null,
   "persistent":false,

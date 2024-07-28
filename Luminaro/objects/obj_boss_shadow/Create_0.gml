@@ -2,7 +2,7 @@
 // Inherit the parent event
 event_inherited();
 
-spawn_distance_to_player = 200;
+spawn_distance_to_player = 400;
 boss_type = E_BOSS_TYPES.BOSS_1;
 supercharged = false;
 

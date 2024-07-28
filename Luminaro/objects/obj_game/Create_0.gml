@@ -1,5 +1,6 @@
 /// @description this controls the game
 
+init = false;
 
 #region Inputs
 
@@ -20,6 +21,8 @@ enum E_GAME_STATE{
 	WIN_SCREEN,
 	DEATH_SCREEN,
 }
+
+global.game_obj = self;
 
 global.game_state = E_GAME_STATE.MAIN_MENU;
 
@@ -79,7 +82,10 @@ global.button_held_threshold = 20;
 
 #region UI
 
-distance_between_player_and_camera_bottom = display_get_gui_height()/10;
+global.dg_width = display_get_gui_width();
+global.dg_height = display_get_gui_height();
+
+distance_between_player_and_camera_bottom = global.dg_height/10;
 
 margin = 20;
 
@@ -90,7 +96,7 @@ hp_bar_width = 600;
 hp_bar_height = 50;
 
 
-hp_bar_x1 = display_get_gui_width() - margin - hp_bar_width;
+hp_bar_x1 = global.dg_width - margin - hp_bar_width;
 hp_bar_x2 = hp_bar_x1 + hp_bar_width;
 
 hp_bar_y1 = margin;
@@ -101,10 +107,10 @@ battery_bar_width = 600;
 battery_bar_height = 50;
 battery_bar_color = c_green; //uncharged color is in draw gui
 
-battery_bar_x1 = display_get_gui_width() - margin - battery_bar_width;
+battery_bar_x1 = global.dg_width - margin - battery_bar_width;
 battery_bar_x2 = battery_bar_x1 + battery_bar_width;
 
-battery_bar_y1 = display_get_gui_height() - margin - battery_bar_height;
+battery_bar_y1 = global.dg_height - margin - battery_bar_height;
 battery_bar_y2 = battery_bar_y1 + battery_bar_height;
 
 
@@ -256,7 +262,7 @@ global.baseline_jump_float_time = .27; //12 //how long after jump does player ho
 
 
 global.baseline_beam_speed = .025; //.03
-global.baseline_light_intensity_mod = 1; //1.2
+global.baseline_light_intensity_mod =  2; //1; //1.2
 
 //how many mirrors can player have?
 //global.baseline_max_mirrors = 1; //3
@@ -279,7 +285,7 @@ global.baseline_catalyst_charge_delay = 500; //how long does a catalyst take to 
 global.baseline_catalyst_size_mod = 1; //the multiplier applied to the catalyst size
  
 
-global.baseline_hp = 100; //300
+global.baseline_hp = 100; //100 //300
 
 #endregion
 

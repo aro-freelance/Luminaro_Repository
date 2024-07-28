@@ -13,7 +13,7 @@
   "overriddenProperties":[],
   "parent":{
     "name":"Pickup_Item_Types",
-    "path":"folders/Objects/Objects/Pickups/Pickup_Item_Types.yy",
+    "path":"folders/Objects/GamePieces/Pickups/Pickup_Item_Types.yy",
   },
   "parentObjectId":{
     "name":"obj_pickup_item",
