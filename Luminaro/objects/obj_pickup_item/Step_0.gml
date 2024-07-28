@@ -4,21 +4,6 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 	
 	if(should_move_to_player) move_towards_point(global.player.x, global.player.y, move_to_player_speed);
 
-//raise to level of player (if the player is on the ground)
-
-
-/*
-if(global.player.jump_state == E_JUMP_STATE.GROUNDED){
-	if(y > (global.player.y - (sprite_get_height(spr_player)) ) ){
-		y -= 5;
-	}
-}
-*/
-
-
-//bounce
-//y += sin(delta_time) * 5;
-
 
 
 

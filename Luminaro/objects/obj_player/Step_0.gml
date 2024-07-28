@@ -59,11 +59,7 @@ if(facing == E_FACING.right){
 	else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED ){
 		sprite_index = spr_player_crouching;
 	}
-/*	else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_player_prone;
-	}*/
 	else if(jump_state == E_JUMP_STATE.JUMPING){
-		//removed standing_state == E_STANDING_STATE.STANDING && so that this works when moving or not moving
 		sprite_index = spr_player_jumping;
 	}
 	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING){
@@ -81,11 +77,7 @@ else if(facing == E_FACING.left){
 	else if(standing_state == E_STANDING_STATE.CROUCHING && jump_state == E_JUMP_STATE.GROUNDED){
 		sprite_index = spr_player_crouching_l;
 	}
-/*	else if(standing_state == E_STANDING_STATE.PRONE && jump_state == E_JUMP_STATE.GROUNDED && attack_state == E_ATTACK_STATE.idle && react_state == E_REACT_STATE.idle){
-		sprite_index = spr_player_prone_l;
-	} */
 	else if(jump_state == E_JUMP_STATE.JUMPING){
-		//removed standing_state == E_STANDING_STATE.STANDING && so that this works when moving or not moving
 		sprite_index = spr_player_jumping_l;
 	}
 	else if(standing_state == E_STANDING_STATE.STANDING && jump_state == E_JUMP_STATE.FALLING){
@@ -235,6 +227,17 @@ if(place_meeting(x, y, obj_pickup_item)){
 		 
 		 
 	}
+	else if (pickup.type == E_PICKUP_TYPES.UPGRADE){
+
+		global.game_state = E_GAME_STATE.IN_GAME_MENU;
+		global.player_menu = instance_create_layer(0, 0, "UI", obj_player_menu);
+		global.player_menu.state = E_PLAYER_MENU_STATE.LEVEL_UP;
+		global.player_menu.is_special_upgrade = true;
+		global.player_menu.level_option = pickup.upgrade_type;
+		global.player_menu.upgrade_quality = pickup.upgrade_quality;
+
+	
+	}
 	
 	//TODO: play sound
 	//TODO: play effect
@@ -247,15 +250,22 @@ if(place_meeting(x, y, obj_pickup_item)){
 
 #region Battery
 
-if(!battery_charged || attack_state == E_ATTACK_STATE.idle){
+if(!battery_has_charge || attack_state == E_ATTACK_STATE.idle){
 	//if the batter didn't fully die, decrement timer twice as fast as if it died
-	if(on_timer > 0) on_timer = clamp(on_timer - 2, 0, dynamic_battery);
+	if(battery_has_charge){
+		//on_timer = clamp(on_timer - 2, 0, dynamic_battery);
+		on_timer = clamp(on_timer - ((delta_time / 1000000) * 1.3), 0, dynamic_battery);
+		show_debug_message("on_timer = " + string(on_timer));
+	}
+	else {
+		battery_charge_timer = battery_charge_timer + (delta_time / 1000000);
+		show_debug_message("battery charge timer = " + string(battery_charge_timer));
+	}
 	
-	battery_charge_timer++;
 	if( battery_charge_timer > dynamic_battery_charge_delay ){
 		on_timer = 0;
 		battery_charge_timer = 0;
-		battery_charged = true;
+		battery_has_charge = true;
 	}
 }
 
@@ -271,7 +281,7 @@ if(attack_state == E_ATTACK_STATE.beam){
 		attack_state = E_ATTACK_STATE.idle;
 		beam.size = E_LIGHT_SIZE.NORMAL;
 		beam.is_on = false;
-		battery_charged = false;
+		battery_has_charge = false;
 	}
 
 }
@@ -290,7 +300,7 @@ if(attack_state == E_ATTACK_STATE.prism){
 			
 			//and clear the list
 			ds_list_clear(prism_beams);
-			battery_charged = false;
+			battery_has_charge = false;
 	
 			attack_state = E_ATTACK_STATE.idle;
 			lantern.is_on = true;
@@ -305,7 +315,7 @@ if(attack_state == E_ATTACK_STATE.prism){
 
 //if we are not at max catalyst charges
 if(current_catalyst_charges < dynamic_catalyst_number){
-	catalyst_charge_timer++; 
+	catalyst_charge_timer = catalyst_charge_timer + (delta_time / 1000000);
 	
 	//if the timer is ready
 	if(catalyst_charge_timer > dynamic_catalyst_charge_delay){
@@ -338,7 +348,7 @@ if(xp >= 100){
 if(place_meeting(x, y, obj_enemy)){
 	show_debug_message("enemy collision with player");
 
-	dynamic_hp = dynamic_hp - other.level;
+	dynamic_hp = dynamic_hp - (other.level)/2;
 
 }
 
@@ -428,6 +438,17 @@ if(boss_defeated){
 
 #region INPUT: left
 
+if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
+	if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
+		facing = E_FACING.left;
+		standing_state = E_STANDING_STATE.WALKING;
+		x = x - dynamic_movement_speed;
+	}
+}
+
+
+
+/*
 if(keyboard_check_pressed(ord("A")) || keyboard_check_pressed(vk_left)){
 	
 	global.button_held_time = 0;
@@ -452,12 +473,25 @@ if(global.button_held == E_BUTTON_HELD.LEFT){
 		x = x - dynamic_movement_speed/2;
 	}
 }
+*/
 
 
 #endregion
 
 #region INPUT: right
 
+
+if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
+	if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
+		facing = E_FACING.right;
+		standing_state = E_STANDING_STATE.WALKING;
+		x = x + dynamic_movement_speed;
+	}
+}
+
+
+
+/*
 if(keyboard_check_pressed(ord("D")) || keyboard_check_pressed(vk_right)){
 	global.button_held_time = 0;
 	global.button_held = E_BUTTON_HELD.NONE;
@@ -482,22 +516,27 @@ if(global.button_held == E_BUTTON_HELD.RIGHT){
 		x = x + dynamic_movement_speed/2;
 	}
 }
+*/
 
 #endregion
+
 
 #region Hold stop
 
 if(keyboard_check_released(ord("A")) || keyboard_check_released(vk_left) || keyboard_check_released(ord("D")) || keyboard_check_released(vk_right) || keyboard_check(ord("C")) || keyboard_check(vk_lcontrol) || keyboard_check_pressed(ord("S"))){
+	/*
 	global.button_held_time = 0;
 	global.button_held = E_BUTTON_HELD.NONE;
+	*/
 	standing_state = E_STANDING_STATE.STANDING;
 }
 
 #endregion
 
+
 #region INPUT: jump
 	
-if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard_check_pressed(ord("W"))){
+if(keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard_check_pressed(ord("W"))){
 		
 	if(jump_state != E_JUMP_STATE.JUMPING){
 		
@@ -547,8 +586,10 @@ if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_up) || keyboard
 
 if(keyboard_check_pressed(ord("C")) || keyboard_check_pressed(vk_lcontrol) || keyboard_check_pressed(ord("S"))){
 	
+	/*
 	global.button_held_time = 0;
 	global.button_held = E_BUTTON_HELD.NONE;
+	*/
 	
 	if(standing_state != E_STANDING_STATE.CROUCHING && standing_state != E_STANDING_STATE.PRONE){
 		
@@ -567,13 +608,15 @@ if(keyboard_check_pressed(ord("C")) || keyboard_check_pressed(vk_lcontrol) || ke
 	}	
 }
 
+/*
 if(keyboard_check(ord("C")) || keyboard_check(vk_lcontrol) || keyboard_check_pressed(ord("S"))){
 	global.button_held_time++;
 	if(global.button_held_time > global.button_held_threshold){
 		global.button_held = E_BUTTON_HELD.CROUCH;
 	}
 }
-
+*/
+/*
 //REMOVED for now
 if(global.button_held == E_BUTTON_HELD.CROUCH){
 	//standing_state = E_STANDING_STATE.PRONE;
@@ -581,7 +624,7 @@ if(global.button_held == E_BUTTON_HELD.CROUCH){
 	//dynamic_movement_speed = dynamic_movement_speed / 2.5;
 	
 }
-
+*/
 
 
 
@@ -591,7 +634,7 @@ if(global.button_held == E_BUTTON_HELD.CROUCH){
 
 if(mouse_check_button(mb_left)){
 	
-	if(battery_charged && !beam.is_on) beam.is_on = true;
+	if(battery_has_charge && !beam.is_on) beam.is_on = true;
 		
 	if(beam.is_on){
 		if(lantern.is_on) lantern.is_on = false;
@@ -623,23 +666,26 @@ if(mouse_check_button_released(mb_left)){
 
 #region INPUT: wide beam
 
-if(keyboard_check_pressed(vk_lshift)){
-	if(beam.is_on){
-		beam.size = E_LIGHT_SIZE.WIDE;
-	}
+if(keyboard_check_pressed(vk_insert) || keyboard_check_pressed(ord("E"))){
+	
+	if(beam.size != E_LIGHT_SIZE.WIDE) beam.size = E_LIGHT_SIZE.WIDE;
+	else beam.size = E_LIGHT_SIZE.NORMAL;
+
 	if(ds_list_size(prism_beams) > 0){
 		with(obj_light){
 			if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
-				size = E_LIGHT_SIZE.WIDE;
+				if(size != E_LIGHT_SIZE.WIDE) size = E_LIGHT_SIZE.WIDE;
+				else size = E_LIGHT_SIZE.NORMAL;
 			}
 		}
 	}
 }
 
-if(keyboard_check_released(vk_lshift)){
-	if(beam.is_on){
+/*
+if(keyboard_check_released(vk_insert) || keyboard_check_released(ord("E"))){
+	//if(beam.is_on){
 		beam.size = E_LIGHT_SIZE.NORMAL;
-	}
+	//}
 	if(ds_list_size(prism_beams) > 0){
 		with(obj_light){
 			if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
@@ -648,28 +694,33 @@ if(keyboard_check_released(vk_lshift)){
 		}
 	}
 }
+*/
 
 #endregion
 
 #region INPUT: narrow beam
 
-if(keyboard_check_pressed(vk_lalt)){
-	if(beam.is_on){
-		beam.size = E_LIGHT_SIZE.NARROW;
-	}
+if(keyboard_check(vk_end) || keyboard_check(ord("Q"))){
+	
+	if(beam.size != E_LIGHT_SIZE.NARROW) beam.size = E_LIGHT_SIZE.NARROW;
+	else beam.size = E_LIGHT_SIZE.NORMAL;
+	
+	
 	if(ds_list_size(prism_beams) > 0){
 		with(obj_light){
 			if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
-				size = E_LIGHT_SIZE.NARROW;
+				if(size != E_LIGHT_SIZE.NARROW) size = E_LIGHT_SIZE.NARROW;
+				else size = E_LIGHT_SIZE.NORMAL;
 			}
 		}
 	}
 }
 
-if(keyboard_check_released(vk_lalt)){
-	if(beam.is_on){
+/*
+if(keyboard_check_released(vk_end) || keyboard_check_released(ord("Q"))){
+	//if(beam.is_on){
 		beam.size = E_LIGHT_SIZE.NORMAL;
-	}
+	//}
 	if(ds_list_size(prism_beams) > 0){
 		with(obj_light){
 			if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
@@ -678,6 +729,7 @@ if(keyboard_check_released(vk_lalt)){
 		}
 	}
 }
+*/
 
 #endregion
 
@@ -724,7 +776,7 @@ if(mouse_check_button_pressed(mb_right)){
 
 if(mouse_check_button(mb_middle)){
 	
-	if(battery_charged){
+	if(battery_has_charge){
 		attack_state = E_ATTACK_STATE.prism;
 		
 		//spawn the beams if they are not out

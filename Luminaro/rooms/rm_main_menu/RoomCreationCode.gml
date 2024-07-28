@@ -13,6 +13,9 @@ if(os_browser != browser_not_a_browser){
 	global.dg_height = display_get_height();
 	
 }
+else{
+	window_set_fullscreen(true);
+}
 
 
 /*

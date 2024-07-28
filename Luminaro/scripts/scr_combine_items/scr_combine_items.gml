@@ -26,7 +26,8 @@ function scr_combine_items(input_item_1, input_item_2){
 		show_debug_message("scr combine items");
 	}
 	else{
-		show_message("Cannot combine those items.");
+		var combine_message = instance_create_layer(x, y, "UI", obj_message);
+		combine_message.text_array = ["Cannot combine those items."];
 	}
 	
 	#endregion

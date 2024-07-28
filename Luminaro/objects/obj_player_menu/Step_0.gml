@@ -5,8 +5,6 @@ if(!init){
 	init = true;
 	
 	
-	
-	
 	#region Pause the game
 	
 		global.button_held_time = 0;
@@ -42,7 +40,7 @@ if(!init){
 	
 		var button3 = instance_create_layer(display_center_x + menu_width/2 - margin - button_width/2, display_center_y + menu_height/2 - margin - button_height/2, "UI", obj_button_room_change);
 		button3.destination_room = rm_main_menu;
-		button3.label = "Exit"; //"Save/Load/Exit";
+		button3.label = "Quit"; //"Save/Load/Exit";
 
 	}
 
@@ -54,64 +52,69 @@ if(!init){
 	
 		show_debug_message("player menu init: level up");
 	
-		#region Increase Random Stat
+		
+		#region Handle Random Level
+		
+		if(level_option == -1){
+			randomize();
 	
-		//TODO: for loop here for multiple stat increase
-		randomize();
+			level_option = irandom_range(0, (E_PLAYER_PARAMETERS.last - 1));
+		}
+		
+		#endregion
 	
-		var random_parameter = irandom_range(0, (E_PLAYER_PARAMETERS.last - 1));
 	
-		switch(random_parameter){
+		switch(level_option){
 			case E_PLAYER_PARAMETERS.MOVEMENT_SPEED:
-				global.player.l_movement_speed++;
+				global.player.l_movement_speed = global.player.l_movement_speed + upgrade_quality;
 				show_debug_message("movement up");
 				break;
 			case E_PLAYER_PARAMETERS.JUMP_HEIGHT:
-				global.player.l_jump_height++;
+				global.player.l_jump_height = global.player.l_jump_height + upgrade_quality;
 				show_debug_message("jump height up");
 				break;
 			case E_PLAYER_PARAMETERS.JUMP_FLOAT_TIME:
-				global.player.l_jump_float_time++;
+				global.player.l_jump_float_time = global.player.l_jump_float_time + upgrade_quality;
 				show_debug_message("jump float time up");
 				break;
 			case E_PLAYER_PARAMETERS.BEAM_SPEED:
-				global.player.l_beam_speed++;
+				global.player.l_beam_speed = global.player.l_beam_speed + upgrade_quality;
 				show_debug_message("beam speed up");
 				break;
 			case E_PLAYER_PARAMETERS.BEAM_INTENSITY_MOD:
-				global.player.l_light_intensity_mod++;
+				global.player.l_light_intensity_mod = global.player.l_light_intensity_mod + upgrade_quality;
 				show_debug_message("beam intensity mod up");
 				break;
 			case E_PLAYER_PARAMETERS.PRISM_BEAM_NUMBER:
-				global.player.l_prism_beam_number++;
+				global.player.l_prism_beam_number = global.player.l_prism_beam_number + upgrade_quality;
 				show_debug_message("prism beam number up");
 				break;
 			case E_PLAYER_PARAMETERS.BATTERY:
-				global.player.l_battery++;
+				global.player.l_battery = global.player.l_battery + upgrade_quality;
 				show_debug_message("battery up");
 				break;
 			case E_PLAYER_PARAMETERS.BATTERY_CHARGE_DELAY:
-				global.player.l_battery_charge_delay++;
+				global.player.l_battery_charge_delay = global.player.l_battery_charge_delay + upgrade_quality;
 				show_debug_message("battery charge delay level up");
 				break;
 			case E_PLAYER_PARAMETERS.LANTERN_SIZE_MOD:
-				global.player.l_lantern_size_mod++;
+				global.player.l_lantern_size_mod = = global.player.l_lantern_size_mod + upgrade_quality;
 				show_debug_message("lantern size mod up");
 				break;
 			case E_PLAYER_PARAMETERS.BEAM_LENGTH_MOD:
-				global.player.l_beam_length_mod++;
+				global.player.l_beam_length_mod = = global.player.l_beam_length_mod + upgrade_quality;
 				show_debug_message("beam length mod up");
 				break;
 			case E_PLAYER_PARAMETERS.CATALYST_NUMBER:
-				global.player.l_catalyst_number++;
+				global.player.l_catalyst_number = = global.player.l_catalyst_number + upgrade_quality;
 				show_debug_message("catalyst number up");
 				break;
 			case E_PLAYER_PARAMETERS.CATALYST_CHARGE_DELAY:
-				global.player.l_catalyst_charge_delay++;
+				global.player.l_catalyst_charge_delay = = global.player.l_catalyst_charge_delay + upgrade_quality;
 				show_debug_message("catalyst charge delay up");
 				break;
 			case E_PLAYER_PARAMETERS.CATALYST_SIZE_MOD:
-				global.player.l_catalyst_size_mod++;
+				global.player.l_catalyst_size_mod = = global.player.l_catalyst_size_mod + upgrade_quality;
 				show_debug_message("catalyst size mod up");
 				break;
 			default:
@@ -119,12 +122,11 @@ if(!init){
 				break;
 			
 		}
-	
-		#endregion
+		
 		
 		global.player.level++;
 	
-		array_push(level_up_results, random_parameter);
+		array_push(level_up_results, specific_level_option);
 		scr_set_player_stats(global.player);
 	
 	

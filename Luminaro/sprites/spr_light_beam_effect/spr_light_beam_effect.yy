@@ -44,8 +44,8 @@
   },
   "origin":3,
   "parent":{
-    "name":"Effects",
-    "path":"folders/Sprites/Effects.yy",
+    "name":"Light",
+    "path":"folders/Sprites/Effects/Light.yy",
   },
   "preMultiplyAlpha":false,
   "resourceType":"GMSprite",

@@ -2,10 +2,8 @@
 //turn off all weapons and reset player to static stats
 
 function scr_reset_player(){
-	
-	show_debug_message("ping reset player")
 
-	global.button_held =  E_BUTTON_HELD.NONE;
+
 
 	with(global.player){
 	
@@ -42,7 +40,7 @@ function scr_reset_player(){
 		
 		on_timer = 0; //drain battery counter
 		battery_charge_timer = 0; //battery charge counter
-		battery_charged = true; //is the battery ready?
+		battery_has_charge = true; //is the battery ready?
 
 		mirrors = [];
 		
@@ -67,7 +65,7 @@ function scr_reset_player(){
 		lantern.is_on = true;
 
 
-		beam_holding_height = 3*sprite_get_height(sprite_index)/4;
+		beam_holding_height = 48*sprite_get_height(sprite_index)/100;
 		beam = instance_create_layer(x, y - beam_holding_height, "Weapons", obj_light_beam);
 		beam.light_type = E_LIGHT_TYPES.PLAYER_BEAM;
 		beam.holder = self;

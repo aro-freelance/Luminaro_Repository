@@ -20,7 +20,7 @@ if(is_on){
 		
 	
 		if(size = E_LIGHT_SIZE.NORMAL){
-			other.hp = other.hp - ((intensity*global.player.dynamic_light_intensity_mod) + (global.player.on_timer/global.player.dynamic_battery) );
+			other.hp = other.hp - ((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) );
 		}
 		else if (size = E_LIGHT_SIZE.NARROW){
 			other.hp = other.hp - ((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) * 2);

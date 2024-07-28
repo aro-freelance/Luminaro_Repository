@@ -16,8 +16,10 @@ if(light_type != E_LIGHT_TYPES.MIRROR_BEAM){
 		if(holder.id == global.player){
 			if (holder.facing == E_FACING.left){
 			    x_offset = -hold_distance;
+				y_offset = -10;
 			} else {
-			     x_offset = hold_distance;
+			    x_offset = hold_distance;
+				y_offset = 0;
 			}
 		}
 		else{
@@ -25,9 +27,15 @@ if(light_type != E_LIGHT_TYPES.MIRROR_BEAM){
 		}
 	
 		//attach beam
-		x = holder.x + x_offset;
-		if(light_type == E_LIGHT_TYPES.PLAYER_LANTERN) y = holder.y - sprite_get_height(holder.sprite_index)/2;
-		else y = holder.y - global.player.beam_holding_height;
+		
+		if(light_type == E_LIGHT_TYPES.PLAYER_LANTERN){
+			x = holder.x + x_offset;
+			y = holder.y + y_offset - sprite_get_height(holder.sprite_index)/2;
+		}
+		else{
+			x = holder.x + 1.34*x_offset;
+			y = holder.y + y_offset - global.player.beam_holding_height;
+		}
 	
 	
 	}

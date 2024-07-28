@@ -37,6 +37,10 @@ if(is_on){
 		move_towards_point( array_get(player_location_snapshot, 0), array_get(player_location_snapshot, 1), movement_speed);
 	//}
 	
+	if(x == array_get(player_location_snapshot, 0) && y == array_get(player_location_snapshot, 1)){
+		instance_destroy();
+	}
+	
 }
 
 #endregion

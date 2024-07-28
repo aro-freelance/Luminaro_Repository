@@ -26,7 +26,6 @@ else{
 	global.player.x = array_get(spawn_point, 0)
 	global.player.y = array_get(spawn_point, 1);
 
-	show_debug_message("ping!!!!!!!!!!!!!!!");
 
 	scr_set_player_stats(global.player);
 	scr_reset_player();
@@ -43,9 +42,11 @@ global.lighting_effects = instance_create_layer(0, 0, "Effects", obj_lighting_ef
 
 obj_intro_story = instance_create_layer(global.dg_width/2, global.dg_height/2, "UI", obj_message);
 obj_intro_story.is_fullscreen = true;
-
+obj_intro_story.background_sprite = spr_message_background_2;
+obj_intro_story.text_color = c_white;
 
 obj_intro_story.text_array = obj_game.level_1_begin_story;
+
 
 obj_game.current_boss_story = obj_game.level_1_boss_story;
 obj_game.current_end_story = obj_game.level_1_end_story;

@@ -1,7 +1,5 @@
 
 
-
-
 if(global.game_state == E_GAME_STATE.PLAYING){
 	
 if(global.dg_width != 99*browser_width/100 || global.dg_height != 99*browser_height/100){
@@ -70,7 +68,7 @@ if(global.player != noone) camera_set_view_pos(view_camera[0], global.player.x -
 
 #region INPUT: Open Game Menu
 
-if(keyboard_check_pressed(vk_f1)){
+if(keyboard_check_pressed(vk_f1) || keyboard_check_pressed(vk_escape)){
 	global.button_held_time = 0;
 	global.button_held = E_BUTTON_HELD.NONE;
 	
@@ -83,8 +81,13 @@ if(keyboard_check_pressed(vk_f1)){
 #endregion
 
 
+
+
+
+
 #region Testing
 
+/*
 	#region INPUT: show enemy states
 
 	if(keyboard_check_pressed(vk_f8)){
@@ -93,26 +96,32 @@ if(keyboard_check_pressed(vk_f1)){
 			show_debug_message("enemy states: type = " + string(enemy_type) + ". jump state = " + string(jump_state) + ". standing state = " + string(standing_state) + ". attack state = " + string(attack_state) + ". react state = " + string(react_state) + ". tactics state = " + string(tactic_state) );
 		}
 	}
+	*/
 
 
 	#endregion
 
 
 
-	#region INPUT: level up
 
+
+
+	#region INPUT: level up
+/*
 
 	if(keyboard_check_pressed(vk_f5)){
 	
 		global.player.xp += 90;
 
 	}
+*/
 
 	#endregion
 
 
 	#region INPUT: add inventory item
 
+/*
 	if(keyboard_check_pressed(vk_f2)){	
 		randomize();
 	
@@ -130,32 +139,14 @@ if(keyboard_check_pressed(vk_f1)){
 			 }
 
 	}
+	*/
 
 	#endregion
 
 
-	#region INPUT: show message
+
 	
-	if(keyboard_check_pressed(vk_f9)){	
-		var message_window = instance_create_layer(global.dg_width/2, global.dg_height/2, "UI", obj_message);
-		message_window.text_array = ["first string", "second string", "third string"];
-		var long_string = " fourth string: mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm mmmmmmmmmmmmmmmmmmmm";
-		array_push(message_window.text_array, long_string);
-		message_window.x_scale = .3;
-		message_window.y_scale = .75;
-	}
-	
-	#endregion
-	
-	
-	#region INPUT: damage player
-	
-	if(keyboard_check_pressed(vk_end)){
-		global.player.dynamic_hp -= 20;
-		
-	}
-	
-	#endregion
+
 
 #endregion
 

@@ -1,7 +1,7 @@
 
 //draw background
-draw_rectangle_color(x1, y1, x2, y2, c_blue, c_blue, c_blue, c_blue, false);
-
+//draw_rectangle_color(x1, y1, x2, y2, c_blue, c_blue, c_blue, c_blue, false);
+draw_rectangle_color(x1, y1, x2, y2, color, color, color, color, false);
 
 
 
@@ -53,7 +53,7 @@ else if(state == E_PLAYER_MENU_STATE.LEVEL_UP){
 	draw_set_valign(fa_middle);
 	draw_set_halign(fa_center);
 
-		
+	
 	draw_text(display_center_x, display_center_y - menu_height/2 + (5*margin), "Level Up!");
 		
 	draw_set_font(fnt_1);
@@ -67,46 +67,43 @@ else if(state == E_PLAYER_MENU_STATE.LEVEL_UP){
 		
 		switch(array_get(level_up_results, i)){
 			case E_PLAYER_PARAMETERS.MOVEMENT_SPEED:
-				result_string = "Movement Speed: + 1"
+				result_string = "Movement Speed: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.JUMP_HEIGHT:
-				result_string = "Jump Height: + 1"
+				result_string = "Jump Height: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.JUMP_FLOAT_TIME:
-				result_string = "Jump Float Time: + 1"
+				result_string = "Jump Float Time: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.BEAM_SPEED:
-				result_string = "Beam Speed: + 1"
+				result_string = "Beam Speed: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.BEAM_INTENSITY_MOD:
-				result_string = "Light Intensity: + 1"
+				result_string = "Light Intensity: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.PRISM_BEAM_NUMBER:
-				result_string = "Prism Beam Number: + 1"
+				result_string = "Prism Beam Number: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.BATTERY:
-				result_string = "Battery: + 1"
+				result_string = "Battery: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.BATTERY_CHARGE_DELAY:
-				result_string = "Battery Charge Delay: + 1"
+				result_string = "Battery Charge Delay: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.LANTERN_SIZE_MOD:
-				result_string = "Lantern Size: + 1"
+				result_string = "Lantern Size: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.BEAM_LENGTH_MOD:
-				result_string = "Beam Length Mod: + 1"
+				result_string = "Beam Length Mod: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.CATALYST_NUMBER:
-				result_string = "Catalyst Number: + 1"
+				result_string = "Catalyst Number: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.CATALYST_CHARGE_DELAY:
-				result_string = "Catalyst Charge Delay: + 1"
+				result_string = "Catalyst Charge Delay: + " + string(upgrade_quality);
 				break;
 			case E_PLAYER_PARAMETERS.CATALYST_SIZE_MOD:
-				result_string = "Catalyst Size Mod: + 1"
-				break;
-			case E_PLAYER_PARAMETERS.HP:
-				result_string = "HP Level: + 1"
+				result_string = "Catalyst Size Mod: + " + string(upgrade_quality);
 				break;
 			default:
 				result_string = "Error. Level up result out of range."

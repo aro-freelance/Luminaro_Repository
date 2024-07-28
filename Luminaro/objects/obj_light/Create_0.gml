@@ -19,6 +19,9 @@ light_type = E_LIGHT_TYPES.PLAYER_LANTERN;
 size = E_LIGHT_SIZE.NORMAL;
 hold_distance = 80; // how far ahead of player is the weapon held?
 
+x_offset = 0;
+y_offset = 0;
+
 intensity = .5;
 xscale_growth = .01;
 min_xscale = .4;

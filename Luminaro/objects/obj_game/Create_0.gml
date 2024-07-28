@@ -1,5 +1,7 @@
 /// @description this controls the game
 
+
+
 init = false;
 
 #region Inputs
@@ -28,7 +30,7 @@ global.game_state = E_GAME_STATE.MAIN_MENU;
 
 global.current_level = E_LEVELS.LEVEL_1;
 
-global.start_room = rm_level1;
+global.start_room = rm_level2;
 
 global.player = noone;
 
@@ -85,7 +87,7 @@ global.button_held_threshold = 20;
 global.dg_width = display_get_gui_width();
 global.dg_height = display_get_gui_height();
 
-distance_between_player_and_camera_bottom = global.dg_height/10;
+distance_between_player_and_camera_bottom = global.dg_height/4;
 
 margin = 20;
 
@@ -157,6 +159,7 @@ enum E_PICKUP_TYPES{
 	HEALTH,
 	XP,
 	last_before_perm,
+	UPGRADE,
 	INVENTORY,
 	last
 }
@@ -249,20 +252,19 @@ enum E_PLAYER_PARAMETERS{
 	CATALYST_NUMBER,
 	CATALYST_CHARGE_DELAY,
 	CATALYST_SIZE_MOD,
-	HP,
 	last,
 }
 
 
 
-global.baseline_movement_speed = 15; //20
+global.baseline_movement_speed = 8; //20
 global.baseline_jump_height = 170; //150
 //global.baseline_jump_number = 1; //2  //How many jumps the player can make
 global.baseline_jump_float_time = .27; //12 //how long after jump does player hover
 
 
 global.baseline_beam_speed = .025; //.03
-global.baseline_light_intensity_mod =  2; //1; //1.2
+global.baseline_light_intensity_mod =  3; //1; //1.2
 
 //how many mirrors can player have?
 //global.baseline_max_mirrors = 1; //3
@@ -271,7 +273,7 @@ global.baseline_prism_beam_number = 3; //4
 
 
 global.baseline_battery = 3.555555;  //battery max on time
-global.baseline_battery_charge_delay = 200; //150 //how long does the battery take to charge?
+global.baseline_battery_charge_delay = 5; //150 //how long does the battery take to charge?
  
  
 global.baseline_lantern_size_mod = 1; //the multiplier applied to the lantern size
@@ -281,7 +283,7 @@ global.baseline_beam_length_mod = 1.5; //the multiplier applied to beam length
 
 
 global.baseline_catalyst_number = 2; //how many catalysts can be held max
-global.baseline_catalyst_charge_delay = 500; //how long does a catalyst take to charge?
+global.baseline_catalyst_charge_delay = 10; //how long does a catalyst take to charge?
 global.baseline_catalyst_size_mod = 1; //the multiplier applied to the catalyst size
  
 
@@ -300,7 +302,7 @@ global.d_jump_float_time = .01;
 
 
 global.d_beam_speed = .005; 
-global.d_light_intensity_mod= .1;
+global.d_light_intensity_mod = .5;
 
 //how many mirrors can player have?
 //global.d_max_mirrors = 1; //3
@@ -308,15 +310,15 @@ global.d_light_intensity_mod= .1;
 global.d_prism_beam_number = 1; 
 
 
-global.d_battery = 50;
-global.d_battery_charge_delay = -20;
+global.d_battery = 1;
+global.d_battery_charge_delay = -.5;
 
 global.d_lantern_size_mod = .1;
 
 global.d_beam_length_mod = .25;
 
 global.d_catalyst_number = 1;
-global.d_catalyst_charge_delay = -20;
+global.d_catalyst_charge_delay = -1;
 global.d_catalyst_size_mod = .1;
 
 global.d_hp = 50; //300
@@ -437,7 +439,7 @@ array_push(level_1_begin_story, "A tale tells of hidden components spread throug
 array_push(level_1_begin_story, "When combined they will create the Luminaro which will bring light back to the world and banish the shadows.");
 array_push(level_1_begin_story, "You have come to a small cave where you will find your first component.");
 array_push(level_1_begin_story, "Delve into the cave and banish the shadow with your light!");
-array_push(level_1_begin_story, " Movement: WASD or arrow keys \n Light Beam: Hold Left Mouse \n Explosive Catalyst: Right mouse \n Prism Beam: Middle Mouse \n Narrow Beam (increase damage): Left Alt \n Widen Beam (lower damage but more area): Left Shift ");
+array_push(level_1_begin_story, " Movement: WASD or arrow keys \n Light Beam: Hold Left Mouse \n Explosive Catalyst: Right mouse \n Prism Beam: Middle Mouse \n Narrow Beam (increase damage): Q or Numberpad 1 \n Widen Beam (lower damage but more area): E or Numberpad 0 ");
 
 level_1_boss_story = [];
 array_push(level_1_boss_story, "You have found " + global.item_descriptions[0] + "!");

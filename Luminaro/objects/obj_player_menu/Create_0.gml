@@ -20,6 +20,10 @@ y1 = global.dg_height/6;
 y2 = y1 + menu_height;
 
 margin = 20;
+
+color = make_color_rgb(25, 25, 112);
+
+
 if(os_browser != browser_not_a_browser){
 		margin = margin * .75
 }
@@ -35,6 +39,13 @@ combine_text_spacing = 10;
 sep = 40;
 
 #endregion
+
+
+is_special_upgrade = false;
+
+//the input parameter we can set to get a specific level up result using E_PLAYER_PARAMETERS
+level_option = -1;
+upgrade_quality = 1;
 
 
 //store the results of a level up

@@ -20,7 +20,7 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 		
 	
 			if(size = E_LIGHT_SIZE.NORMAL){
-				other.dynamic_hp = other.dynamic_hp - ((intensity*global.player.dynamic_light_intensity_mod) + (global.player.on_timer/global.player.dynamic_battery) );
+				other.dynamic_hp = other.dynamic_hp - ((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) );
 			}
 			else if (size = E_LIGHT_SIZE.NARROW){
 				other.dynamic_hp = other.dynamic_hp - ((intensity*global.player.dynamic_light_intensity_mod) * (global.player.on_timer/global.player.dynamic_battery) * 2);

@@ -26,17 +26,20 @@ start_button.label = "Start";
 start_button.destination_room = global.start_room;
 
 
-//Handle all of the following with a main menu obj
 
-//TODO: button for display controls and help
-var help_button = instance_create_layer(display_width/4, display_height - display_height/12 + button_height/2, "UI", obj_display_text_button);
+var help_button = instance_create_layer(display_width/8, display_height - display_height/12 + button_height/2, "UI", obj_display_text_button);
 help_button.label = "Help";
-help_button.text_array = [" MOVEMENT:   Left Arrow, A or Right Arrow, D \n JUMP:   Up Arrow, Space or Enter \n CROUCH / PRONE: Left Control, C.  Press to Crouch, Hold to Go Prone \n CONTROL LIGHT BEAM:   Hold left mouse button and move mouse \n NARROW BEAM:   Left Alt \n WIDEN BEAM:   Left Shift \n PRISM BEAM:   Hold Center Mouse Button \n CATALYST:   Right Mouse Button \n\n OPEN MENU: F1 \n\n COMBINE ITEMS:   Click on two items in inventory and click combine."];
+help_button.text_array = [" MOVEMENT:   WASD or Arrow Keys \n JUMP:   Up Arrow or Space \n CONTROL LIGHT BEAM:   Hold left mouse button and move mouse \n NARROW BEAM:   Q or Numberpad 1 \n WIDEN BEAM: E or Numberpad 0 \n PRISM BEAM:   Hold Center Mouse Button \n CATALYST:   Right Mouse Button \n\n OPEN MENU: F1 or Esc \n\n COMBINE ITEMS:   Click on two items in inventory and click combine."];
 
-//TODO: button for display credits
-var credits_button = instance_create_layer(3*display_width/4, display_height - display_height/12 + button_height/2, "UI", obj_display_text_button);
+
+var credits_button = instance_create_layer(display_width/2, display_height - display_height/12 + button_height/2, "UI", obj_display_text_button);
 credits_button.label = "Credits";
-credits_button.text_array = ["Credits: \n\n For Tom, \n     Happy Birthday! Love you :) \n\n\n\n Designed and Developed by Mandy Otero (Arora Software) \n\n\n\n\n Tileset: 2d Platformer Tiles - Dungeon's End by Tajima \n\n Tileset and Backgrounds: Oak Woods - Environment by Brullov"];
+credits_button.text_array = ["Credits: \n\n For Tom, \n     Happy Birthday! Love you :) \n\n\n\n Designed and Developed by Mandy Otero (Arora Software) \n\n\n\n\n Tileset: 2d Platformer Tiles - Dungeon's End by Tajima "];
+
+if(os_browser == browser_not_a_browser){
+	var quit_button = instance_create_layer(display_width - display_width/8, display_height - display_height/12 + button_height/2, "UI", obj_quit_game_button);
+	quit_button.label = "Exit Game";
+}
 
 
 
