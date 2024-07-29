@@ -72,6 +72,7 @@ if(is_on && can_bounce){
 					
 					
 					if(mirror.beam == noone){
+						show_debug_message("obj light: create mirror beam");
 						mirror.beam = instance_create_layer(xEnd, yEnd, "Weapons", obj_light_beam);
 						mirror.beam.holder = self;
 						mirror.beam.light_type = E_LIGHT_TYPES.MIRROR_BEAM;

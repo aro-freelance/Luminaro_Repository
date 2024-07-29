@@ -5,7 +5,8 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 // Inherit the parent event
 event_inherited();
 
-
+show_debug_message("scr mirror beam angle: beam image angle = " + string(image_angle) );
+	
 
 #region Set Collision bool for growth
 
@@ -36,17 +37,18 @@ else if(place_meeting(x, y, obj_mirror) && is_on && light_type != E_LIGHT_TYPES.
 	
 	is_colliding = true;
 }
-else if(place_meeting(x, y, layer_tilemap_get_id("Tiles_Floor")) && is_on){
+else if(( place_meeting(x, y, obj_floor)) && is_on){ //place_meeting(x, y, layer_tilemap_get_id("Tiles_Floor")) ||
 	
 	show_debug_message("light step: collide tiles floor");
 	
-	/*
-	var distance = point_distance(x, y, tip.x, tip.y);
+	
+	var obj = instance_place(x, y, obj_floor);
+	var distance = point_distance(x, y, obj.x, obj.y);
 	depth = -50;
 	image_xscale = 1
 	image_xscale = distance / sprite_get_width(sprite_index);
 	is_colliding = true;
-	*/
+	
 	
 	
 	
@@ -75,11 +77,16 @@ else if(place_meeting(x, y, layer_tilemap_get_id("Tiles_Floor")) && is_on){
 	*/
 }
 
-else if(place_meeting(x, y, layer_tilemap_get_id("Tiles_Walls")) && is_on){
+else if( (place_meeting(x, y, obj_wall)) && is_on){  //(place_meeting(x, y, layer_tilemap_get_id("Tiles_Walls")) ||
 	
 	show_debug_message("light step: collide tiles wall");
 	
-	
+	var obj = instance_place(x, y, obj_wall);
+	var distance = point_distance(x, y, obj.x, obj.y);
+	depth = -50;
+	image_xscale = 1
+	image_xscale = distance / sprite_get_width(sprite_index);
+	is_colliding = true;
 	
 	
 	//var obj = instance_place(x, y, layer_tilemap_get_id("Tiles"));
@@ -107,17 +114,18 @@ else if(place_meeting(x, y, layer_tilemap_get_id("Tiles_Walls")) && is_on){
 	//}
 }
 
-else if(place_meeting(x, y, layer_tilemap_get_id("Tiles_Ceiling")) && is_on){
+else if((place_meeting(x, y, obj_ceiling)) && is_on){ //place_meeting(x, y, layer_tilemap_get_id("Tiles_Ceiling")) || 
 	
 	show_debug_message("light step: collide tiles ceiling");
 	
-	/*
-	var distance = point_distance(x, y, tip.x, tip.y);
+	
+	var obj = instance_place(x, y, obj_ceiling);
+	var distance = point_distance(x, y, obj.x, obj.y);
 	depth = -50;
 	image_xscale = 1
 	image_xscale = distance / sprite_get_width(sprite_index);
 	is_colliding = true;
-	*/
+
 	
 	//var obj = instance_place(x, y, layer_tilemap_get_id("Tiles"));
 	//var distance = point_distance(x, y, obj.x, obj.y);

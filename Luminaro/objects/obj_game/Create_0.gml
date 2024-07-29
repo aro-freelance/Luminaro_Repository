@@ -149,6 +149,7 @@ enum E_SOLID_OBJ_TYPE{
 	NONE,
 	FLOOR,
 	WALL,
+	CEILING,
 	last
 }
 
@@ -268,7 +269,7 @@ global.baseline_jump_float_time = .27; //12 //how long after jump does player ho
 
 
 global.baseline_beam_speed = .025; //.03
-global.baseline_light_intensity_mod =  3; //1; //1.2
+global.baseline_light_intensity_mod =  1.5; //1; //1.2
 
 //how many mirrors can player have?
 //global.baseline_max_mirrors = 1; //3
@@ -276,7 +277,7 @@ global.baseline_light_intensity_mod =  3; //1; //1.2
 global.baseline_prism_beam_number = 3; //4
 
 
-global.baseline_battery =  1000; //3.555555;  //battery max on time
+global.baseline_battery = 3.5555; //3.555555;  //battery max on time
 global.baseline_battery_charge_delay = 5; //150 //how long does the battery take to charge?
  
  
@@ -291,7 +292,7 @@ global.baseline_catalyst_charge_delay = 10; //how long does a catalyst take to c
 global.baseline_catalyst_size_mod = 1; //the multiplier applied to the catalyst size
  
 
-global.baseline_hp = 5000; //100 
+global.baseline_hp = 100; //100 
 
 #endregion
 
@@ -306,7 +307,7 @@ global.d_jump_float_time = .01;
 
 
 global.d_beam_speed = .005; 
-global.d_light_intensity_mod = .5;
+global.d_light_intensity_mod = .35;
 
 //how many mirrors can player have?
 //global.d_max_mirrors = 1; //3

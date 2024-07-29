@@ -104,18 +104,18 @@ global.grav_acceleration *= global.grav_delta_a;
 //calculate gravity
 var g = clamp(global.grav + global.grav_acceleration, global.grav, global.terminal_velocity);
 
-if(place_meeting(x, y + g, layer_tilemap_get_id("Tiles_Floor"))){
+if(place_meeting(x, y + g, layer_tilemap_get_id("Tiles_Floor"))){ // || place_meeting(x, y + g, obj_floor)
 	jump_state = E_JUMP_STATE.GROUNDED;
 }
 
 
 
-if(!place_meeting(x, y + g, layer_tilemap_get_id("Tiles_Floor")) 
+if(!place_meeting(x, y + g, layer_tilemap_get_id("Tiles_Floor"))
 && jump_current == 0 && jump_state == E_JUMP_STATE.GROUNDED 
 && y != (room_height - sprite_height)){
 	jump_state = E_JUMP_STATE.FALLING;
 	
-}
+} // && !place_meeting(x, y + g, obj_floor)
 
 #endregion
 
@@ -165,7 +165,7 @@ if(jump_state == E_JUMP_STATE.JUMPING){
 	
 	if(jump_y_counter < dynamic_jump_height){
 		
-		if(place_meeting(x, y + jump_y_increment, layer_tilemap_get_id("Tiles_Ceiling"))){
+		if(place_meeting(x, y + jump_y_increment, layer_tilemap_get_id("Tiles_Ceiling"))){ // || place_meeting(x, y + jump_y_increment, obj_ceiling)
 		
 			//increase acceleration
 			global.grav_acceleration *= global.grav_delta_a;
@@ -442,7 +442,7 @@ if(boss_defeated){
 #region INPUT: left
 
 if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
-	if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
+	if(!place_meeting(x - dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){ // && !place_meeting(x - dynamic_movement_speed, y, obj_wall)
 		facing = E_FACING.left;
 		standing_state = E_STANDING_STATE.WALKING;
 		x = x - dynamic_movement_speed;
@@ -456,7 +456,7 @@ if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
 
 
 if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
-	if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){
+	if(!place_meeting(x + dynamic_movement_speed, y, layer_tilemap_get_id("Tiles_Walls"))){ // && !place_meeting(x - dynamic_movement_speed, y, obj_wall)
 		facing = E_FACING.right;
 		standing_state = E_STANDING_STATE.WALKING;
 		x = x + dynamic_movement_speed;
@@ -492,7 +492,7 @@ if(keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard
 		
 		jump_current++;
 		
-		if(!place_meeting(x, y + 1, layer_tilemap_get_id("Tiles_Ceiling"))){
+		if(!place_meeting(x, y + 1, layer_tilemap_get_id("Tiles_Ceiling"))){ // && !place_meeting(x, y + 1, obj_ceiling)
 			jump_y_counter += jump_y_increment;
 			y -= jump_y_increment;
 		}
@@ -514,7 +514,7 @@ if(keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard
 			jump_current++;
 			
 			
-			if(!place_meeting(x, y + 1, layer_tilemap_get_id("Tiles_Ceiling"))){
+			if(!place_meeting(x, y + 1, layer_tilemap_get_id("Tiles_Ceiling"))){ // && !place_meeting(x, y + 1, obj_ceiling)
 				jump_y_counter += jump_y_increment;
 				y -= jump_y_increment;
 			}
