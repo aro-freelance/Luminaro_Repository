@@ -23,7 +23,7 @@ else if(type == E_PICKUP_TYPES.XP){
 	global.player.display_message_on = true;
 }
 else if(type == E_PICKUP_TYPES.INVENTORY){
-	var item_type = global.item_descriptions[inventory_item_type];
+	var item_type = global.item_descriptions_short[inventory_item_type];
 	var s = "Found a " + string(item_type) + " !!!"; 
 	var c = c_green;
 	

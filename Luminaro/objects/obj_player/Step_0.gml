@@ -502,6 +502,10 @@ if(keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard
 	if(jump_state != E_JUMP_STATE.JUMPING){
 		
 		if(standing_state != E_STANDING_STATE.STANDING) standing_state = E_STANDING_STATE.STANDING;
+		
+		
+		global.grav_acceleration = global.starting_grav_a;
+		
 		jump_state = E_JUMP_STATE.JUMPING;
 		
 		jump_current++;
@@ -521,6 +525,8 @@ if(keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard
 		if(jump_current < dynamic_jump_number){
 			
 			jump_y_counter = 0;
+			
+			global.grav_acceleration = global.starting_grav_a;
 			
 			//double jump
 			jump_current++;

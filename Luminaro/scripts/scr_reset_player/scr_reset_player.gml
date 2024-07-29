@@ -3,6 +3,7 @@
 
 function scr_reset_player(){
 
+	global.grav_acceleration = global.starting_grav_a;
 
 
 	with(global.player){

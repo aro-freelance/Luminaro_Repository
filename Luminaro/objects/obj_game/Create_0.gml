@@ -30,7 +30,7 @@ global.game_state = E_GAME_STATE.MAIN_MENU;
 
 global.current_level = E_LEVELS.LEVEL_1;
 
-global.start_room = rm_level2;
+global.start_room = rm_level1;
 
 global.player = noone;
 
@@ -174,6 +174,13 @@ enum E_INVENTORY_ITEM_TYPES{
 	TYPE_7,
 	last
 }
+
+
+global.item_descriptions_short = [];
+
+array_insert(global.item_descriptions_short, E_INVENTORY_ITEM_TYPES.TYPE_0, "Flamestone.");
+array_insert(global.item_descriptions_short, E_INVENTORY_ITEM_TYPES.TYPE_1, "Mythril.");
+array_insert(global.item_descriptions_short, E_INVENTORY_ITEM_TYPES.TYPE_2, "Fire Mythril.");
 
 global.item_descriptions = [];
 
@@ -442,7 +449,7 @@ level_1_boss_story = [];
 array_push(level_1_boss_story, "You have found " + global.item_descriptions[0] + "!");
 
 level_1_end_story = [];
-array_push(level_1_end_story, "After finding " + global.item_descriptions[0] + " you leave in pursuit of the next component.");
+array_push(level_1_end_story, "After finding " + global.item_descriptions_short[0] + " you leave in pursuit of the next component.");
 
 
 level_2_begin_story = [];
@@ -451,12 +458,12 @@ array_push(level_2_begin_story, "Delve into the cave and banish the shadow with 
 
 
 level_2_boss_story = [];
-array_push(level_2_boss_story, "You have found " + global.item_descriptions[1] + "! \nYou now have two items which can be combined.");
-array_push(level_2_boss_story, "Open the menu using F1 and then open the inventory. \nCombine " + global.item_descriptions[0] + " and " + global.item_descriptions[1] + " to create " + global.item_descriptions[2] + ".");
+array_push(level_2_boss_story, "You have found " + global.item_descriptions_short[1] + "! \nYou now have two items which can be combined.");
+array_push(level_2_boss_story, "Open the menu using F1 and then open the inventory. \nCombine " + global.item_descriptions_short[0] + " and " + global.item_descriptions_short[1] + " to create " + global.item_descriptions_short[2] + ".");
 
 
 level_2_end_story = [];
-array_push(level_2_end_story, "You have created " + global.item_descriptions[2] + " and you are well on your way to banishing the shadow!");
+array_push(level_2_end_story, "You have created " + global.item_descriptions_short[2] + " and you are well on your way to banishing the shadow!");
 array_push(level_2_end_story, "This is the end of the version of the game completed for the Jam! The journey to defeat the shadow is still being written.");
 array_push(level_2_end_story, "Thank you for playing!")
 
