@@ -1,7 +1,7 @@
 // set the mirror beam angle based on the angle difference with the holder (the beam that created it)
 
 
-
+//TODO: THIS IS NOT BEING USED AND WAS NOT WORKING AFTER THE FIRST MIRROR. REMOVE?  i replaced it in initial mirror bounce in obj_light step with : var mirror = collision_point(xEnd, yEnd, obj_mirror, 0, 0 );
 
 function scr_get_hit_mirror(beam){
 

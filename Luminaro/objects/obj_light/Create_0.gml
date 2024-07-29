@@ -42,7 +42,7 @@ bounce_number = 1;
 bounce_counter = 0;
 
 //what percent of intensity does a bounce get?
-bounce_damage_mod = .5;
+bounce_damage_mod = 1.3;
 
 //what percent of intensity does a prism beam get?
 prism_damage_mod = .80;

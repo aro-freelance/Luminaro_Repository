@@ -48,7 +48,7 @@ global.lighting_effects = noone;
 global.grav = 6;
 
 //terminal velocity
-global.terminal_velocity = 15;
+global.terminal_velocity = 13;
 
 //starting acceleration
 global.starting_grav_a = 0.0001;
@@ -276,7 +276,7 @@ global.baseline_light_intensity_mod =  3; //1; //1.2
 global.baseline_prism_beam_number = 3; //4
 
 
-global.baseline_battery = 3.555555;  //battery max on time
+global.baseline_battery =  1000; //3.555555;  //battery max on time
 global.baseline_battery_charge_delay = 5; //150 //how long does the battery take to charge?
  
  
@@ -291,7 +291,7 @@ global.baseline_catalyst_charge_delay = 10; //how long does a catalyst take to c
 global.baseline_catalyst_size_mod = 1; //the multiplier applied to the catalyst size
  
 
-global.baseline_hp = 100; //100 //300
+global.baseline_hp = 5000; //100 
 
 #endregion
 

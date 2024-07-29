@@ -86,6 +86,21 @@ if(keyboard_check_pressed(vk_f1) || keyboard_check_pressed(vk_escape)){
 #region Testing
 
 
+#region Input: Add Mirror
+
+if(keyboard_check_pressed(ord("M"))){
+	
+	var mirror = instance_create_layer(device_mouse_x(0), device_mouse_y(0), "Weapons", obj_mirror);
+	mirror.owner = global.player;
+	
+}
+
+
+
+#endregion
+
+
+
 	#region INPUT: show enemy states
 /*
 	if(keyboard_check_pressed(vk_f8)){

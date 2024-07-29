@@ -7,4 +7,6 @@ beam = noone;
 owner = noone;
 
 
+light_collision = false;
+
 

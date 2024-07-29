@@ -22,3 +22,15 @@ can_bounce = true;
 
 //how many times can it bounce
 bounce_number = 1;
+
+//tip = instance_create_layer(x, y, "Utility", obj_light_beam_tip);
+//tip.owner = self;
+
+
+
+
+
+
+
+
+

@@ -132,24 +132,6 @@ if(jump_state == E_JUMP_STATE.GROUNDED && jump_current > 0){
 
 #endregion
 
-#region level block transition
-
-
-/*
-TODO: remove this was disabled after room was made much larger for scrolling. could instead make dead happen if player is off screen?
-
-if(x < 0) x = 0;
-if(x > (room_width - sprite_width)) x = room_width - sprite_width;
-if(y < 0) y = 0;
-
-//TODO: if player goes off the bottom of screen death?
-if(y > (room_height - sprite_height)){
-	y = room_height - sprite_height;
-	jump_state = E_JUMP_STATE.GROUNDED;
-}
-*/
-
-#endregion
 
 #region gravity and jumping
 
@@ -670,7 +652,7 @@ if(keyboard_check_released(vk_end) || keyboard_check_released(ord("Q"))){
 
 #endregion
 
-#region INPUT: create a .... catalyst    (previously mirror)
+#region INPUT: create a Catalyst
 
 if(mouse_check_button_pressed(mb_right)){
 

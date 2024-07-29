@@ -57,48 +57,34 @@ if(is_on && can_bounce){
 			xEnd = x + lengthdir_x(i, image_angle);
 			yEnd = y + lengthdir_y(i, image_angle);
 			
-			//if(i = (max_length-1)) show_debug_message("obj_light step: maxlength xend = " + string(xEnd) + ". yend = " + string(yEnd));
 		
 			 if (collision_point(xEnd, yEnd, obj_mirror, 0, 0 ) ) {
-				 
-				var mirror = scr_get_hit_mirror(self);
+				
+				var mirror = collision_point(xEnd, yEnd, obj_mirror, 0, 0 );
+				
 				 
 				if(mirror != noone){
 					
-					 var mirror_beam_angle = scr_get_mirror_beam_angle(self, mirror);
-				 
-					  if(bounce_counter < bounce_number){
-						bounce_counter++;
+					mirror.light_collision = true;
+					
+					var mirror_beam_angle = scr_get_mirror_beam_angle(self, mirror);
+				
 					
 					
-					
-						if(mirror.beam == noone) mirror.beam = instance_create_layer(xEnd, yEnd, "Weapons", obj_light_beam);
+					if(mirror.beam == noone){
+						mirror.beam = instance_create_layer(xEnd, yEnd, "Weapons", obj_light_beam);
 						mirror.beam.holder = self;
 						mirror.beam.light_type = E_LIGHT_TYPES.MIRROR_BEAM;
 						mirror.beam.is_on = true;
 						mirror.beam.can_bounce = false;
 						mirror.beam.image_angle = mirror_beam_angle;
+					}
+					else{
+						mirror.beam.image_angle = mirror_beam_angle;
+						mirror.beam.x = xEnd;
+						mirror.beam.y = yEnd;
+					}
 					
-				
-					 }
-					 //not a new bounce, if there are current beams update them
-					 else{
-					 
-					 
-						 #region Update Bounce Beams
-						 
-						 if(mirror.beam != noone){
-							mirror.beam.image_angle = mirror_beam_angle;
-							mirror.beam.x = xEnd;
-							mirror.beam.y = yEnd;
-						 }
-
-
-						#endregion
-					 
-					 
-					 }
-					 
 				 
 				 }
 		}
@@ -108,13 +94,7 @@ if(is_on && can_bounce){
 
 	
 
-//reset the bounce counter if not in contact with a mirror
-if(bounce_counter > 0){
-	if(!is_on){
-		bounce_counter = 0;
-		//show_debug_message("END collision with mirror. reset bounce counter");
-	}
-}
+
 
 #endregion
 
