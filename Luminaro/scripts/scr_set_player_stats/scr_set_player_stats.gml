@@ -1,7 +1,11 @@
 
 // set/refresh player stats
 
-function scr_set_player_stats(player){
+//if should keep hp is set to true this script will set the dynamic hp to the player's current hp
+
+
+
+function scr_set_player_stats(player, should_keep_hp = false){
 	
 	show_debug_message("set stats to player");
 	
@@ -65,6 +69,35 @@ function scr_set_player_stats(player){
 	player.dynamic_catalyst_size_mod = player.static_catalyst_size_mod;
 
 
-	player.dynamic_hp = player.static_hp; //aka current hp
+	if(!should_keep_hp) player.dynamic_hp = player.static_hp; //aka current hp
+	
+	#endregion
+	
+	
+	#region Inventory Parameters
+	
+	for(var i = 0; i < array_length(player.inventory); i++){
+			
+		var item_type = player.inventory[i];
+			
+		switch(item_type){
+				
+			case E_INVENTORY_ITEM_TYPES.TYPE_0:
+			//firestone
+				player.dynamic_light_intensity_mod = player.dynamic_light_intensity_mod + (global.d_light_intensity_mod);
+				break;
+			case E_INVENTORY_ITEM_TYPES.TYPE_1:
+			//mythril
+				player.dynamic_catalyst_size_mod = player.dynamic_catalyst_size_mod + (global.d_catalyst_size_mod);
+				break;
+			case E_INVENTORY_ITEM_TYPES.TYPE_2:
+			//fire mythril
+				player.dynamic_light_intensity_mod = player.dynamic_light_intensity_mod + (2*global.d_light_intensity_mod);
+				player.dynamic_catalyst_size_mod = player.dynamic_catalyst_size_mod + (2*global.d_catalyst_size_mod);
+				break;		
+		}
+	}
+	
+	#endregion
 
 }

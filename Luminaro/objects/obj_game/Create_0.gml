@@ -43,7 +43,22 @@ global.lighting_effects = noone;
 
 #region World Parameters
 
+
+//starting base amount
 global.grav = 6;
+
+//terminal velocity
+global.terminal_velocity = 15;
+
+//starting acceleration
+global.starting_grav_a = 0.0001;
+global.grav_acceleration = global.starting_grav_a; //note that this value is changed during use and is then reset to starting_grav_a in player step
+
+//increase in acceleration per tick
+global.grav_delta_a = 1.05;
+
+//gravity formula: grav + grav_a(delta_a)  -> clamped to terminal velocity
+
 
 global.darkness_level = .7; //alpha value of obj_lighting_effect
 
@@ -64,23 +79,6 @@ array_insert(global.levels, E_LEVELS.LEVEL_2, rm_level2);
 #endregion
 
 
-#region Button Inputs
-
-enum E_BUTTON_HELD{
-	NONE,
-	LEFT, 
-	RIGHT,
-	FIRE,
-	JUMP,
-	CROUCH,
-}
-
-global.button_held = E_BUTTON_HELD.NONE;
-
-global.button_held_time = 0;
-global.button_held_threshold = 20;
-
-#endregion
 
 #region UI
 
@@ -179,9 +177,9 @@ enum E_INVENTORY_ITEM_TYPES{
 
 global.item_descriptions = [];
 
-array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_0, "Flamestone");
-array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_1, "Mythril");
-array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_2, "Fire Mythril");
+array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_0, "Flamestone. Light intensity + 1 ");
+array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_1, "Mythril. Catalyst size + 1 ");
+array_insert(global.item_descriptions, E_INVENTORY_ITEM_TYPES.TYPE_2, "Fire Mythril. Light intensity + 2, Catalyst size + 2");
 
 
 global.combine_descriptions = ds_grid_create(E_INVENTORY_ITEM_TYPES.last - 1, E_INVENTORY_ITEM_TYPES.last - 1);
@@ -210,7 +208,6 @@ enum E_STANDING_STATE{
 	STANDING,
 	WALKING,
 	CROUCHING,
-	PRONE,
 }
 
 enum E_ATTACK_STATE{
@@ -258,7 +255,7 @@ enum E_PLAYER_PARAMETERS{
 
 
 global.baseline_movement_speed = 8; //20
-global.baseline_jump_height = 170; //150
+global.baseline_jump_height = 200; //150
 //global.baseline_jump_number = 1; //2  //How many jumps the player can make
 global.baseline_jump_float_time = .27; //12 //how long after jump does player hover
 
@@ -315,7 +312,7 @@ global.d_battery_charge_delay = -.5;
 
 global.d_lantern_size_mod = .1;
 
-global.d_beam_length_mod = .25;
+global.d_beam_length_mod = .1;
 
 global.d_catalyst_number = 1;
 global.d_catalyst_charge_delay = -1;

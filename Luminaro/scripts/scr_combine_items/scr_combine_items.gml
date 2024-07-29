@@ -30,6 +30,8 @@ function scr_combine_items(input_item_1, input_item_2){
 		combine_message.text_array = ["Cannot combine those items."];
 	}
 	
+	scr_set_player_stats(global.player, true);
+	
 	#endregion
 	
 	#region reset player menu 

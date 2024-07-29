@@ -1,7 +1,7 @@
 
 //input the x and y bounds and the place_meeting obj input (object, instance, tile map ID, keywords all/other, or array containing these items)
 
-//output the average of points that have collision
+//output the average of points that have collision as array [x, y]
 
 function scr_get_tm_collision_point(input_x, input_y, tile_layer_name){
 		

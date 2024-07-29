@@ -7,8 +7,6 @@ if(!init){
 	
 	#region Pause the game
 	
-		global.button_held_time = 0;
-		global.button_held = E_BUTTON_HELD.NONE;
 	
 		instance_deactivate_all(true);
 	
@@ -98,23 +96,23 @@ if(!init){
 				show_debug_message("battery charge delay level up");
 				break;
 			case E_PLAYER_PARAMETERS.LANTERN_SIZE_MOD:
-				global.player.l_lantern_size_mod = = global.player.l_lantern_size_mod + upgrade_quality;
+				global.player.l_lantern_size_mod = global.player.l_lantern_size_mod + upgrade_quality;
 				show_debug_message("lantern size mod up");
 				break;
 			case E_PLAYER_PARAMETERS.BEAM_LENGTH_MOD:
-				global.player.l_beam_length_mod = = global.player.l_beam_length_mod + upgrade_quality;
+				global.player.l_beam_length_mod = global.player.l_beam_length_mod + upgrade_quality;
 				show_debug_message("beam length mod up");
 				break;
 			case E_PLAYER_PARAMETERS.CATALYST_NUMBER:
-				global.player.l_catalyst_number = = global.player.l_catalyst_number + upgrade_quality;
+				global.player.l_catalyst_number = global.player.l_catalyst_number + upgrade_quality;
 				show_debug_message("catalyst number up");
 				break;
 			case E_PLAYER_PARAMETERS.CATALYST_CHARGE_DELAY:
-				global.player.l_catalyst_charge_delay = = global.player.l_catalyst_charge_delay + upgrade_quality;
+				global.player.l_catalyst_charge_delay = global.player.l_catalyst_charge_delay + upgrade_quality;
 				show_debug_message("catalyst charge delay up");
 				break;
 			case E_PLAYER_PARAMETERS.CATALYST_SIZE_MOD:
-				global.player.l_catalyst_size_mod = = global.player.l_catalyst_size_mod + upgrade_quality;
+				global.player.l_catalyst_size_mod = global.player.l_catalyst_size_mod + upgrade_quality;
 				show_debug_message("catalyst size mod up");
 				break;
 			default:
@@ -126,7 +124,7 @@ if(!init){
 		
 		global.player.level++;
 	
-		array_push(level_up_results, specific_level_option);
+		array_push(level_up_results, level_option);
 		scr_set_player_stats(global.player);
 	
 	
