@@ -12,6 +12,10 @@ global.game_state = E_GAME_STATE.PLAYING;
 
 init = false;
 
+floor_tiles = layer_tilemap_get_id("Tiles_Floor");
+wall_tiles = layer_tilemap_get_id("Tiles_Walls");
+ceiling_tiles = layer_tilemap_get_id("Tiles_Ceiling");
+
 
 #region Player State 
 
@@ -24,6 +28,12 @@ attack_state = E_ATTACK_STATE.idle;
 react_state = E_REACT_STATE.idle;
 
 facing = E_FACING.right;
+
+//horizontal speed
+hsp = 0;
+//vertical speed
+vsp = 0;
+
 
 #endregion
 

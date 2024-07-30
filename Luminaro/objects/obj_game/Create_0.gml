@@ -267,7 +267,7 @@ enum E_PLAYER_PARAMETERS{
 global.baseline_movement_speed = 8; //20
 global.baseline_jump_height = 210; //150
 //global.baseline_jump_number = 1; //2  //How many jumps the player can make
-global.baseline_jump_float_time = .32; //12 //how long after jump does player hover
+global.baseline_jump_float_time = .25; //12 //how long after jump does player hover
 
 
 global.baseline_beam_speed = .025; //.03

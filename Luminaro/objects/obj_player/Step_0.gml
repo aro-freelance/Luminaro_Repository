@@ -97,8 +97,93 @@ if(sprite_index != prev_sprite_index){
 
 #endregion
 
-#region Ground player / Fall
 
+
+#region Process Movement
+
+// capture decimals
+var hsp_decimal = frac(hsp);
+var vsp_decimal = frac(vsp);
+
+hsp -= hsp_decimal;
+vsp -= vsp_decimal;
+
+#region -- Solid Collisions --
+// Horizontal collision
+if (hsp > 0) bbox_side = bbox_right; else bbox_side = bbox_left;
+if (	tilemap_get_at_pixel(wall_tiles, bbox_side+hsp, bbox_top) != 0 
+	||	tilemap_get_at_pixel(wall_tiles, bbox_side+hsp, bbox_bottom) != 0) {
+
+    if (hsp > 0) x = x - (x mod 32) + 31 - (bbox_right - x);
+    else x = x - (x mod 32) - (bbox_left - x);
+    hsp = 0;
+   
+}
+
+// Vertical collision
+if (vsp > 0) bbox_side = bbox_bottom; else bbox_side = bbox_top;
+if (	tilemap_get_at_pixel(floor_tiles, bbox_left, bbox_side+vsp) != 0
+	||  tilemap_get_at_pixel(floor_tiles, bbox_right, bbox_side+vsp) != 0
+	||  tilemap_get_at_pixel(ceiling_tiles, bbox_left, bbox_side+vsp) != 0 
+	||  tilemap_get_at_pixel(ceiling_tiles, bbox_right, bbox_side+vsp) != 0
+	) {
+
+    if (vsp > 0) {
+        y = y - (y mod 32) + 31 - (bbox_bottom - y);
+    } else {
+		
+        y = y - (y mod 32) - (bbox_top - y);
+    }  
+   
+    vsp = 0;
+}
+
+#region -- One Way Collisions --
+
+// check if the player is falling, or walking onto the platform
+
+if (	tilemap_get_at_pixel(floor_tiles, bbox_left, bbox_bottom+vsp) != 0 
+	||	tilemap_get_at_pixel(floor_tiles, bbox_right, bbox_bottom+vsp) != 0
+	||	tilemap_get_at_pixel(ceiling_tiles, bbox_left, bbox_bottom+vsp) != 0 
+	||	tilemap_get_at_pixel(ceiling_tiles, bbox_right, bbox_bottom+vsp) != 0
+	
+	) {
+
+    var tileY = (y div 32) * 32;
+    if bbox_bottom >= tileY-32 && vsp >= 0 {  
+        y = y + (y mod 32) - 31 + (bbox_bottom - y);
+        vsp = 0;
+    }
+	else if(jump_state != E_JUMP_STATE.JUMPING ) jump_state = E_JUMP_STATE.FALLING;
+}
+#endregion
+
+#region check grounded
+if (	tilemap_get_at_pixel(floor_tiles, bbox_left, bbox_bottom+1) 
+	||	tilemap_get_at_pixel(floor_tiles, bbox_right, bbox_bottom+1)) 
+	&&	vsp == 0 {
+   
+    var tileY = (y div 32) * 32;
+    if bbox_bottom+1 >= tileY-32 {  
+       jump_state = E_JUMP_STATE.GROUNDED;
+    }
+} else {
+    if(jump_state != E_JUMP_STATE.JUMPING ) jump_state = E_JUMP_STATE.FALLING;
+}
+#endregion
+
+// apply speeds
+x += hsp;
+y += vsp;
+
+hsp = 0;
+vsp = 0;
+
+#endregion
+
+
+#region Ground player / Fall
+/*
 
 if(jump_state != E_JUMP_STATE.GROUNDED){
 	//increase acceleration
@@ -107,11 +192,25 @@ if(jump_state != E_JUMP_STATE.GROUNDED){
 	var g = round(clamp(global.grav + global.grav_acceleration, global.grav, global.terminal_velocity));
 
 	if(place_meeting(x, y + g, layer_tilemap_get_id("Tiles_Floor"))){ // || place_meeting(x, y + g, obj_floor)
-		jump_state = E_JUMP_STATE.GROUNDED;
-		jump_float_counter = 0;
-		jump_current = 0;
-		jump_y_counter = 0;
-		global.grav_acceleration = global.starting_grav_a;
+		
+		var coll_x = x + tilemap_get_cell_x_at_pixel(layer_tilemap_get_id("Tiles_Floor"), x , y);
+		var coll_y = y + tilemap_get_cell_y_at_pixel(layer_tilemap_get_id("Tiles_Floor"), x , y);
+		collision_x = coll_x;
+		collision_y = coll_y;
+		var dir = point_direction(x, y, coll_x, coll_y)
+		
+		if(dir > 181 || dir < 0.5){
+			show_debug_message("dir = " + string(dir));
+			jump_state = E_JUMP_STATE.GROUNDED;
+			jump_float_counter = 0;
+			jump_current = 0;
+			jump_y_counter = 0;
+			global.grav_acceleration = global.starting_grav_a;
+		}
+		else{
+			show_debug_message("player step: hit floor from below");
+		}
+		
 	}
 }
 else{
@@ -128,6 +227,7 @@ else{
 	} // && !place_meeting(x, y + g, obj_floor)
 
 }
+*/
 
 
 
@@ -164,11 +264,15 @@ if(jump_state != E_JUMP_STATE.GROUNDED){
 		//calculate gravity
 		var g = round(clamp(global.grav + global.grav_acceleration, global.grav, global.terminal_velocity));
 		
+		
+		vsp += g;
+		
+		/*
 		//if applying gravity will not put the player in collision
 		if(!place_meeting(x, y + g, layer_tilemap_get_id("Tiles_Floor"))){
 			//apply gravity
 			 y = y + g;
-		}
+		}*/
 	
 	}
 }
@@ -179,7 +283,10 @@ if(jump_state == E_JUMP_STATE.JUMPING){
 	//show_debug_message("jump_y_counter = " + string(jump_y_counter));
 	
 	if(jump_y_counter < dynamic_jump_height){
+		jump_y_counter += jump_y_increment;
+		vsp -= jump_y_increment;
 		
+		/*
 		if(place_meeting(x, y + jump_y_increment, layer_tilemap_get_id("Tiles_Ceiling"))){ // || place_meeting(x, y + jump_y_increment, obj_ceiling)
 		
 			//increase acceleration
@@ -196,6 +303,7 @@ if(jump_state == E_JUMP_STATE.JUMPING){
 			jump_y_counter += jump_y_increment;
 			y -= jump_y_increment;
 		}
+		*/
 	}
 }
 
@@ -364,14 +472,14 @@ if(xp >= 100){
 #region Contact Damage
 
 if(place_meeting(x, y, obj_enemy)){
-	show_debug_message("enemy collision with player");
+	//show_debug_message("enemy collision with player");
 
 	dynamic_hp = dynamic_hp - (other.level)/2;
 
 }
 
 if(place_meeting(x, y, obj_boss)){
-	show_debug_message("boss collision with player");
+	//show_debug_message("boss collision with player");
 
 	dynamic_hp = dynamic_hp - 3*other.level;
 
@@ -458,35 +566,25 @@ if(boss_defeated){
 
 if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
 	
-	if(jump_state == E_JUMP_STATE.JUMPING){
-		if(!place_meeting(x - round(dynamic_movement_speed), y + round(jump_y_increment), [layer_tilemap_get_id("Tiles_Floor"), layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling")])){
-			facing = E_FACING.left;
-			standing_state = E_STANDING_STATE.WALKING;
-			x = x - round(dynamic_movement_speed);
-		}
-		else{
-			
-			standing_state = E_STANDING_STATE.STANDING;
-			
-			/*
-			while (!place_meeting(x - 1, y, [layer_tilemap_get_id("Tiles_Floor"), layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling")])){
-				facing = E_FACING.left;
-				standing_state = E_STANDING_STATE.WALKING;
-		        x--;
-			}
-			*/
-			
-			//standing_state = E_STANDING_STATE.STANDING;
-		}
-	}
-	else if(!place_meeting(x - round(dynamic_movement_speed), y, layer_tilemap_get_id("Tiles_Walls"))){ // && !place_meeting(x - dynamic_movement_speed, y, obj_wall)
+	facing = E_FACING.left;
+		standing_state = E_STANDING_STATE.WALKING;
+	hsp = - dynamic_movement_speed;
+	
+	show_debug_message("hsp = "+ string(hsp));
+	/*
+	if(!place_meeting(x - round(dynamic_movement_speed), y, layer_tilemap_get_id("Tiles_Walls"))){ // && !place_meeting(x - dynamic_movement_speed, y, obj_wall)
+		
 		facing = E_FACING.left;
 		standing_state = E_STANDING_STATE.WALKING;
 		x = x - round(dynamic_movement_speed);
 	}
 	else{
 		
-		standing_state = E_STANDING_STATE.STANDING;
+	*/	
+		
+		//show_debug_message("player step: move left: collision x = " + string(collision_x) + ". y = " + string(collision_y));
+		
+		//standing_state = E_STANDING_STATE.STANDING;
 		
 		//x = xprevious;
 		
@@ -499,7 +597,9 @@ if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
 		
 		//standing_state = E_STANDING_STATE.STANDING;
 		
-	}
+	//}
+	
+	
 }
 
 
@@ -509,14 +609,25 @@ if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
 
 
 if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
+	
+	facing = E_FACING.right;
+	standing_state = E_STANDING_STATE.WALKING;
+	hsp = dynamic_movement_speed;
+	
+	
+	
+	/*
 	if(jump_state == E_JUMP_STATE.JUMPING){
-		if(!place_meeting(x + round(dynamic_movement_speed), y + round(jump_y_increment), [layer_tilemap_get_id("Tiles_Floor"), layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling")])){
+		if(!place_meeting(x + round(dynamic_movement_speed), y + round(jump_y_increment), [layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling")])){
+			
 			facing = E_FACING.right;
 			standing_state = E_STANDING_STATE.WALKING;
 			x = x + round(dynamic_movement_speed);
 		}
 		else{
-			standing_state = E_STANDING_STATE.STANDING;
+			
+			
+			//standing_state = E_STANDING_STATE.STANDING;
 			/*
 			while (!place_meeting(x + 1, y, [layer_tilemap_get_id("Tiles_Floor"), layer_tilemap_get_id("Tiles_Walls"), layer_tilemap_get_id("Tiles_Ceiling")])){
 				facing = E_FACING.right;
@@ -524,17 +635,22 @@ if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
 	            x++;
 			}
 			*/
-			//standing_state = E_STANDING_STATE.STANDING;
+		
+		//standing_state = E_STANDING_STATE.STANDING;
+		
+		/*
 		}
 	}
 	else if(!place_meeting(x + round(dynamic_movement_speed), y, layer_tilemap_get_id("Tiles_Walls"))){ // && !place_meeting(x - dynamic_movement_speed, y, obj_wall)
+		
 		facing = E_FACING.right;
 		standing_state = E_STANDING_STATE.WALKING;
 		x = x + round(dynamic_movement_speed);
 	}
 	else{
+		*/
 		
-		standing_state = E_STANDING_STATE.STANDING;
+		//standing_state = E_STANDING_STATE.STANDING;
 		
 		//x = xprevious;
 		
@@ -549,7 +665,7 @@ if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
 		
 		//standing_state = E_STANDING_STATE.STANDING;
 	
-}
+	//}
 	
 }
 
@@ -560,7 +676,7 @@ if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
 
 #region Hold stop
 
-if(keyboard_check_released(ord("A")) || keyboard_check_released(vk_left) || keyboard_check_released(ord("D")) || keyboard_check_released(vk_right) || keyboard_check_released(ord("C")) || keyboard_check_released(vk_lcontrol) || keyboard_check_released(ord("S")) || keyboard_check_released(vk_down)){
+if(keyboard_check_released(ord("A")) || keyboard_check_released(vk_left) || keyboard_check_released(ord("D")) || keyboard_check_released(vk_right) || keyboard_check_released(ord("C")) || keyboard_check_released(vk_lcontrol) || keyboard_check_released(ord("S")) || keyboard_check_released(vk_down)){			
 	standing_state = E_STANDING_STATE.STANDING;
 }
 
@@ -582,20 +698,25 @@ if(keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard
 		
 		jump_current++;
 		
+		jump_y_counter += jump_y_increment;
+		vsp -= jump_y_increment;
+		
+		/*
 		if(!place_meeting(x, y - jump_y_increment, layer_tilemap_get_id("Tiles_Ceiling"))){ // && !place_meeting(x, y + 1, obj_ceiling)
 			jump_y_counter += jump_y_increment;
 			y -= jump_y_increment;
 		}
 		else{
-		/*
+		
 			while(!place_meeting(x, y - sign(jump_y_increment),layer_tilemap_get_id("Tiles_Ceiling") )){
 				y -= sign(jump_y_increment);
 			}
-			*/
+			
 			
 			jump_state = E_JUMP_STATE.FALLING;
 		
 		}
+		*/
 	
 	
 		//instance_create_layer(x, bbox_bottom, "Effects", obj_effect_jump);
@@ -613,21 +734,26 @@ if(keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard
 			//double jump
 			jump_current++;
 			
+			vsp -= jump_y_increment;
 			
+			/*
 			if(!place_meeting(x, y - jump_y_increment, layer_tilemap_get_id("Tiles_Ceiling"))){ // && !place_meeting(x, y + 1, obj_ceiling)
 				jump_y_counter += jump_y_increment;
 				y -= jump_y_increment;
 			}
 			else{
+				
+				*/
 		/*
 				while(!place_meeting(x, y - sign(jump_y_increment),layer_tilemap_get_id("Tiles_Ceiling") )){
 					y -= sign(jump_y_increment);
 				}
 				*/
 				
-				jump_state = E_JUMP_STATE.FALLING;
+			//	jump_state = E_JUMP_STATE.FALLING;
 		
-			}
+			//}
+			
 			
 			/*
 			if(!place_meeting(x, y + 1, layer_tilemap_get_id("Tiles_Ceiling"))){ // && !place_meeting(x, y + 1, obj_ceiling)
@@ -881,6 +1007,8 @@ if(mouse_check_button_released(mb_middle)){
 
 
 #endregion
+
+
 
 
 
