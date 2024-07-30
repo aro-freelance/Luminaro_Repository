@@ -45,17 +45,19 @@ global.lighting_effects = noone;
 
 
 //starting base amount
-global.grav = 6;
+global.grav = 8;
 
 //terminal velocity
-global.terminal_velocity = 13;
+global.terminal_velocity = 17;
 
 //starting acceleration
-global.starting_grav_a = 0.0001;
+global.starting_grav_a = 0.00000001;
 global.grav_acceleration = global.starting_grav_a; //note that this value is changed during use and is then reset to starting_grav_a in player step
 
 //increase in acceleration per tick
-global.grav_delta_a = 1.05;
+global.grav_delta_a = 1.13;
+
+
 
 //gravity formula: grav + grav_a(delta_a)  -> clamped to terminal velocity
 
@@ -263,9 +265,9 @@ enum E_PLAYER_PARAMETERS{
 
 
 global.baseline_movement_speed = 8; //20
-global.baseline_jump_height = 200; //150
+global.baseline_jump_height = 210; //150
 //global.baseline_jump_number = 1; //2  //How many jumps the player can make
-global.baseline_jump_float_time = .27; //12 //how long after jump does player hover
+global.baseline_jump_float_time = .32; //12 //how long after jump does player hover
 
 
 global.baseline_beam_speed = .025; //.03
@@ -303,7 +305,7 @@ global.baseline_hp = 100; //100
 global.d_movement_speed = 1; 
 global.d_jump_height = 10; 
 //global.d_jump_number = 1; 
-global.d_jump_float_time = .01;
+global.d_jump_float_time = .008;
 
 
 global.d_beam_speed = .005; 

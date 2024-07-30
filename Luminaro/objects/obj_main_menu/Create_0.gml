@@ -11,6 +11,8 @@ button_height = sprite_get_height(spr_button);
 
 init = false;
 
+margin = 20;
+
 
 
 

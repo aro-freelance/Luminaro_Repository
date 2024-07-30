@@ -12,9 +12,15 @@ if(os_browser != browser_not_a_browser){
 	global.dg_width = display_get_width();
 	global.dg_height = display_get_height();
 	
+	
+	var back = layer_background_get_id("Background");
+	layer_background_xscale(back, .78);
+	layer_background_yscale(back, .74);
+	//layer_background_stretch(back,false);
+	
 }
 else{
-	window_set_fullscreen(true);
+	//window_set_fullscreen(true);
 }
 
 

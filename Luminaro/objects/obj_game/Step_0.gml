@@ -159,13 +159,16 @@ if(keyboard_check_pressed(ord("M"))){
 	#endregion
 
 #region INPUT: check catalyst size and light intensity
-/*
+
 if(keyboard_check_pressed(vk_f8)){	
 
-	show_debug_message("cat size = " + string(global.player.dynamic_catalyst_size_mod) + ". intensity mod = " + string(global.player.dynamic_light_intensity_mod));
+	show_debug_message("x = " + string(global.player.x) + " standing state = " + string(global.player.standing_state) + ". jumpstate = " + string(global.player.jump_state));
+
+	//show_debug_message("cat size = " + string(global.player.dynamic_catalyst_size_mod) + ". intensity mod = " + string(global.player.dynamic_light_intensity_mod));
 
 }
-*/
+
+
 #endregion
 
 

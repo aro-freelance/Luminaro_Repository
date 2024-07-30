@@ -5,8 +5,6 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 // Inherit the parent event
 event_inherited();
 
-show_debug_message("scr mirror beam angle: beam image angle = " + string(image_angle) );
-	
 
 #region Set Collision bool for growth
 
@@ -202,12 +200,17 @@ if(!is_on){
 	mask_index = sprite_index;
 }
 
+
 if(image_xscale < (max_xscale*global.player.dynamic_beam_length_mod)){
 	if(!is_colliding){
 		image_xscale += global.player.dynamic_beam_speed - growth_deceleration;
 		mask_index = sprite_index;
 	}
 }
+
+
+
+
 
 
 

@@ -1,3 +1,3 @@
 
 
-draw_sprite(spr_light_beam_tip, 0, x, y);
+draw_sprite(spr, 0, x, y);

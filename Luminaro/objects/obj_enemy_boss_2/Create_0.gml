@@ -33,11 +33,11 @@ can_shoot = true;
 
 ranged_attack_range = 600;
 
-attack_rate = 800;
+attack_rate = 1000;
 
-hp = 300;
+hp = 600;
 
-level = 1;
+level = 2;
 
 #endregion
 

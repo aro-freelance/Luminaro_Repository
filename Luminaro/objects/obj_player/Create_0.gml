@@ -193,7 +193,7 @@ mirrors = [];
 #region Catalysts
 
 catalyst_charge_timer = 0;
-current_catalyst_charges = 0;
+current_catalyst_charges = 1;
 
 current_spawned_catalysts = 0;
 

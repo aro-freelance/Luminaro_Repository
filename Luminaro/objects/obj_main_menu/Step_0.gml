@@ -27,14 +27,14 @@ start_button.destination_room = global.start_room;
 
 
 
-var help_button = instance_create_layer(display_width/8, display_height - display_height/12 + button_height/2, "UI", obj_display_text_button);
+var help_button = instance_create_layer(display_width/8, display_height - display_height/12 - button_height/2 - margin, "UI", obj_display_text_button);
 help_button.label = "Help";
-help_button.text_array = [" MOVEMENT:   WASD or Arrow Keys \n JUMP:   Up Arrow or Space \n CONTROL LIGHT BEAM:   Hold left mouse button and move mouse \n NARROW BEAM:   Q or Numberpad 1 (Toggle) \n WIDEN BEAM: E or Numberpad 0 (Toggle) \n PRISM BEAM:   Hold Center Mouse Button \n CATALYST:   Right Mouse Button \n\n OPEN MENU: F1 or Esc \n\n COMBINE ITEMS:   Click on two items in inventory and click combine."];
+help_button.text_array = [" MOVEMENT:   WASD or Arrow Keys \n\n CONTROL LIGHT BEAM:   Hold left mouse button and move mouse \n\n NARROW BEAM:   Q or Numberpad 1 (Toggle) \n\n WIDEN BEAM: E or Numberpad 0 (Toggle) \n\n PRISM BEAM:   Hold Center Mouse Button \n\n CATALYST:   Right Mouse Button \n\n OPEN MENU: F1 or Esc \n\n COMBINE ITEMS:   Click on two items in inventory and click combine."];
 
 
-var credits_button = instance_create_layer(display_width/2, display_height - display_height/12 + button_height/2, "UI", obj_display_text_button);
+var credits_button = instance_create_layer(display_width/8, display_height - display_height/12 + button_height/2, "UI", obj_display_text_button);
 credits_button.label = "Credits";
-credits_button.text_array = ["Credits: \n\n Designed and Developed by Mandy Otero (Arora Software) \n\n Playtesting by Neale Reimers \n\n Tileset: 2d Platformer Tiles - Dungeon's End by Tajima \n\n For Tom, \n     Happy Birthday! Love you :) "];
+credits_button.text_array = ["Credits: \n\n Designed and Developed by Mandy Otero (Arora Software)  \n\n Playtesting by Neale Reimers \n\n Tileset: '2D Platformer Tiles - Dungeon's End' by Tajima \n\n For Tom, Happy Birthday! Love you :) "];
 
 if(os_browser == browser_not_a_browser){
 	var quit_button = instance_create_layer(display_width - display_width/8, display_height - display_height/12 + button_height/2, "UI", obj_quit_game_button);
