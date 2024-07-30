@@ -12,9 +12,14 @@ global.game_state = E_GAME_STATE.PLAYING;
 
 init = false;
 
+
 floor_tiles = layer_tilemap_get_id("Tiles_Floor");
 wall_tiles = layer_tilemap_get_id("Tiles_Walls");
 ceiling_tiles = layer_tilemap_get_id("Tiles_Ceiling");
+
+
+collision_not_released = false;
+
 
 
 #region Player State 

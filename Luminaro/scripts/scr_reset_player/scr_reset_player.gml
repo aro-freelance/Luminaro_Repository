@@ -13,6 +13,18 @@ function scr_reset_player(){
 		attack_state = E_ATTACK_STATE.idle;
 		react_state = E_REACT_STATE.idle;
 		facing = E_FACING.right;
+		
+		
+		floor_tiles = layer_tilemap_get_id("Tiles_Floor");
+		wall_tiles = layer_tilemap_get_id("Tiles_Walls");
+		ceiling_tiles = layer_tilemap_get_id("Tiles_Ceiling");
+		
+		collision_not_released = false;
+		
+		//horizontal speed
+		hsp = 0;
+		//vertical speed
+		vsp = 0;
 	
 		boss_defeated = false;
 		has_required_item = false;

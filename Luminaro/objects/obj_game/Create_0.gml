@@ -38,6 +38,8 @@ global.player_menu = noone;
 
 global.lighting_effects = noone;
 
+global.TILE_SIZE = 64;
+
 
 #endregion
 

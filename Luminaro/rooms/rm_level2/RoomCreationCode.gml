@@ -28,8 +28,6 @@ else{
 	
 	scr_reset_player();
 	
-	
-	global.game_state = E_GAME_STATE.PLAYING;
 }
 
 
@@ -51,7 +49,7 @@ obj_game.current_boss_story = obj_game.level_2_boss_story;
 obj_game.current_end_story = obj_game.level_2_end_story;
 
 
-
+global.game_state = E_GAME_STATE.PLAYING;
 
 
 

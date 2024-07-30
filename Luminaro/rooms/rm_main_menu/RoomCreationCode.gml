@@ -20,7 +20,7 @@ if(os_browser != browser_not_a_browser){
 	
 }
 else{
-	//window_set_fullscreen(true);
+	window_set_fullscreen(true);
 }
 
 

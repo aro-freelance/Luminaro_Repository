@@ -4,7 +4,9 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 	
 #region init	
 
-if(init){
+if(!init){
+	
+	init = true;
 	
 	#region display size for browser
 	if(os_browser != browser_not_a_browser){
@@ -23,6 +25,8 @@ if(init){
 	
 	}
 	#endregion
+	
+
 
 
 
@@ -108,14 +112,28 @@ var vsp_decimal = frac(vsp);
 hsp -= hsp_decimal;
 vsp -= vsp_decimal;
 
+
 #region -- Solid Collisions --
 // Horizontal collision
 if (hsp > 0) bbox_side = bbox_right; else bbox_side = bbox_left;
 if (	tilemap_get_at_pixel(wall_tiles, bbox_side+hsp, bbox_top) != 0 
-	||	tilemap_get_at_pixel(wall_tiles, bbox_side+hsp, bbox_bottom) != 0) {
+	||	tilemap_get_at_pixel(wall_tiles, bbox_side+hsp, bbox_bottom) != 0
+	||	tilemap_get_at_pixel(floor_tiles, bbox_side+hsp, bbox_top) != 0 
+	||	tilemap_get_at_pixel(floor_tiles, bbox_side+hsp, bbox_bottom) != 0
+	||	tilemap_get_at_pixel(ceiling_tiles, bbox_side+hsp, bbox_top) != 0 
+	||	tilemap_get_at_pixel(ceiling_tiles, bbox_side+hsp, bbox_bottom) != 0
+	
+	) {
 
-    if (hsp > 0) x = x - (x mod 32) + 31 - (bbox_right - x);
-    else x = x - (x mod 32) - (bbox_left - x);
+    /*if (hsp > 0) x = x - (x mod global.TILE_SIZE) + global.TILE_SIZE -1 - (bbox_right - x);
+    else x = x - (x mod global.TILE_SIZE) - (bbox_left - x);
+	*/
+	
+	standing_state = E_STANDING_STATE.STANDING;
+	
+	
+	//if(tilemap_get_at_pixel(wall_tiles, bbox_side+hsp, bbox_top) != 0 || tilemap_get_at_pixel(wall_tiles, bbox_side+hsp, bbox_bottom) != 0) collision_not_released = true;
+	
     hsp = 0;
    
 }
@@ -124,16 +142,30 @@ if (	tilemap_get_at_pixel(wall_tiles, bbox_side+hsp, bbox_top) != 0
 if (vsp > 0) bbox_side = bbox_bottom; else bbox_side = bbox_top;
 if (	tilemap_get_at_pixel(floor_tiles, bbox_left, bbox_side+vsp) != 0
 	||  tilemap_get_at_pixel(floor_tiles, bbox_right, bbox_side+vsp) != 0
+	||	tilemap_get_at_pixel(wall_tiles, bbox_left, bbox_side+vsp) != 0
+	||  tilemap_get_at_pixel(wall_tiles, bbox_right, bbox_side+vsp) != 0
 	||  tilemap_get_at_pixel(ceiling_tiles, bbox_left, bbox_side+vsp) != 0 
 	||  tilemap_get_at_pixel(ceiling_tiles, bbox_right, bbox_side+vsp) != 0
 	) {
 
     if (vsp > 0) {
         y = y - (y mod 32) + 31 - (bbox_bottom - y);
+		//jump_state = E_JUMP_STATE.GROUNDED;
     } else {
 		
-        y = y - (y mod 32) - (bbox_top - y);
+	//	var temp_y = y;
+		
+		
+        //y = y - (y mod global.TILE_SIZE) - (bbox_top - y);
+		
+		
+		//show_debug_message("player hit ceiling at " + string(temp_y) + " new y = " + string(y) + " diff = " + string(temp_y - y) );
+		
+		
+		//jump_state = E_JUMP_STATE.FALLING;
+		//jump_current = dynamic_jump_number;
     }  
+  
    
     vsp = 0;
 }
@@ -144,27 +176,31 @@ if (	tilemap_get_at_pixel(floor_tiles, bbox_left, bbox_side+vsp) != 0
 
 if (	tilemap_get_at_pixel(floor_tiles, bbox_left, bbox_bottom+vsp) != 0 
 	||	tilemap_get_at_pixel(floor_tiles, bbox_right, bbox_bottom+vsp) != 0
+	||	tilemap_get_at_pixel(wall_tiles, bbox_left, bbox_bottom+vsp) != 0 
+	||	tilemap_get_at_pixel(wall_tiles, bbox_right, bbox_bottom+vsp) != 0
 	||	tilemap_get_at_pixel(ceiling_tiles, bbox_left, bbox_bottom+vsp) != 0 
 	||	tilemap_get_at_pixel(ceiling_tiles, bbox_right, bbox_bottom+vsp) != 0
-	
 	) {
 
-    var tileY = (y div 32) * 32;
-    if bbox_bottom >= tileY-32 && vsp >= 0 {  
-        y = y + (y mod 32) - 31 + (bbox_bottom - y);
+    var tileY = (y div global.TILE_SIZE) * global.TILE_SIZE;
+    if bbox_bottom >= tileY-global.TILE_SIZE && vsp >= 0 {  
+        y = y + (y mod global.TILE_SIZE) - global.TILE_SIZE - 1 + (bbox_bottom - y);
         vsp = 0;
     }
 	else if(jump_state != E_JUMP_STATE.JUMPING ) jump_state = E_JUMP_STATE.FALLING;
+	
 }
 #endregion
 
 #region check grounded
 if (	tilemap_get_at_pixel(floor_tiles, bbox_left, bbox_bottom+1) 
-	||	tilemap_get_at_pixel(floor_tiles, bbox_right, bbox_bottom+1)) 
+	||	tilemap_get_at_pixel(floor_tiles, bbox_right, bbox_bottom+1)
+	||	tilemap_get_at_pixel(floor_tiles, (bbox_left+bbox_right)/2, bbox_bottom+1)
+	) 
 	&&	vsp == 0 {
    
-    var tileY = (y div 32) * 32;
-    if bbox_bottom+1 >= tileY-32 {  
+    var tileY = (y div global.TILE_SIZE) * global.TILE_SIZE;
+    if bbox_bottom+1 >= tileY-global.TILE_SIZE {  
        jump_state = E_JUMP_STATE.GROUNDED;
     }
 } else {
@@ -175,6 +211,7 @@ if (	tilemap_get_at_pixel(floor_tiles, bbox_left, bbox_bottom+1)
 // apply speeds
 x += hsp;
 y += vsp;
+
 
 hsp = 0;
 vsp = 0;
@@ -264,6 +301,7 @@ if(jump_state != E_JUMP_STATE.GROUNDED){
 		//calculate gravity
 		var g = round(clamp(global.grav + global.grav_acceleration, global.grav, global.terminal_velocity));
 		
+		collision_not_released = false;
 		
 		vsp += g;
 		
@@ -564,10 +602,10 @@ if(boss_defeated){
 
 #region INPUT: left
 
-if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
+if((keyboard_check(ord("A")) || keyboard_check(vk_left)) && !collision_not_released){
 	
 	facing = E_FACING.left;
-		standing_state = E_STANDING_STATE.WALKING;
+	standing_state = E_STANDING_STATE.WALKING;
 	hsp = - dynamic_movement_speed;
 	
 	show_debug_message("hsp = "+ string(hsp));
@@ -608,7 +646,7 @@ if(keyboard_check(ord("A")) || keyboard_check(vk_left)){
 #region INPUT: right
 
 
-if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
+if((keyboard_check(ord("D")) || keyboard_check(vk_right)) && !collision_not_released){
 	
 	facing = E_FACING.right;
 	standing_state = E_STANDING_STATE.WALKING;
@@ -678,6 +716,7 @@ if(keyboard_check(ord("D")) || keyboard_check(vk_right)){
 
 if(keyboard_check_released(ord("A")) || keyboard_check_released(vk_left) || keyboard_check_released(ord("D")) || keyboard_check_released(vk_right) || keyboard_check_released(ord("C")) || keyboard_check_released(vk_lcontrol) || keyboard_check_released(ord("S")) || keyboard_check_released(vk_down)){			
 	standing_state = E_STANDING_STATE.STANDING;
+	collision_not_released = false;
 }
 
 #endregion
@@ -697,6 +736,9 @@ if(keyboard_check_pressed(vk_up) || keyboard_check_pressed(vk_space) || keyboard
 		jump_state = E_JUMP_STATE.JUMPING;
 		
 		jump_current++;
+		
+		
+		//collision_not_released = false;
 		
 		jump_y_counter += jump_y_increment;
 		vsp -= jump_y_increment;
@@ -861,7 +903,7 @@ if(keyboard_check_released(vk_insert) || keyboard_check_released(ord("E"))){
 
 #region INPUT: narrow beam
 
-if(keyboard_check(vk_end) || keyboard_check(ord("Q"))){
+if(keyboard_check_pressed(vk_end) || keyboard_check_pressed(ord("Q"))){
 	
 	if(beam.size != E_LIGHT_SIZE.NARROW) beam.size = E_LIGHT_SIZE.NARROW;
 	else beam.size = E_LIGHT_SIZE.NORMAL;
