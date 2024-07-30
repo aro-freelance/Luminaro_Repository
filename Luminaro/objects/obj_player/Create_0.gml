@@ -1,6 +1,6 @@
-/// @description create the player character
+/// @description the player character
 
-show_debug_message("player create");
+
 
 depth = -10; //draw in front of background
 
@@ -57,7 +57,6 @@ l_jump_float_time = 0;
 l_beam_speed = 0;
 l_light_intensity_mod = 0;
 
-//l_max_mirrors = 0;
 
 l_prism_beam_number = 0;
 
@@ -72,7 +71,6 @@ l_catalyst_number = 0;
 l_catalyst_charge_delay = 0;
 l_catalyst_size_mod = 0;
 
-//l_hp = 0;
 
 
 #endregion
@@ -86,13 +84,10 @@ l_catalyst_size_mod = 0;
 static_movement_speed = global.baseline_movement_speed + (l_movement_speed * global.d_movement_speed);
 
 static_jump_height = global.baseline_jump_height + (l_jump_height * global.d_jump_height);
-//static_jump_number = global.baseline_jump_number + (l_jump_number * global.d_jump_number); //How many jumps the player can make
 static_jump_float_time = global.baseline_jump_float_time + (l_jump_float_time * global.d_jump_float_time); //how long after jump does player hover
 
 static_beam_speed = global.baseline_beam_speed + (l_beam_speed * global.d_beam_speed);
 static_light_intensity_mod = global.baseline_light_intensity_mod + (l_light_intensity_mod * global.d_light_intensity_mod);
-
-//static_max_mirrors = global.baseline_max_mirrors + (l_max_mirrors * global.d_max_mirrors);
 
 static_prism_beam_number = global.baseline_prism_beam_number + (l_prism_beam_number * global.d_prism_beam_number);
 
@@ -112,8 +107,6 @@ static_catalyst_size_mod = global.baseline_catalyst_size_mod + (l_catalyst_size_
 
 static_hp = global.baseline_hp + (level * global.d_hp); //aka total hp
 
-show_debug_message("player create: static_hp = " + string(static_hp));
-
 
 #endregion
 
@@ -130,7 +123,6 @@ dynamic_jump_float_time = static_jump_float_time //how long after jump does play
 dynamic_beam_speed = static_beam_speed;
 dynamic_light_intensity_mod = static_light_intensity_mod;
 
-//dynamic_max_mirrors = static_max_mirrors;
 
 dynamic_prism_beam_number = static_prism_beam_number;
 

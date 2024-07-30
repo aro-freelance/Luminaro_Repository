@@ -7,8 +7,6 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 if(!init){
 	init = true;
 
-	//player_location_snapshot = [global.player.x - camera_get_view_x(view_camera[0]) , global.player.y - camera_get_view_y(view_camera[0]) - sprite_get_height(global.player.sprite_index)/2 ] ;
-	
 	player_location_snapshot = [global.player.x, global.player.y];
 	
 	
@@ -19,9 +17,6 @@ if(!init){
 	
 	direction = image_angle;
 	
-	//global.player.x - camera_get_view_x(view_camera[0]), global.player.y) - camera_get_view_y(view_camera[0]) - 90;
-	
-	//scale_distance_ratio = distance_to_player / sprite_get_height(sprite_index);
 	
 	is_on = true;
 }

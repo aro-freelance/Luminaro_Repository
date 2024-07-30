@@ -1,6 +1,4 @@
 
-//draw background
-//draw_rectangle_color(x1, y1, x2, y2, c_blue, c_blue, c_blue, c_blue, false);
 draw_rectangle_color(x1, y1, x2, y2, color, color, color, color, false);
 
 
@@ -133,7 +131,6 @@ else if(state == E_PLAYER_MENU_STATE.INVENTORY){
 	
 	var combine_item_x = display_center_x + margin + 1*sprite_get_width(spr_inventory_item);
 	var combine_item_y =  y1 + 2*margin;
-	//var c_1_string = "description 1 mmmmmmmm description 1 description 1 description 1"  //example string.  end of mmms in max length of one line. max four lines.
 	if(selected_item_type_1 != -1) {
 		var type_1_string = global.combine_descriptions[# selected_item_type_1, selected_item_type_1];
 		
@@ -167,7 +164,7 @@ else if(state == E_PLAYER_MENU_STATE.INVENTORY){
 
 else if(state == E_PLAYER_MENU_STATE.SETTINGS){
 
-
+//TODO:
 
 }
 
@@ -178,7 +175,7 @@ else if(state == E_PLAYER_MENU_STATE.SETTINGS){
 
 else if(state == E_PLAYER_MENU_STATE.SAVE_LOAD_EXIT){
 
-
+//TODO:
 
 }
 

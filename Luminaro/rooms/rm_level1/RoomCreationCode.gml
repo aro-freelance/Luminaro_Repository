@@ -1,6 +1,5 @@
 if(os_browser != browser_not_a_browser){
-	
-	//show_message("resize");
+
 	
 	var _dw = 99*browser_width/100;
 	var _dh = 99*browser_height/100;

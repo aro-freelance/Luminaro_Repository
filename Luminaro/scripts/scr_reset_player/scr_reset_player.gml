@@ -19,8 +19,6 @@ function scr_reset_player(){
 		wall_tiles = layer_tilemap_get_id("Tiles_Walls");
 		ceiling_tiles = layer_tilemap_get_id("Tiles_Ceiling");
 		
-		collision_not_released = false;
-		
 		//horizontal speed
 		hsp = 0;
 		//vertical speed

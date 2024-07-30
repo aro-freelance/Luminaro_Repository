@@ -3,7 +3,6 @@ if(os_browser != browser_not_a_browser){
 	var _dh = 99*browser_height/100;
 	
 	display_set_gui_size(_dw, _dh);
-	//window_set_size(_dw, _dh);
 	camera_set_view_size(view_camera[0], _dw, _dh);
 	surface_resize(application_surface, _dw, _dh);
 	window_set_rectangle(0, 0, _dw, _dh);
@@ -16,7 +15,6 @@ if(os_browser != browser_not_a_browser){
 	var back = layer_background_get_id("Background");
 	layer_background_xscale(back, .78);
 	layer_background_yscale(back, .74);
-	//layer_background_stretch(back,false);
 	
 }
 else{

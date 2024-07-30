@@ -8,24 +8,20 @@ global.game_state = E_GAME_STATE.LEVEL_TRANSITION;
 	//if it is a level
 	if(level < array_length(global.levels)){		
 		var destination_room = global.levels[level];	
-	
-		show_debug_message("scr level transition: End of level. moving to next. level = " + string(level));
-	
-		//TODO: display end of level message when it closes move the player to the next room.
+		
+		//display end story
 		var message_box = instance_create_layer(global.dg_width/2, global.dg_height/2, "UI", obj_message);
 		message_box.text_array = global.game_obj.current_end_story;
 		
 		global.player.init = false;
 		
-		//global.game_state = E_GAME_STATE.PLAYING;
 	
 	}
 	//else go to the win screen
 	else{
 		var destination_room = rm_win_screen;
 	
-		show_debug_message("scr level transition: End of levels. TODO: setup functionality for winning the game here. ");
-		//TODO: for the jam display a message saying that is the end of the jam demo and return player to main menu... 
+		//display end story
 		var message_box = instance_create_layer(global.dg_width/2, global.dg_height/2, "UI", obj_message);
 		message_box.text_array = global.game_obj.win_story;
 

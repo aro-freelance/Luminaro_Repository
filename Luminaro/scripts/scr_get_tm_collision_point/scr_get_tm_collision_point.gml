@@ -3,6 +3,8 @@
 
 //output the average of points that have collision as array [x, y]
 
+//THIS IS NOT WORKING ACCURATELY REMOVE OR REWORK
+
 function scr_get_tm_collision_point(input_x, input_y, tile_layer_name){
 		
 	//the [x, y] position array that will be output

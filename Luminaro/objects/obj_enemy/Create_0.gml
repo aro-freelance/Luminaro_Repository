@@ -4,7 +4,6 @@
 depth = -20;
 
 
-show_debug_message("enemy spawned");
 
 #region Enemy State
 
@@ -106,13 +105,3 @@ projectiles = ds_list_create();
 
 #endregion
 
-
-#region bandaids
-//fixes for issues
-
-//if the enemy is not moving start a counter
-stuck_counter = 0;
-stuck_max_duration = 1000;
-
-
-#endregion

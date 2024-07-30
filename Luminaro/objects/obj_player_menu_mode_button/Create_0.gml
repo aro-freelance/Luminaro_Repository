@@ -1,6 +1,5 @@
 /// @description this is for changing the player menu type
 
-//show_debug_message("player menu button create x = " + string(x) + ". y = " + string(y));
 
 depth = -50;
 

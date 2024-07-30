@@ -12,13 +12,12 @@ function scr_set_player_stats(player, should_keep_hp = false){
 	player.static_movement_speed = global.baseline_movement_speed + (player.l_movement_speed * global.d_movement_speed);
 
 	player.static_jump_height = global.baseline_jump_height + (player.l_jump_height * global.d_jump_height);
-	//player.static_jump_number = global.baseline_jump_number + (player.l_jump_number * global.d_jump_number); //How many jumps the player can make
+	
 	player.static_jump_float_time = global.baseline_jump_float_time + (player.l_jump_float_time * global.d_jump_float_time); //how long after jump does player hover
 
 	player.static_beam_speed = global.baseline_beam_speed + (player.l_beam_speed * global.d_beam_speed);
 	player.static_light_intensity_mod = global.baseline_light_intensity_mod + (player.l_light_intensity_mod * global.d_light_intensity_mod);
 
-	//player.static_max_mirrors = global.baseline_max_mirrors + (player.l_max_mirrors * global.d_max_mirrors);
 
 	player.static_prism_beam_number = global.baseline_prism_beam_number + (player.l_prism_beam_number * global.d_prism_beam_number);
 
@@ -53,7 +52,6 @@ function scr_set_player_stats(player, should_keep_hp = false){
 	player.dynamic_beam_speed = player.static_beam_speed;
 	player.dynamic_light_intensity_mod = player.static_light_intensity_mod;
 
-	//player.dynamic_max_mirrors = player.static_max_mirrors;
 
 	player.dynamic_prism_beam_number = player.static_prism_beam_number;
 

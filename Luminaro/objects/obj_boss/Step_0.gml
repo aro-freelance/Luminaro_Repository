@@ -56,7 +56,9 @@ if(!parameter_init){
 
 #endregion
 
-/*
+/* 
+TODO: change enemy sprite 
+
 #region Sprite Index
 
 //handle all sprite changes using states here
@@ -113,22 +115,6 @@ if(!place_meeting(x, y + global.grav, layer_tilemap_get_id("Tiles_Floor")) && ju
 #endregion
 
 
-#region keep enemy on screen
-
-//TODO: scroll the screen and make larger rooms?
-/*
-if(x < 0) x = 0;
-if(x > (room_width - sprite_width)) x = room_width - sprite_width;
-if(y < 0) y = 0;
-
-//TODO: if player goes off the bottom of screen death?
-if(y > (room_height - sprite_height)){
-	y = room_height - sprite_height;
-	if(jump_state != E_ENEMY_JUMP_STATE.FLOATING) jump_state = E_JUMP_STATE.GROUNDED;
-}
-*/
-
-#endregion
 
 
 #region gravity
@@ -151,8 +137,6 @@ if(jump_state != E_ENEMY_JUMP_STATE.GROUNDED && jump_state != E_ENEMY_JUMP_STATE
 			//apply gravity
 			 y = y + global.grav;
 		
-			//plus more gravity when "falling"
-			//if(jump_state == E_JUMP_STATE.FALLING) y = y + (.5 * global.grav);
 		}
 	
 	}
@@ -447,7 +431,7 @@ if(can_move){
 		//show_debug_message("Enemy Step: Attack timer ready: distance goal = " + string(distance_goal) + ". current distance = " + string(distance_to_object(obj_player)) );
 		
 		//if in melee range, make melee attack
-		if(distance_to_object(obj_player) <= melee_attack_range){
+		if(distance_to_object(global.player) <= melee_attack_range){
 			tactic_state = E_ENEMY_TACTIC_STATE.KEEP_DISTANCE;
 			//show_debug_message("spawn melee attack");
 			attack_timer = 0;
@@ -482,7 +466,6 @@ if(can_move){
 
 if(variable_instance_exists(id, "dynamic_hp")){
 	if(dynamic_hp <= 0){
-		show_debug_message("boss " + string(id) + " death.");
 		
 		randomize();
 		var irand_xp_offset = irandom_range(-100, 100);
@@ -532,24 +515,7 @@ if(variable_instance_exists(id, "dynamic_hp")){
 #endregion
 
 
-#region Bandaids
 
-
-	#region Stuck
-	
-		if(x == xprevious && y == yprevious && distance_to_point(array_get(goal_point, 0), array_get(goal_point, 1)) < goal_radius){
-			stuck_counter++;
-		}
-		
-		//enemy is stuck for too long
-		if(stuck_counter >= stuck_max_duration){
-			//TODO: handle stuck enemy
-			show_debug_message("TODO: handle stuck enemy");
-		}
-	
-	#endregion
-
-#endregion
 
 
 }

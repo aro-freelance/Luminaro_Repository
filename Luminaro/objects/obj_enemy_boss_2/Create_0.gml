@@ -23,19 +23,19 @@ tactic_state = E_ENEMY_TACTIC_STATE.CHASE;
 
 enemy_type = E_BOSS_TYPES.BOSS_2;
 
-static_movement_speed = 3;
+static_movement_speed = 3.5;
 
-melee_attack_range = 400;
+melee_attack_range = 100;
 
 can_float = true;
 
 can_shoot = true;
 
-ranged_attack_range = 600;
+ranged_attack_range = 350;
 
-attack_rate = 1000;
+attack_rate = 200;
 
-hp = 800;
+hp = 3000;
 
 level = 2;
 

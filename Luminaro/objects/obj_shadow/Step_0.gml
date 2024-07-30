@@ -33,7 +33,6 @@ if(!supercharged && supercharge_timer > supercharge_rate){
 	supercharged = true;
 	shadow_state = E_SHADOW_STATE.SUPERCHARGED;
 	
-	show_debug_message("supercharge on");
 	//TODO: spawn supercharge effect on shadow
 	
 }

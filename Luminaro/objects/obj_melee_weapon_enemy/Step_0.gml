@@ -38,36 +38,16 @@ if(image_yscale < scale_distance_ratio){
 	if(!place_meeting(x, y, obj_player)){
 		//increase size
 		image_yscale += growth_factor;
-		//var _spr = object_get_sprite(object_index);
-		//mask_index = _spr;
-		//show_debug_message("y scale = " + string(image_yscale));
 	}
 	
 }
 else{
-	//show_debug_message("meleeweapon: reached max size. destroy self. B: range = " + string(owner.dynamic_melee_attack_range) + ". distance = " + string(distance_to_object(obj_player)));
 	destroy_counter++;
 	if (destroy_counter >= destroy_delay) instance_destroy();
 }
 
 #endregion
 
-
-#region Deal Damage
-
-/*
-if(place_meeting(x + sprite_width, y + (sprite_height * y_scale), obj_player) || place_meeting(global.player.x, global.player.y, self)){
-//if(collision_line(x, y, x + sprite_width, y + sprite_height, obj_player, false, true)){
-	
-	global.player.dynamic_hp = global.player.dynamic_hp - intensity;
-	show_debug_message("========================== melee attack hits player. player hp = " + string(global.player.dynamic_hp));
-	
-	instance_destroy();
-}
-*/
-
-
-#endregion
 
 
 

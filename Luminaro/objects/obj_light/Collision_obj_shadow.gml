@@ -10,8 +10,7 @@ if(is_on){
 	
 		
 		other.hp = other.hp - (intensity*global.player.dynamic_light_intensity_mod);
-		//show_debug_message("obj_light collision obj_enemy: shadow collision with lantern. hp = " + string(other.hp));
-
+	
 	}
 
 	//if it is a player beam
@@ -29,7 +28,6 @@ if(is_on){
 			other.hp = other.hp - ((intensity*global.player.dynamic_light_intensity_mod) / 2);
 		}
 		
-		//show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.hp));
 		
 	}
 	
@@ -47,7 +45,6 @@ if(is_on){
 		}
 		
 		
-		//show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.hp));
 		
 	}
 	
@@ -64,7 +61,6 @@ if(is_on){
 		}
 		
 		
-		//show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.hp));
 		
 	}
 	

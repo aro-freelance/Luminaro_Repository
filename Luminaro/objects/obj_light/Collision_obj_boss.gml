@@ -10,8 +10,7 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 	
 		
 			other.dynamic_hp = other.dynamic_hp - (intensity*global.player.dynamic_light_intensity_mod);
-			//show_debug_message("obj_light collision obj_enemy: enemy collision with lantern. hp = " + string(other.dynamic_hp));
-
+		
 		}
 
 		//if it is a player beam
@@ -29,8 +28,6 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 				other.dynamic_hp = other.dynamic_hp - ((intensity*global.player.dynamic_light_intensity_mod) / 2);
 			}
 		
-			//show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.dynamic_hp));
-		
 		}
 	
 		//if it is a mirror beam
@@ -47,8 +44,6 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 			}
 		
 		
-			//show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.dynamic_hp));
-		
 		}
 	
 		else if(light_type == E_LIGHT_TYPES.PLAYER_PRISM_BEAM){
@@ -63,8 +58,6 @@ if(global.game_state == E_GAME_STATE.PLAYING){
 				other.dynamic_hp = other.dynamic_hp - (((intensity*global.player.dynamic_light_intensity_mod) * prism_damage_mod) / 2);
 			}
 		
-		
-			//show_debug_message("obj_light collision obj_enemy: enemy collision with light beam. hp = " + string(other.dynamic_hp));
 		
 		}
 	

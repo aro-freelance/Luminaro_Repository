@@ -59,8 +59,6 @@ global.grav_acceleration = global.starting_grav_a; //note that this value is cha
 //increase in acceleration per tick
 global.grav_delta_a = 1.13;
 
-
-
 //gravity formula: grav + grav_a(delta_a)  -> clamped to terminal velocity
 
 
@@ -81,7 +79,6 @@ array_insert(global.levels, E_LEVELS.LEVEL_1, rm_level1);
 array_insert(global.levels, E_LEVELS.LEVEL_2, rm_level2);
 
 #endregion
-
 
 
 #region UI
@@ -248,11 +245,9 @@ enum E_FACING{
 enum E_PLAYER_PARAMETERS{
 	MOVEMENT_SPEED,
 	JUMP_HEIGHT,
-	//JUMP_NUMBER,
 	JUMP_FLOAT_TIME,
 	BEAM_SPEED,
 	BEAM_INTENSITY_MOD,
-	//MAX_MIRRORS,
 	PRISM_BEAM_NUMBER,
 	BATTERY,
 	BATTERY_CHARGE_DELAY,
@@ -266,23 +261,19 @@ enum E_PLAYER_PARAMETERS{
 
 
 
-global.baseline_movement_speed = 8; //20
-global.baseline_jump_height = 210; //150
-//global.baseline_jump_number = 1; //2  //How many jumps the player can make
-global.baseline_jump_float_time = .25; //12 //how long after jump does player hover
+global.baseline_movement_speed = 8; 
+global.baseline_jump_height = 210; 
+global.baseline_jump_float_time = .25; //how long after jump does player hover
 
 
-global.baseline_beam_speed = .025; //.03
-global.baseline_light_intensity_mod =  1.5; //1; //1.2
+global.baseline_beam_speed = .025; 
+global.baseline_light_intensity_mod =  1.5; 
 
-//how many mirrors can player have?
-//global.baseline_max_mirrors = 1; //3
-
-global.baseline_prism_beam_number = 3; //4
+global.baseline_prism_beam_number = 3; 
 
 
-global.baseline_battery = 3.5555; //3.555555;  //battery max on time
-global.baseline_battery_charge_delay = 5; //150 //how long does the battery take to charge?
+global.baseline_battery = 3.5555;  //battery max on time
+global.baseline_battery_charge_delay = 5; //how long does the battery take to charge?
  
  
 global.baseline_lantern_size_mod = 1; //the multiplier applied to the lantern size
@@ -296,7 +287,7 @@ global.baseline_catalyst_charge_delay = 10; //how long does a catalyst take to c
 global.baseline_catalyst_size_mod = 1; //the multiplier applied to the catalyst size
  
 
-global.baseline_hp = 100; //100 
+global.baseline_hp = 100; 
 
 #endregion
 
@@ -306,15 +297,11 @@ global.baseline_hp = 100; //100
 
 global.d_movement_speed = 1; 
 global.d_jump_height = 10; 
-//global.d_jump_number = 1; 
 global.d_jump_float_time = .008;
 
 
 global.d_beam_speed = .005; 
 global.d_light_intensity_mod = .35;
-
-//how many mirrors can player have?
-//global.d_max_mirrors = 1; //3
 
 global.d_prism_beam_number = 1; 
 
@@ -330,7 +317,7 @@ global.d_catalyst_number = 1;
 global.d_catalyst_charge_delay = -1;
 global.d_catalyst_size_mod = .1;
 
-global.d_hp = 50; //300
+global.d_hp = 50; 
 
 #endregion
 
@@ -472,12 +459,6 @@ array_push(level_2_end_story, "You have created " + global.item_descriptions_sho
 array_push(level_2_end_story, "This is the end of the version of the game completed for the Jam! The journey to defeat the shadow is still being written.");
 array_push(level_2_end_story, "Thank you for playing!")
 
-
-
-
 win_story = level_2_end_story;
-//array_push(win_story, "Game Jam Version complete!")
-
-
 
 #endregion

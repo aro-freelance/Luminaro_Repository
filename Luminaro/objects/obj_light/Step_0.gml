@@ -50,7 +50,6 @@ if(light_type != E_LIGHT_TYPES.MIRROR_BEAM){
 
 if(is_on && can_bounce){
 		var max_length = sprite_get_width(sprite_index) * image_xscale;
-		//show_debug_message("light step: bounce: max length = " + string(max_length));
 		
 		
 		for (var i = 0; i < max_length; i++ ) {
