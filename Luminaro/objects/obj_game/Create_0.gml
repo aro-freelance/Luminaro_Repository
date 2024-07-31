@@ -435,7 +435,7 @@ array_push(level_1_begin_story, "A tale tells of hidden components spread throug
 array_push(level_1_begin_story, "When combined they will create the Luminaro which will bring light back to the world and banish the shadows.");
 array_push(level_1_begin_story, "You have come to a small cave where you will find your first component.");
 array_push(level_1_begin_story, "Delve into the cave and banish the shadow with your light!");
-array_push(level_1_begin_story, " Movement: WASD or arrow keys \n Light Beam: Hold Left Mouse \n Explosive Catalyst: Right mouse \n Prism Beam: Middle Mouse \n Narrow Beam (increase damage): Q or Numberpad 1 \n Widen Beam (lower damage but more area): E or Numberpad 0 ");
+array_push(level_1_begin_story, " Movement: WASD or arrow keys \n Light Beam: Hold Left Mouse \n Explosive Catalyst: Right mouse \n Prism Beam: Middle Mouse \n Narrow Beam (increase damage): Q or Numberpad 1 \n Widen Beam (lower damage but more area): E or Numberpad 0 \n Menu M or Esc ");
 
 level_1_boss_story = [];
 array_push(level_1_boss_story, "You have found " + global.item_descriptions[0] + "!");

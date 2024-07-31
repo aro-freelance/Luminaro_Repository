@@ -16,3 +16,7 @@ with(obj_combine_button){
 with(obj_button_room_change){
 	instance_destroy();
 }
+
+with(obj_player_menu_close){
+	instance_destroy();
+}

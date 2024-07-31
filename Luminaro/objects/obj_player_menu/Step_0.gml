@@ -20,6 +20,8 @@ if(!init){
 		instance_destroy();
 	}
 
+	var close_button = instance_create_layer(x2 - 2*margin, y1, "UI", obj_player_menu_close);
+	
 
 	#region Display Stats
 
@@ -167,6 +169,10 @@ if(!init){
 		
 		var combine_button = instance_create_layer(combine_x, y2 - button_height - margin, "UI", obj_combine_button );
 		//set things on combine button here if needed
+		
+		
+		
+		
 	}
 
 	#endregion
@@ -217,13 +223,13 @@ if(state == E_PLAYER_MENU_STATE.INVENTORY){
 
 #region INPUT: Go back / Close
 if(state != E_PLAYER_MENU_STATE.DISPLAY_STATS && state != E_PLAYER_MENU_STATE.LEVEL_UP){
-	if(keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_f1) || (mouse_check_button_pressed(mb_left) && state == E_PLAYER_MENU_STATE.LEVEL_UP)){
+	if(keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_f1) || keyboard_check_pressed(ord("M")) || (mouse_check_button_pressed(mb_left) && state == E_PLAYER_MENU_STATE.LEVEL_UP)){
 		state = E_PLAYER_MENU_STATE.DISPLAY_STATS;
 		init = false;
 	}
 }
 else{
-	if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_f1) || (mouse_check_button_pressed(mb_left) && state == E_PLAYER_MENU_STATE.LEVEL_UP)){
+	if(keyboard_check_pressed(vk_enter) || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(vk_f1) || keyboard_check_pressed(ord("M")) || (mouse_check_button_pressed(mb_left) && state == E_PLAYER_MENU_STATE.LEVEL_UP)){
 		global.game_state = E_GAME_STATE.PLAYING;
 		instance_activate_all();
 		//destroy this menu

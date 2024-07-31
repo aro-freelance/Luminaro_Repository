@@ -65,7 +65,7 @@ if(global.player != noone) camera_set_view_pos(view_camera[0], global.player.x -
 
 #region INPUT: Open Game Menu
 
-if(keyboard_check_pressed(vk_f1) || keyboard_check_pressed(vk_escape)){
+if(keyboard_check_pressed(vk_f1) || keyboard_check_pressed(vk_escape) || keyboard_check_pressed(ord("M"))){
 	
 	global.game_state = E_GAME_STATE.IN_GAME_MENU;
 	global.player_menu = instance_create_layer(0, 0, "UI", obj_player_menu);

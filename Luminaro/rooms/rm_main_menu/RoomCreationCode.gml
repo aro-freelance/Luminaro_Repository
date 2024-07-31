@@ -13,8 +13,8 @@ if(os_browser != browser_not_a_browser){
 	
 	
 	var back = layer_background_get_id("Background");
-	layer_background_xscale(back, .78);
-	layer_background_yscale(back, .74);
+	layer_background_xscale(back, .85);
+	layer_background_yscale(back, .85);
 	
 }
 else{
